@@ -15,13 +15,13 @@
     ]
   },
   "files": [
-    "./node_modules/@types/node/index.d.ts"
+    "back-end/node_modules/@types/node/index.d.ts"
   ],
   "include": [
-    "src/**/*.ts",
+    "back-end/src/**/*.ts",
     "package.json"
   ],
   "exclude": [
-    "node_modules"
+    "back-end/node_modules"
   ]
 }
