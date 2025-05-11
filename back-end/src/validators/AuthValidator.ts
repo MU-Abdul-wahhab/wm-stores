@@ -14,7 +14,7 @@ export class AuthValidator {
                     return true;
                 })
             }),
-            body("phone", "Phone Number Is Required").isString().matches("/^07[01245678][0-9]{7}$/").withMessage("Invaid Phone Number"),
+            body("phone", "Phone Number Is Required").isString().matches(/^07[01245678][0-9]{7}$/).withMessage("Invalid Phone Number"),
             body("password", "Password Is Required").isAlphanumeric().isLength({ min: 8, max: 20 }).withMessage("Password must be between 8-20 Characters"),
         ]
     }

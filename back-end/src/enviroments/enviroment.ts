@@ -4,6 +4,10 @@ import { ProdEnviroment } from "./enviroment-prod";
 
 export interface Enviroment {
     db_url: string,
+    gmail_auth : {
+        user: string,
+        pass: string
+    }
 }
 
 export function getEnvVariables() {

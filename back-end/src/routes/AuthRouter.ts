@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { AuthController } from "../controllers/AuthController";
+import asyncHandler from "express-async-handler";
 
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleware";
+import { AuthValidator } from "../validators/AuthValidator";
 
 class AuthRouter {
 
@@ -14,11 +16,11 @@ class AuthRouter {
     }
 
     getRoutes() {
-        this.router.get("/get", AuthController.getUser)
+        this.router.get("/login", AuthController.getUser)
     }
 
     postRoutes(){
-        this.router.post("/signup" ,  GlobalMiddleware.checkError)
+        this.router.post("/signup" , AuthValidator.signUp() , GlobalMiddleware.checkError , asyncHandler(AuthController.signUp))
     }
 
 }

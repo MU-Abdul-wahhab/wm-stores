@@ -15,7 +15,7 @@ export class GlobalErrorController {
     }
 
     private static sendErrorDev(err : AppError, res : Response) {
-        res.status(err.statusCode).json({
+        res.status(err.statusCode || 500).json({
             status: err.status,
             error: err,
             message: err.message,
@@ -25,7 +25,7 @@ export class GlobalErrorController {
 
     private static sendErrorProd(err : AppError, res : Response) {
         if (err.isOperational) {
-            res.status(err.statusCode).json({
+            res.status(err.statusCode || 500).json({
                 status: err.status,
                 message: err.message,
             });
