@@ -7,7 +7,9 @@ export interface Enviroment {
     gmail_auth : {
         user: string,
         pass: string
-    }
+    },
+    jwt_secret_key : string,
+    jwt_secret_refresh_key:string
 }
 
 export function getEnvVariables() {
