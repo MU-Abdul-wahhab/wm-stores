@@ -28,9 +28,9 @@ export class GlobalMiddleware {
 
         const user = await User.findOne({email : decoded.email})
 
-        if(!user) return next(new AppError("Unauthorised Access" , 401));
+        if(!user) return next(new AppError("Unauthorized Access" , 401));
 
-        req.user = user;
+        req.user = decoded;
         next();
 
     }

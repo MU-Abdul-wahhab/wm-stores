@@ -4,7 +4,6 @@ import asyncHandler from "express-async-handler";
 
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleware";
 import { AuthValidator } from "../validators/AuthValidator";
-import { CatchAsync } from "../utils/CatchAsync";
 
 
 class AuthRouter {
@@ -20,13 +19,15 @@ class AuthRouter {
 
     getRoutes() {
         this.router.get("/verify/email", AuthValidator.verifyEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.verifyEmail));
+        this.router.get("/verify/get/phone", GlobalMiddleware.auth , asyncHandler(AuthController.getPhoneotp));
+         this.router.get("/verify/phone", AuthValidator.verifyPhone(), GlobalMiddleware.checkError, GlobalMiddleware.auth ,asyncHandler(AuthController.verifyPhone));
     }
 
     postRoutes() {
-        this.router.post("/signup", AuthValidator.signUp(), GlobalMiddleware.checkError, CatchAsync.catchError(AuthController.signUp));
-        this.router.post("/verify/get/email", AuthValidator.getVerificationEmail(), GlobalMiddleware.checkError, CatchAsync.catchError(AuthController.getVerificationEmail));
-        this.router.post("/login", AuthValidator.logIn(), GlobalMiddleware.checkError, CatchAsync.catchError(AuthController.logIn));
-        this.router.post("/getnewtoken", AuthValidator.getNewToken(), GlobalMiddleware.checkError , CatchAsync.catchError(GlobalMiddleware.auth), CatchAsync.catchError(AuthController.getNewToken));
+        this.router.post("/signup", AuthValidator.signUp(), GlobalMiddleware.checkError, asyncHandler(AuthController.signUp));
+        this.router.post("/verify/get/email", AuthValidator.getVerificationEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.getVerificationEmail));
+        this.router.post("/login", AuthValidator.logIn(), GlobalMiddleware.checkError, asyncHandler(AuthController.logIn));
+        this.router.post("/getnewtoken", AuthValidator.getNewToken(), GlobalMiddleware.checkError , asyncHandler(GlobalMiddleware.auth), asyncHandler(AuthController.getNewToken));
     }
 
     putRoutes() {

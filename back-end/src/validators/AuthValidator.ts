@@ -46,6 +46,12 @@ export class AuthValidator {
         ]
     }
 
+     static verifyPhone() {
+        return [
+            query("otp", "OTP Is Required").isAlphanumeric().notEmpty(),
+        ]
+    }
+
 
 }
 

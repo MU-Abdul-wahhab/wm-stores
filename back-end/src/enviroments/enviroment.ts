@@ -10,6 +10,8 @@ export interface Enviroment {
     },
     jwt_secret_key : string,
     jwt_secret_refresh_key:string
+    twillio_account_sid : string
+    twillio_auth_token : string
 }
 
 export function getEnvVariables() {

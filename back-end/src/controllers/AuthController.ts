@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { AuthService } from "../services/AuthService";
 import { Utils } from "../utils/Utils";
 
@@ -6,7 +5,7 @@ import { Utils } from "../utils/Utils";
 
 export class AuthController {
 
-    public static async logIn(req: Request, res: Response) {
+    public static async logIn(req, res) {
 
         const { email, password } = req.body;
         const data = {
@@ -14,7 +13,7 @@ export class AuthController {
             password
         }
 
-        const response = await AuthService.logIn(data);
+        const response = await AuthService.logIn(data, req);
 
         res.status(201).json({
             status: 'success',
@@ -26,7 +25,7 @@ export class AuthController {
         });
     }
 
-    public static async signUp(req: Request, res: Response) {
+    public static async signUp(req, res) {
 
         const { first_name, last_name, email, phone, password } = req.body;
         const token = Utils.generateToken();
@@ -54,23 +53,23 @@ export class AuthController {
 
     }
 
-    public static async verifyEmail(req: Request, res: Response) {
+    public static async verifyEmail(req, res) {
         const { email, token } = req.query;
         const data = {
             email,
             token
         }
 
-        const verifiedUser = await AuthService.verifyEmail(data);
+        await AuthService.verifyEmail(data);
 
         res.status(201).json({
             status: 'success',
             message: 'Email Has Verified',
-            verifiedUser
+
         })
     }
 
-    public static async getVerificationEmail(req: Request, res: Response) {
+    public static async getVerificationEmail(req, res) {
         const { email, password } = req.body;
         const token = Utils.generateToken();
         const token_time = Date.now() + new Utils().VERIFICATION_TIME;
@@ -96,12 +95,41 @@ export class AuthController {
 
     }
 
-    public static async getNewToken(req: Request, res: Response) {
-        const { access_token, refresh_token } = await AuthService.getNewToken(req.body.refresh_token);
+    public static async getNewToken(req, res) {
+        const { access_token, refresh_token } = await AuthService.getNewToken(req.body.refresh_token, req);
 
         res.status(201).json({
             access_token,
             refresh_token
+        })
+    }
+
+    public static async getPhoneotp(req, res) {
+        const { email } = req.user;
+
+        await AuthService.getPhoneotp(email);
+
+
+        res.status(201).json({
+            status: "success",
+            message: "OTP has sent to your phone number"
+        })
+
+    }
+
+    public static async verifyPhone(req, res) {
+        const otp = req.query.otp;
+        const email = req.user.email;
+        const data = {
+            email,
+            otp
+        }
+
+        await AuthService.verifyPhone(data);
+
+        res.status(201).json({
+            status: 'success',
+            message: 'Phone Number Has Verified',
         })
     }
 }
