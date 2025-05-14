@@ -8,14 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "lib": [
-      "es2017.object",
-      "es2015",
       "es2017",
+      "es2015",
       "dom"
     ]
   },
   "files": [
-    "../back-end/node_modules/@types/node/index.d.ts"
+    "node_modules/@types/node/index.d.ts"
   ],
   "include": [
     "back-end/src/**/*.ts",
