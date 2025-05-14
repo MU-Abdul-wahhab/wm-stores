@@ -52,5 +52,9 @@ export class Utils {
         return await argon2.verify(encryptedToken, token);
     }
 
+    public test(){
+        return;
+    }
+
 
 }
