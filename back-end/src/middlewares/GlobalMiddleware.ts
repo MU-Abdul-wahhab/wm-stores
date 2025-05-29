@@ -35,11 +35,14 @@ export class GlobalMiddleware {
 
     }
 
-    static checkRole(req, res, next, role) {
-        const user = req.user;
-        if (user.user_role != role) {
-            next(new AppError('Your an Unauthorized user', 401));
+    static checkRole(role: string) {
+        return (req, res, next) => {
+            const user = req.user;
+            if (user.user_role != role) {
+                next(new AppError('Your an Unauthorized user', 401));
+            }
+            next();
         }
-        next();
+
     }
 }

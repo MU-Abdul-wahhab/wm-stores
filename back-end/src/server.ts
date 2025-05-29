@@ -9,6 +9,7 @@ import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { AppError } from "./utils/AppError";
 import { GlobalErrorController } from "./controllers/GlobalErrorController";
+import BrandRouter from "./routes/BrandRouter";
 
 
 const limiter = rateLimit({
@@ -38,6 +39,7 @@ export class Server {
 
     setRoutes() {
         this.app.use("/api/v1/auth", AuthRouter);
+        this.app.use("/api/v1/brand", BrandRouter);
     }
     connectMongoDB() {
         mongoose.connect(getEnvVariables().db_url)

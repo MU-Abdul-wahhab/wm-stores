@@ -1,8 +1,6 @@
 import { AuthService } from "../services/AuthService";
 import { Utils } from "../utils/Utils";
 
-
-
 export class AuthController {
 
     public static async logIn(req, res) {
