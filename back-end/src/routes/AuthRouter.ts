@@ -14,26 +14,20 @@ class AuthRouter {
         this.router = Router();
         this.getRoutes();
         this.postRoutes();
-        this.putRoutes();
     }
 
-    getRoutes() {
+    private getRoutes() {
         this.router.get("/verify/email", AuthValidator.verifyEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.verifyEmail));
-        this.router.get("/verify/get/phone", GlobalMiddleware.auth , asyncHandler(AuthController.getPhoneotp));
-         this.router.get("/verify/phone", AuthValidator.verifyPhone(), GlobalMiddleware.checkError, GlobalMiddleware.auth ,asyncHandler(AuthController.verifyPhone));
+        this.router.get("/verify/get/phone", GlobalMiddleware.auth, asyncHandler(AuthController.getPhoneotp));
+        this.router.get("/verify/phone", AuthValidator.verifyPhone(), GlobalMiddleware.checkError, GlobalMiddleware.auth, asyncHandler(AuthController.verifyPhone));
     }
 
-    postRoutes() {
+    private postRoutes() {
         this.router.post("/signup", AuthValidator.signUp(), GlobalMiddleware.checkError, asyncHandler(AuthController.signUp));
         this.router.post("/verify/get/email", AuthValidator.getVerificationEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.getVerificationEmail));
         this.router.post("/login", AuthValidator.logIn(), GlobalMiddleware.checkError, asyncHandler(AuthController.logIn));
-        this.router.post("/getnewtoken", AuthValidator.getNewToken(), GlobalMiddleware.checkError , asyncHandler(GlobalMiddleware.auth), asyncHandler(AuthController.getNewToken));
+        this.router.post("/getnewtoken", AuthValidator.getNewToken(), GlobalMiddleware.checkError, asyncHandler(GlobalMiddleware.auth), asyncHandler(AuthController.getNewToken));
     }
-
-    putRoutes() {
-
-    }
-
 }
 
 export default new AuthRouter().router;

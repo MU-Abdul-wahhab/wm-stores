@@ -43,18 +43,16 @@ export class AuthService {
         const refresh_token = Jwt.jwtRefreshSign(payload);
         const hashedRefreshToken = await Utils.encryptRefreshToken(refresh_token);
 
-
-        const refresh_token_data = {
-            user: user._id,
-            token: hashedRefreshToken,
-            ipAddress: req.ip,
-            userAgent: req.headers['user-agent']
-        }
-
         if (existingToken) {
             existingToken.token = hashedRefreshToken;
             existingToken.save();
         } else {
+            const refresh_token_data = {
+                user: user._id,
+                token: hashedRefreshToken,
+                ipAddress: req.ip,
+                userAgent: req.headers['user-agent']
+            }
             await RefreshToken.create(refresh_token_data);
         }
 
@@ -225,7 +223,7 @@ export class AuthService {
 
     public static async verifyPhone(data: any) {
         const { email, otp } = data;
-     
+
         const user = await User.findOneAndUpdate(
             {
                 email: email,
@@ -253,7 +251,7 @@ export class AuthService {
                 }
             }
         )
-      
+
         if (!user) {
             throw new AppError("Invalid Credentials", 401);
         }

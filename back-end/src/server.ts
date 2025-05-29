@@ -9,14 +9,12 @@ import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { AppError } from "./utils/AppError";
 import { GlobalErrorController } from "./controllers/GlobalErrorController";
-import { Twillio } from "./utils/Twillio";
-
 
 
 const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 100,
-  message: "Too many requests from this IP, please try again later.",
+    windowMs: 60 * 60 * 1000,
+    max: 100,
+    message: "Too many requests from this IP, please try again later.",
 });
 
 export class Server {
@@ -46,7 +44,9 @@ export class Server {
             .then(() => {
                 console.log(`Mongo DB Connected`);
             })
-            .catch(err => console.log(err));
+            .catch(err =>
+                console.log(err)
+            );
     }
 
     setDotenv() {

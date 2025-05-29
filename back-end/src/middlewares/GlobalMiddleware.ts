@@ -26,12 +26,20 @@ export class GlobalMiddleware {
 
         const decoded = await Jwt.jwtVerify(token);
 
-        const user = await User.findOne({email : decoded.email})
+        const user = await User.findOne({ email: decoded.email })
 
-        if(!user) return next(new AppError("Unauthorized Access" , 401));
+        if (!user) return next(new AppError("Unauthorized Access", 401));
 
         req.user = decoded;
         next();
 
+    }
+
+    static checkRole(req, res, next, role) {
+        const user = req.user;
+        if (user.user_role != role) {
+            next(new AppError('Your an Unauthorized user', 401));
+        }
+        next();
     }
 }
