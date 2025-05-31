@@ -1,0 +1,1 @@
+// CategoryValidator.ts content

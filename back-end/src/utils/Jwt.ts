@@ -5,7 +5,7 @@ import { AppError } from "./AppError";
 
 export class Jwt {
 
-    static jwtSign(payLoad, expires_in = '1h') {
+    static jwtSign(payLoad, expires_in = getEnvVariables().jwt_secret_key_time) {
         return jwt.sign(payLoad, getEnvVariables().jwt_secret_key, {
             expiresIn: expires_in
         })
@@ -25,7 +25,7 @@ export class Jwt {
         })
     }
 
-    static jwtRefreshSign(payLoad, expires_in = '1d') {
+    static jwtRefreshSign(payLoad, expires_in = getEnvVariables().jwt_secret_refresh_key_time) {
         return jwt.sign(payLoad, getEnvVariables().jwt_secret_refresh_key, {
             expiresIn: expires_in
         })
