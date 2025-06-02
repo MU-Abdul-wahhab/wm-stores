@@ -2,6 +2,7 @@ import { Router } from "express";
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleware";
 import asyncHandler from "express-async-handler";
 import { BrandController } from "../controllers/BrandController";
+import { BrandValidator } from "../validators/BrandValidator";
 
 class BrandRouter {
     public router: Router;
@@ -16,7 +17,7 @@ class BrandRouter {
         
     }
     private postRoutes() {
-        this.router.post("/create", GlobalMiddleware.auth , GlobalMiddleware.checkRole("admin") , asyncHandler(BrandController.createBrand));
+        this.router.post("/create", GlobalMiddleware.auth , GlobalMiddleware.checkRole("admin") , BrandValidator.createBrand() , GlobalMiddleware.checkError , asyncHandler(BrandController.createBrand));
     }
 
 }
