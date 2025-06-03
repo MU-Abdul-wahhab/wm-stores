@@ -10,6 +10,7 @@ import cors from "cors";
 import { AppError } from "./utils/AppError";
 import { GlobalErrorController } from "./controllers/GlobalErrorController";
 import BrandRouter from "./routes/BrandRouter";
+import CategoryRouter from "./routes/CategoryRouter";
 
 
 const limiter = rateLimit({
@@ -38,8 +39,10 @@ export class Server {
     }
 
     setRoutes() {
+        this.app.use("/src/uploads", express.static("src/uploads"))
         this.app.use("/api/v1/auth", AuthRouter);
         this.app.use("/api/v1/brand", BrandRouter);
+        this.app.use("/api/v1/category", CategoryRouter);
     }
     connectMongoDB() {
         mongoose.connect(getEnvVariables().db_url)
