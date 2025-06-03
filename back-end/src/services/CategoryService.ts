@@ -1,7 +1,5 @@
 import Category from "../models/CategoryModel";
 import { AppError } from "../utils/AppError";
-import fs from "fs";
-import path from "path";
 import { Utils } from "../utils/Utils";
 
 export class CategoryService {
