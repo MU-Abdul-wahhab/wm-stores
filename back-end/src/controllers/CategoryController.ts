@@ -8,18 +8,20 @@ export class CategoryController {
 
         const image = `/src/uploads/${req.file.fieldname}/${req.file.filename}`;
 
-        const { name, description } = req.body;
+        const { name, description ,specs } = req.body;
         let data: any = {
-            name, description, image
+            name, description, image,specs
         }
         if (req.body.brand) {
             data = { ...data, brand: req.body.brand }
         }
 
         const category = await CategoryService.createCategory(data);
-        res.status(201).json({
+       res.status(201).json({
+            status: "success",
+            message: "Category has created successfully",
             category
-        });
+        })
 
 
     }

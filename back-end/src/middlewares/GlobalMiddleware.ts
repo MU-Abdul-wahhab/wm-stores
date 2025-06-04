@@ -2,15 +2,19 @@ import { validationResult } from "express-validator";
 import { AppError } from "../utils/AppError";
 import { Jwt } from "../utils/Jwt";
 import User from "../models/UserModel";
+import { Utils } from "../utils/Utils";
 
 export class GlobalMiddleware {
     static checkError(req, res, next) {
-        const errors = validationResult(req);
 
+        const errors = validationResult(req);
+        if (!errors.isEmpty() && req.file) {
+            const image = `/src/uploads/${req.file.fieldname}/${req.file.filename}`;
+            Utils.deleteFile(image);
+        }
         if (!errors.isEmpty()) {
             next(new AppError(errors.array()[0].msg, 403))
         } else {
-
             next();
         }
     }
@@ -44,5 +48,19 @@ export class GlobalMiddleware {
             next();
         }
 
+    }
+
+    static parseJSON(field: string) {
+        return (req, res, next) => {
+            if (Array.isArray(req.body[field])) {
+                try {
+                    req.body[field] = req.body[field].map(value => JSON.parse(value));
+                    console.log(req.body[field]);
+                } catch (err) {
+                    return res.status(400).json({ message: "Invalid specs format" });
+                }
+            }
+            next();
+        }
     }
 }

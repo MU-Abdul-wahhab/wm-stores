@@ -6,9 +6,9 @@ export class CategoryService {
 
     public static async createCategory(data : any) {
 
-        const { name, description, image } = data;
-        let categoryData: any = { name, description, image, status: false };
-
+        const { name, description, image ,specs } = data;
+        let categoryData: any = { name, description, image, specs, status: false };
+        console.log(specs);
         const isExist = await Category.findOne({ name });
 
         if (isExist) {

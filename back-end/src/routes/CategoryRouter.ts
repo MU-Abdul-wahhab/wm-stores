@@ -18,6 +18,7 @@ class CategoryRouter {
         this.router.post("/create", GlobalMiddleware.auth,
             GlobalMiddleware.checkRole("admin"),
             new Utils().multer.single('category'),
+            GlobalMiddleware.parseJSON('specs'),
             CategoryValidator.createCategory(),
             GlobalMiddleware.checkError,
             asyncHandler(CategoryController.createCategory));
