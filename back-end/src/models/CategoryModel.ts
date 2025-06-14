@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { AppError } from "../utils/AppError";
 
 const specSchema = new mongoose.Schema({
     field: { type: String, required: true, unique: true },
@@ -13,7 +14,7 @@ const specSchema = new mongoose.Schema({
         trim: true,
         uppercase: true,
     },
-  });
+});
 
 specSchema.pre("validate", function (next) {
     if (this.unit_required && (!this.unit || this.unit.trim() === "")) {
@@ -37,6 +38,23 @@ const categorySchema = new mongoose.Schema({
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
     });
+
+categorySchema.pre("save", async function (next) {
+
+    if (this.isModified("isFeatured") && this.isFeatured) {
+        const count = await Category.countDocuments({
+            isFeatured: true,
+            _id: { $ne: this._id }
+        });
+
+        if (count >= 3) {
+            return next(new AppError("Maximum of 2 featured categories allowed", 401));
+        }
+    }
+
+    next();
+
+});
 
 const Category = mongoose.model("categories", categorySchema);
 

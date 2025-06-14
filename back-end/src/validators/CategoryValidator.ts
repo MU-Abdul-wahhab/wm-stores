@@ -1,4 +1,4 @@
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import { AppError } from "../utils/AppError";
 
 export class CategoryValidator {
@@ -47,9 +47,10 @@ export class CategoryValidator {
         ]
     }
 
-    static updateCategoryStatus(){
+    static updateCategoryStatus() {
         return [
-            param("id").isMongoId().withMessage("Invalid category ID")
+            param("id").isMongoId().withMessage("Invalid category ID"),
+            query("field").optional().isString().isIn(["isFeatured" , "status"]).withMessage("Invalid Field")
         ]
     }
 

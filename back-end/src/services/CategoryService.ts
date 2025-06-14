@@ -7,7 +7,7 @@ export class CategoryService {
     public static async createCategory(data: any) {
 
         const { name, description, image, specs } = data;
-        let categoryData: any = { name, description, image, specs, status: false  };
+        let categoryData: any = { name, description, image, specs, status: false };
 
         const isExist = await Category.findOne({ name });
 
@@ -28,8 +28,14 @@ export class CategoryService {
 
     }
 
-    public static async updateCategory(data: any) {
+    public static async updateCategoryStatus(data: any) {
+        const categoryId = data.id;
 
+        const field = data.field ? data.field : "status";
+
+        const category = await Category.findById(categoryId);
+        if (!category) throw new AppError("Category Not Found", 401);
+        category[field] = !category[field];
+        await category.save();
     }
-
 }
