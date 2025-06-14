@@ -4,7 +4,7 @@ import { AppError } from "../utils/AppError";
 
 export class GlobalErrorController {
 
-    public static erroHandler(err: AppError, req: Request, res: Response, next: NextFunction) {
+    public static errorHandler(err: AppError, req: Request, res: Response, next: NextFunction) {
         if (process.env.NODE_ENV == 'development') {
             GlobalErrorController.sendErrorDev(err, res)
         } else if (process.env.NODE_ENV == 'production') {
@@ -43,6 +43,4 @@ export class GlobalErrorController {
     private static handleJwtExpire(err) {
         return new AppError("Invalid Token Please Login Again", 401);
     }
-
-
 }

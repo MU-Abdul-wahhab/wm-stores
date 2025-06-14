@@ -4,11 +4,11 @@ import { Utils } from "../utils/Utils";
 
 export class CategoryService {
 
-    public static async createCategory(data : any) {
+    public static async createCategory(data: any) {
 
-        const { name, description, image ,specs } = data;
-        let categoryData: any = { name, description, image, specs, status: false };
-        console.log(specs);
+        const { name, description, image, specs } = data;
+        let categoryData: any = { name, description, image, specs, status: false  };
+
         const isExist = await Category.findOne({ name });
 
         if (isExist) {
@@ -28,7 +28,7 @@ export class CategoryService {
 
     }
 
-    public static async updateCategory(data : any){
+    public static async updateCategory(data: any) {
 
     }
 

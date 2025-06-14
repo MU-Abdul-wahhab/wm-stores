@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { AppError } from "../utils/AppError";
 
 export class CategoryValidator {
@@ -18,7 +18,7 @@ export class CategoryValidator {
                 }
             }),
             body("specs")
-                .isArray({ min: 2 }).withMessage("At least 2 specs are required")
+                .isArray({ min: 1 }).withMessage("At least 2 specs are required")
                 .custom((specs) => {
                     if (!Array.isArray(specs)) throw new AppError("Specs must be an array", 400);
                     if (specs.length < 2) throw new AppError("At least 2 specs are required", 400);
@@ -34,9 +34,22 @@ export class CategoryValidator {
                     }
                     return value;
                 }),
+            body("specs.*.unit_required", "")
+                .isBoolean().optional(),
+
+            body("specs.*.unit", "")
+                .isString().withMessage("Unit must be a string")
+                .notEmpty().withMessage("Unit cannot be empty")
+                .toUpperCase().optional(),
 
             body("specs.*.type", "Each spec must have a valid type")
-                .isIn(["string", "number", "boolean"]).withMessage("Invalid type in specs"),
+                .isIn(["string", "number", "boolean"]).withMessage(new AppError("Invalid Spec format", 400)),
+        ]
+    }
+
+    static updateCategoryStatus(){
+        return [
+            param("id").isMongoId().withMessage("Invalid category ID")
         ]
     }
 

@@ -85,7 +85,7 @@ export class Utils {
         const filePath = path.join(__dirname, '..', '..', image);
         fs.unlink(filePath, (err) => {
             if (err) {
-                console.error('Error deleting the file:', err);
+                console.error('Error deleting the file:', err , image);
             } else {
                 console.log('File deleted successfully');
             }

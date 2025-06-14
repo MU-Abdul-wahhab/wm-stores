@@ -1,5 +1,3 @@
-// CategoryRouter.ts content
-
 import { Router } from "express";
 import { CategoryValidator } from "../validators/CategoryValidator";
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleware";
@@ -12,6 +10,7 @@ class CategoryRouter {
     constructor() {
         this.router = Router();
         this.postRoutes();
+        this.patchRoutes();
     }
 
     private postRoutes() {
@@ -22,6 +21,15 @@ class CategoryRouter {
             CategoryValidator.createCategory(),
             GlobalMiddleware.checkError,
             asyncHandler(CategoryController.createCategory));
+    }
+
+    private patchRoutes() {
+        this.router.patch("/:id/status", GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.updateCategoryStatus(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.updateCategoryStatus)
+        );
     }
 }
 

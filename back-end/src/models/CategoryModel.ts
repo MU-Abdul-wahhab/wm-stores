@@ -1,9 +1,28 @@
 import mongoose from "mongoose";
 
 const specSchema = new mongoose.Schema({
-    field: { type: String, required: true },
-    type: { type: String, required: true },
-    required: { type: Boolean, default: true }
+    field: { type: String, required: true, unique: true },
+    type: {
+        type: String, required: true,
+        enum: ["string", "number", "boolean"],
+    },
+    required: { type: Boolean, default: true },
+    unit_required: { type: Boolean, required: true },
+    unit: {
+        type: String,
+        trim: true,
+        uppercase: true,
+    },
+  });
+
+specSchema.pre("validate", function (next) {
+    if (this.unit_required && (!this.unit || this.unit.trim() === "")) {
+        this.invalidate("unit", "Unit is required as per unit_required setting");
+    }
+    if (!this.unit_required && this.unit && this.unit.trim() !== "") {
+        this.invalidate("unit", "Unit should be empty when unit_required is false");
+    }
+    next();
 });
 
 const categorySchema = new mongoose.Schema({

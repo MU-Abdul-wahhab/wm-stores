@@ -1,3 +1,4 @@
+// @ts-ignore
 import express from "express";
 import AuthRouter from "./routes/AuthRouter";
 import mongoose from "mongoose";
@@ -6,6 +7,7 @@ import { Utils } from "./utils/Utils";
 import helmet from "helmet";
 
 import rateLimit from "express-rate-limit";
+// @ts-ignore
 import cors from "cors";
 import { AppError } from "./utils/AppError";
 import { GlobalErrorController } from "./controllers/GlobalErrorController";
@@ -78,7 +80,7 @@ export class Server {
     }
 
     handleError() {
-        this.app.use(GlobalErrorController.erroHandler);
+        this.app.use(GlobalErrorController.errorHandler);
     }
 
 }
