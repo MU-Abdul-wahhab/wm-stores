@@ -24,7 +24,8 @@ export class AuthService {
         if (!user) throw new AppError("Invalid Crendtials", 401);
         if (!user.email_verified) throw new AppError("Email Is Not Verified", 403);
 
-        await Utils.comparePassword(password, user.password);
+        const isCorrect = await Utils.comparePassword(password, user.password);
+        if (!isCorrect) throw new AppError("Incorrect Password", 401);
 
         const existingToken = await RefreshToken.findOne({
             user: user._id,
@@ -209,7 +210,7 @@ export class AuthService {
         if (user.phone_verified) {
             throw new AppError("Phone Number Already Verified", 403);
         }
-        const otp = Utils.generatePhoneOtp();
+        const otp = Utils.getOtp();
         const token_time = Date.now() + new Utils().VERIFICATION_TIME;
         const phone = user.phone;
 
@@ -257,4 +258,76 @@ export class AuthService {
         }
         return;
     }
+
+    public static async getResetOtp(data: String) {
+        const email = data;
+        const token = Utils.getOtp();
+        const token_time = Date.now() + new Utils().VERIFICATION_TIME;
+
+        const user = await User.findOne({ email });
+
+        if (!user) throw new AppError("Invalid Credentials", 401);
+        if (!user.email_verified) throw new AppError("Email is not verified yet.", 401);
+
+        user.token = token;
+        user.token_time = token_time;
+        await user.save();
+
+        return token;
+    }
+
+    public static async resetPassword(data) {
+        const { new_password, email, otp, current_password } = data;
+
+        const user = await User.findOne({
+            email,
+            token: otp,
+            token_time: { $gt: Date.now() }
+        }).select("+password")
+
+        if (!user) throw new AppError("Invalid Or Expired OTP", 401);
+
+        if (current_password) {
+            const isValidPassword = await Utils.comparePassword(current_password, user.password);
+            if (!isValidPassword) throw new AppError("Invalid Password", 400);
+        }
+
+        const isSamePassword = await Utils.comparePassword(new_password, user.password);
+        if (isSamePassword) throw new AppError("New Password cannot be same as current password", 400);
+
+        const hashed_password = await Utils.encryptPassword(new_password);
+
+        const updatedUser = await User.findOneAndUpdate(
+            {
+                email,
+                token: otp,
+                token_time: {
+                    $gt: Date.now()
+                }
+            },
+            {
+                $set: {
+                    password: hashed_password,
+                    updated_at: Date.now(),
+
+                },
+                $unset: {
+                    token: '',
+                    token_time: ''
+                }
+            },
+            {
+                new: true,
+                projection: {
+                    first_name: 1,
+                    last_name: 1,
+                    email: 1
+                }
+            }
+        )
+
+        if (!updatedUser) throw new AppError("Password Update Failed", 401);
+        return updatedUser;
+    }
+
 }

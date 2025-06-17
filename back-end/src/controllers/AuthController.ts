@@ -1,5 +1,6 @@
 import { AuthService } from "../services/AuthService";
 import { Utils } from "../utils/Utils";
+import os from "os";
 
 export class AuthController {
 
@@ -129,5 +130,52 @@ export class AuthController {
             status: 'success',
             message: 'Phone Number Has Verified',
         })
+    }
+
+    public static async getResetOtp(req, res) {
+
+        const email = req.user.email;
+
+        const token = await AuthService.getResetOtp(email);
+
+        res.status(200).json({
+            status: "success",
+            message: "Verification OTP Has sent to the email"
+        })
+
+        const html = `<p>${token}</p>`;
+
+        await AuthService.sendEmail(email, "Verification OTP for Password Reset", html);
+
+    }
+
+    public static async resetPassword(req, res) {
+
+        const { new_password, otp } = req.body;
+        const { email } = req.user;
+
+        let data: any = {
+            new_password,
+            otp,
+            email,
+        }
+
+        if (req.body.current_password) {
+            data = { ...data, current_password: req.body.current_password }
+        }
+
+        const user = await AuthService.resetPassword(data);
+
+        res.status(201).json({
+            status: "success",
+            message: "Password has been reset",
+            user
+        });
+
+        const html = `<p> Your Password Has been changed <br>
+Device Name: ${os.cpus()[0].model} ${os.hostname()} <br>
+Date: ${new Date().toLocaleString()}</p>`;
+
+        await AuthService.sendEmail(user.email, "Password Has Chnaged", html);
     }
 }

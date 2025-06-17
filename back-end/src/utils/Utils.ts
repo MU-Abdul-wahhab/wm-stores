@@ -42,7 +42,7 @@ export class Utils {
         return crypto.randomBytes(digit).toString('hex');
     }
 
-    public static generatePhoneOtp(digits: number = 4): string {
+    public static getOtp(digits: number = 4): string {
         const min = Math.pow(10, digits - 1);
         const max = Math.pow(10, digits) - 1;
         return crypto.randomInt(min, max + 1).toString();
@@ -64,7 +64,7 @@ export class Utils {
         try {
             const isMatch = await bcrypt.compare(password, encryptedPassword);
             if (!isMatch) {
-                throw new AppError("Incorrect password", 401);
+               return false;
             } else {
                 return true;
             }

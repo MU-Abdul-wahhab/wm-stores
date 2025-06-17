@@ -1,4 +1,5 @@
 import { body, query } from "express-validator";
+import { AppError } from "../utils/AppError";
 
 export class AuthValidator {
 
@@ -44,9 +45,29 @@ export class AuthValidator {
         ]
     }
 
-     static verifyPhone() {
+    static verifyPhone() {
         return [
             query("otp", "OTP Is Required").isAlphanumeric().notEmpty(),
+        ]
+    }
+
+    static resetPassword() {
+        return [
+            body("current_password").optional().isString().notEmpty()
+                .withMessage("Current Password is required"),
+            body("new_password", "New Password Is Required").notEmpty().isAlphanumeric()
+                .isLength({ min: 8, max: 20 })
+                .withMessage("Password must be between 8-20 Characters"),
+            body("confirm_new_password", "Confirmation Password Is Required").notEmpty()
+                .custom((value, { req }) => {
+                    if (value !== req.body.new_password) {
+                        throw new AppError("Password does not match", 400)
+                    }
+                    return true
+                }),
+            body("otp")
+                .notEmpty().withMessage("OTP is required")
+                .isNumeric().withMessage("OTP must be numeric")
         ]
     }
 

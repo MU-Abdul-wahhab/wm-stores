@@ -14,12 +14,16 @@ class AuthRouter {
         this.router = Router();
         this.getRoutes();
         this.postRoutes();
+        this.patchRoutes();
     }
 
     private getRoutes() {
         this.router.get("/verify/email", AuthValidator.verifyEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.verifyEmail));
         this.router.get("/verify/get/phone", GlobalMiddleware.auth, asyncHandler(AuthController.getPhoneotp));
         this.router.get("/verify/phone", AuthValidator.verifyPhone(), GlobalMiddleware.checkError, GlobalMiddleware.auth, asyncHandler(AuthController.verifyPhone));
+        this.router.get("/verify/password/email",
+            GlobalMiddleware.auth,
+            asyncHandler(AuthController.getResetOtp));
     }
 
     private postRoutes() {
@@ -27,6 +31,14 @@ class AuthRouter {
         this.router.post("/verify/get/email", AuthValidator.getVerificationEmail(), GlobalMiddleware.checkError, asyncHandler(AuthController.getVerificationEmail));
         this.router.post("/login", AuthValidator.logIn(), GlobalMiddleware.checkError, asyncHandler(AuthController.logIn));
         this.router.post("/getnewtoken", AuthValidator.getNewToken(), GlobalMiddleware.checkError, asyncHandler(GlobalMiddleware.auth), asyncHandler(AuthController.getNewToken));
+    }
+
+    private patchRoutes() {
+        this.router.patch("/reset/password",
+            GlobalMiddleware.auth,
+            AuthValidator.resetPassword(),
+            GlobalMiddleware.checkError, asyncHandler(AuthController.resetPassword)
+        );
     }
 }
 

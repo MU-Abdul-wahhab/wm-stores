@@ -34,8 +34,13 @@ export class CategoryService {
         const field = data.field ? data.field : "status";
 
         const category = await Category.findById(categoryId);
-        if (!category) throw new AppError("Category Not Found", 401);
+        if (!category) throw new AppError("Category Not Found", 400);
+        if (field !== "status" && field !== "isFeatured") throw new AppError("Sometthing went wrong", 400)
         category[field] = !category[field];
+        const value = category[field];
         await category.save();
+        return {
+            field,value
+        }
     }
 }
