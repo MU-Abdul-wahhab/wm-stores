@@ -1,0 +1,19 @@
+{
+    "typescript.tsdk": "front-end/node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/dist/**": true,
+        "**/.angular/**": true
+    },
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.angular": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.angular": true
+    }
+}
