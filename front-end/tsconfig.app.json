@@ -10,6 +10,13 @@
     "src/main.ts"
   ],
   "include": [
+    "src/**/*.ts",
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules",
+    "dist",
+    "test.ts"
   ]
 }
