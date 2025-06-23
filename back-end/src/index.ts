@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import { Server } from "./server";
 import { Utils } from "./utils/Utils";
 
@@ -8,3 +9,4 @@ server.listen(port, () => {
     console.log(`Server Listening On Port Number :- ${port}`);
     console.log(Utils.time());
 });
+

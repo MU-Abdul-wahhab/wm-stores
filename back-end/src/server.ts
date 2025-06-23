@@ -1,19 +1,24 @@
+// @ts-ignore
 import express from "express";
 import AuthRouter from "./routes/AuthRouter";
 import mongoose from "mongoose";
 import { getEnvVariables } from "./enviroments/enviroment";
 import { Utils } from "./utils/Utils";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
+
 import rateLimit from "express-rate-limit";
+// @ts-ignore
 import cors from "cors";
 import { AppError } from "./utils/AppError";
 import { GlobalErrorController } from "./controllers/GlobalErrorController";
+import BrandRouter from "./routes/BrandRouter";
+import CategoryRouter from "./routes/CategoryRouter";
 
-const limit = rateLimit({
-    max: 10,
+
+const limiter = rateLimit({
     windowMs: 60 * 60 * 1000,
-    message: "Too Many Request From this IP. Please try again in an hour",
+    max: 100,
+    message: "Too many requests from this IP, please try again later.",
 });
 
 export class Server {
@@ -36,14 +41,19 @@ export class Server {
     }
 
     setRoutes() {
+        this.app.use("/src/uploads", express.static("src/uploads"))
         this.app.use("/api/v1/auth", AuthRouter);
+        this.app.use("/api/v1/brand", BrandRouter);
+        this.app.use("/api/v1/category", CategoryRouter);
     }
     connectMongoDB() {
         mongoose.connect(getEnvVariables().db_url)
             .then(() => {
                 console.log(`Mongo DB Connected`);
             })
-            .catch(err => console.log(err));
+            .catch(err =>
+                console.log(err)
+            );
     }
 
     setDotenv() {
@@ -59,18 +69,18 @@ export class Server {
         // this.app.use(mongoSanitize());
         this.app.use(helmet());
         this.app.use(cors());
-        this.app.use("/api", limit);
+        this.app.use("/api", limiter);
 
     }
 
     error404Handler() {
-        this.app.use((req, res , next) => {
-          next(new AppError(`Requested ${req.originalUrl} Is Not Available` , 404));
+        this.app.use((req, res, next) => {
+            next(new AppError(`Requested ${req.originalUrl} Is Not Available`, 404));
         });
     }
 
-    handleError(){
-        this.app.use(GlobalErrorController.erroHandler);
+    handleError() {
+        this.app.use(GlobalErrorController.errorHandler);
     }
 
 }

@@ -1,20 +1,22 @@
-import { NextFunction ,Response ,Request} from "express";
+import { NextFunction, Response, Request } from "express";
 import { AppError } from "../utils/AppError";
 
 
 export class GlobalErrorController {
 
-    public static erroHandler(err : AppError, req : Request, res : Response, next : NextFunction) {
-        // console.log(err.stack);
-
+    public static errorHandler(err: AppError, req: Request, res: Response, next: NextFunction) {
         if (process.env.NODE_ENV == 'development') {
             GlobalErrorController.sendErrorDev(err, res)
         } else if (process.env.NODE_ENV == 'production') {
-            GlobalErrorController.sendErrorProd(err , res);
+            let error = { ...err };
+            if (error.name === "TokenExpiredError") {
+                error = GlobalErrorController.handleJwtExpire(error);
+            }
+            GlobalErrorController.sendErrorProd(error, res);
         }
     }
 
-    private static sendErrorDev(err : AppError, res : Response) {
+    private static sendErrorDev(err: AppError, res: Response) {
         res.status(err.statusCode || 500).json({
             status: err.status,
             error: err,
@@ -23,7 +25,7 @@ export class GlobalErrorController {
         });
     };
 
-    private static sendErrorProd(err : AppError, res : Response) {
+    private static sendErrorProd(err: AppError, res: Response) {
         if (err.isOperational) {
             res.status(err.statusCode || 500).json({
                 status: err.status,
@@ -38,4 +40,7 @@ export class GlobalErrorController {
         }
     }
 
+    private static handleJwtExpire(err) {
+        return new AppError("Invalid Token Please Login Again", 401);
+    }
 }
