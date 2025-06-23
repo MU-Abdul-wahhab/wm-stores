@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { ShellComponent } from "./shell/shell.component";
 
 @Component({
   selector: 'app-layouts',
-  imports: [ShellComponent],
+  imports: [],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.css'
 })
