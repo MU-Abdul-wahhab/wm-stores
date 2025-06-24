@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,8 @@ import { RouterLink, Router } from '@angular/router';
 export class SignupComponent {
 
   private router = inject(Router);
+  private authService = inject(AuthService);
+  submitted = signal(false);
 
   form = new FormGroup({
     name: new FormGroup({
@@ -22,13 +25,13 @@ export class SignupComponent {
       }),
     }),
     mobile: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(10)]
+      validators: [Validators.required, Validators.pattern(/^07[01245678][0-9]{7}$/)]
     }),
     email: new FormControl('', {
       validators: [Validators.email, Validators.required]
     }),
     password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)]
+      validators: [Validators.required, Validators.minLength(8)]
     }),
     agreement: new FormControl(false, {
       validators: [Validators.requiredTrue]
@@ -52,8 +55,6 @@ export class SignupComponent {
 
   onSubmit() {
 
-    console.log(this.form);
-
     if (this.form.invalid) {
       return;
     }
@@ -70,10 +71,31 @@ export class SignupComponent {
     console.log(enteredEmail);
     console.log(enteredPassword);
 
+    this.authService.automaticallySetEnteredMailToLoginField(enteredEmail ? enteredEmail : '');
+
     this.form.reset();
 
-    this.router.navigate(['../../home']);
+    this.submitted.set(true);
+
+    this.router.navigate(['/auth', 'login '], {
+      replaceUrl: true
+    });
 
   }
 
 }
+
+export const canLeaveSignupPage: CanDeactivateFn<SignupComponent> = (component) => {
+  if (component.submitted()) {
+    return true;
+  }
+
+  const isCredentialEntered = component.form.value.name?.firstName || component.form.value.name?.lastName ||
+    component.form.value.mobile || component.form.value.email || component.form.value.password
+
+  if (isCredentialEntered) {
+    return window.confirm('Do you really want to leave? You will lose the entered credentials.')
+  }
+
+  return true;
+};

@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,11 @@ import { RouterLink, Router } from '@angular/router';
 export class LoginComponent {
 
   private router = inject(Router);
+  private authService = inject(AuthService);
+  submitted = signal(false);
 
   form = new FormGroup({
-    email: new FormControl('', {
+    email: new FormControl(this.authService.enteredEmail(), {
       validators: [Validators.email, Validators.required]
     }),
     password: new FormControl('', {
@@ -30,8 +33,6 @@ export class LoginComponent {
 
   onSubmit() {
 
-    console.log(this.form);
-
     if (this.form.invalid) {
       return;
     }
@@ -44,8 +45,23 @@ export class LoginComponent {
 
     this.form.reset();
 
-    this.router.navigate(['../../home']);
+    this.submitted.set(true);
+
+    this.router.navigate(['/home'], {
+      replaceUrl: true
+    });
 
   }
 
 }
+
+export const canLeaveLoginPage: CanDeactivateFn<LoginComponent> = (component) => {
+  if (component.submitted()) {
+    return true;
+  }
+  if (component.form.value.password || component.form.value.email) {
+    return window.confirm('Do you really want to leave? You will lose the entered credentials.')
+  }
+
+  return true;
+};
