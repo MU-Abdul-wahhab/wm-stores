@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AuthComponent {
 
+  isLoggedIn = false;
+  loginContainerClasses = 'max-w-md space-y-8 p-8';
+  signupContainerClasses = 'max-w-lg space-y-3 md:space-y-8 p-4 md:p-8';
+
+  onClick(){
+    this.isLoggedIn = !this.isLoggedIn;
+  }
+
 }
