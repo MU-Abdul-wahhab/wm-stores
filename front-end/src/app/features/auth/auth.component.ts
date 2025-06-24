@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-
-  isLoggedIn = false;
-  loginContainerClasses = 'max-w-md space-y-8 p-8';
-  signupContainerClasses = 'max-w-lg space-y-3 md:space-y-8 p-4 md:p-8';
-
-  onClick(){
-    this.isLoggedIn = !this.isLoggedIn;
-  }
 
 }

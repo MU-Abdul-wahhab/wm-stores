@@ -1,0 +1,57 @@
+<section id="login">
+
+    <div class="flex items-center justify-center min-h-screen bg-gray-50">
+
+        <div class="w-full max-w-md space-y-8 p-8 border border-gray-300 rounded-xl bg-white shadow-md">
+
+            <h2 class="text-2xl font-semibold">Login</h2>
+
+            <form class="space-y-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div>
+                    <input type="email" id="email" required formControlName="email"
+                        class="w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                        placeholder="Your Email" />
+                    @if(isEmailInvalid){
+                    <p class="text-xs text-red-600 font-light mt-3">Please enter a valid email address.</p>
+                    }
+                </div>
+                <div>
+                    <input type="password" id="password" required formControlName="password"
+                        class="w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                        placeholder="Password" />
+                    @if(isPasswordInvalid){
+                    <p class="text-xs text-red-600 font-light mt-3">Please enter a valid password - must be at least 6
+                        characters long</p>
+                    }
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" id="checkbox"
+                            class=" cursor-pointer w-4 h-4 accent-button-green transition duration-150" />
+                        <label for="checkbox"
+                            class="cursor-pointer text-sm text-black opacity-75 font-extralight">Remember me</label>
+                    </div>
+
+                    <a class="text-sm text-black opacity-50 font-light">Forgot password?</a>
+                </div>
+
+                <button type="submit" [disabled]="form.invalid"
+                    [class]="form.valid
+    ? 'px-11 py-4 text-sm text-white bg-button-green border-buttonHover-green rounded-md hover:bg-buttonHover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200'
+    : 'px-11 py-4 text-sm text-white bg-button-green rounded-md cursor-not-allowed opacity-50 transition duration-200'">
+                    Log in
+                </button>
+
+                <p class="text-xs text-black opacity-75 font-light text-center mt-3">Don't Have an Account?
+                    <a [routerLink]="['../signup']" class="text-buttonHover-green cursor-pointer">Sign up </a>now
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
