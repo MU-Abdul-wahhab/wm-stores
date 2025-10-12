@@ -48,7 +48,9 @@ export class AuthController {
 
         const html = `<a href="http://${req.hostname}:3000/api/v1/auth/verify/email?email=${user.email}&token=${token}" target="_blank">Verify My Account</a>`;
 
-        await AuthService.sendEmail(user.email, "Email Verification", html);
+        // await AuthService.sendEmail(user.email, "Email Verification", html);
+        AuthService.sendEmail(user.email, "Email Verification", html)
+            .catch(err => console.error("Email sending failed:", err));
 
     }
 
