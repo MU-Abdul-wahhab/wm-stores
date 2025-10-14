@@ -7,11 +7,18 @@ export class GlobalErrorController {
     public static errorHandler(err: AppError, req: Request, res: Response, next: NextFunction) {
         if (process.env.NODE_ENV == 'development') {
             GlobalErrorController.sendErrorDev(err, res)
-        } else if (process.env.NODE_ENV == 'production') {
-            let error = { ...err };
+        } else if (process.env.NODE_ENV === 'production') {
+
+            const error = Object.assign({}, err);
+            error.message = err.message;
+
             if (error.name === "TokenExpiredError") {
-                error = GlobalErrorController.handleJwtExpire(error);
+                return GlobalErrorController.sendErrorProd(
+                    GlobalErrorController.handleJwtExpire(),
+                    res
+                );
             }
+
             GlobalErrorController.sendErrorProd(error, res);
         }
     }
@@ -27,6 +34,7 @@ export class GlobalErrorController {
 
     private static sendErrorProd(err: AppError, res: Response) {
         if (err.isOperational) {
+            console.log("working");
             res.status(err.statusCode || 500).json({
                 status: err.status,
                 message: err.message,
@@ -40,7 +48,7 @@ export class GlobalErrorController {
         }
     }
 
-    private static handleJwtExpire(err) {
+    private static handleJwtExpire() {
         return new AppError("Invalid Token Please Login Again", 401);
     }
 }
