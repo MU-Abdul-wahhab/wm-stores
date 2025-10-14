@@ -1,11 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
+
 import { AuthService } from '../../../core/services/auth.service';
+import { AlertComponent } from "../../../shared/alert/alert.component";
 
 @Component({
   selector: 'app-signup',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -13,7 +15,10 @@ export class SignupComponent {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
   submitted = signal(false);
+  errorMsg = signal<string | undefined>(undefined);
+  successMsg = signal<string | undefined>(undefined);
 
   form = new FormGroup({
     name: new FormGroup({
@@ -65,22 +70,35 @@ export class SignupComponent {
     const enteredEmail = this.form.value.email;
     const enteredPassword = this.form.value.password;
 
-    console.log(enteredFirstName);
-    console.log(enteredLastName);
-    console.log(enteredMobileNumber);
-    console.log(enteredEmail);
-    console.log(enteredPassword);
+    if (enteredFirstName && enteredLastName && enteredMobileNumber && enteredEmail && enteredPassword) {
 
-    this.authService.automaticallySetEnteredMailToLoginField(enteredEmail ? enteredEmail : '');
+      const subscription = this.authService.signup({ email: enteredEmail, firstName: enteredFirstName, lastName: enteredLastName, mobile: enteredMobileNumber, password: enteredPassword }).subscribe({
+        next: (resData) => {
+          if (resData.status === 'success') {
+            this.errorMsg.set(undefined);
+            this.successMsg.set(resData.message);
+            this.authService.automaticallySetEnteredMailToLoginField(enteredEmail ? enteredEmail : '');
+            this.form.reset();
+            this.submitted.set(true);
+          }
+        },
+        error: (err: Error) => {
+          this.successMsg.set(undefined);
+          this.errorMsg.set(err.message);
+          this.form.patchValue({
+            email: ''
+          });
+        }
+      });
 
-    this.form.reset();
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    }
 
-    this.submitted.set(true);
+  }
 
-    this.router.navigate(['/auth', 'login '], {
-      replaceUrl: true
-    });
-
+  onSuccessDialogClose() {
+    this.successMsg.set(undefined);
+    this.router.navigate(['/auth', 'login'], { replaceUrl: true });
   }
 
 }

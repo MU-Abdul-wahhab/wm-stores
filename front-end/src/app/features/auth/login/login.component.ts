@@ -1,7 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from '../../../../environments/environment';
+import { AuthResponseData } from '../../../core/services/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +15,11 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class LoginComponent {
 
+  private httpClient = inject(HttpClient);
+  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private baseUrl = environment.apiBaseUrl;
   submitted = signal(false);
 
   form = new FormGroup({
@@ -37,11 +44,16 @@ export class LoginComponent {
       return;
     }
 
-    const enteredPassword = this.form.value.password;
     const enteredEmail = this.form.value.email;
+    const enteredPassword = this.form.value.password;
 
     console.log(enteredPassword);
     console.log(enteredEmail);
+
+    this.httpClient.post<AuthResponseData>(this.baseUrl + '/login', {
+      email: enteredEmail,
+      password: enteredPassword
+    });
 
     this.form.reset();
 
