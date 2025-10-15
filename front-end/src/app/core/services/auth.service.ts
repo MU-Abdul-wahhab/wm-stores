@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   signup(signupCredentials: { firstName: string, lastName: string, email: string, mobile: string, password: string }) {
-    return this.httpClient.post<{ status: string, message: string }>(`${this.baseUrl} /auth/signup`, {
+    return this.httpClient.post<{ status: string, message: string }>(`${this.baseUrl}/auth/signup`, {
       first_name: signupCredentials.firstName,
       last_name: signupCredentials.lastName,
       email: signupCredentials.email,
