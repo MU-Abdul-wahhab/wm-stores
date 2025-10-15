@@ -1,11 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
+import { AlertComponent } from '../../../shared/alert/alert.component';
+
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -13,7 +15,11 @@ export class LoginComponent {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
   submitted = signal(false);
+  isLoading = signal(false);
+  errorMsg = signal<string | undefined>(undefined);
+  successMsg = signal<string | undefined>(undefined);
 
   form = new FormGroup({
     email: new FormControl(this.authService.enteredEmail(), {
@@ -37,20 +43,32 @@ export class LoginComponent {
       return;
     }
 
-    const enteredPassword = this.form.value.password;
     const enteredEmail = this.form.value.email;
+    const enteredPassword = this.form.value.password;
 
-    console.log(enteredPassword);
-    console.log(enteredEmail);
+    if (enteredEmail && enteredPassword) {
 
-    this.form.reset();
+      const subscription = this.authService.signin({ email: enteredEmail, password: enteredPassword }).subscribe({
+        next: (resData) => {
+          this.onSuccessDialogClose();
+        },
+        error: (err) => {
+          this.successMsg.set(undefined);
+          this.errorMsg.set(err.message);
+          this.isLoading.set(false);
+        }
+      });
 
-    this.submitted.set(true);
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
 
-    this.router.navigate(['/home'], {
-      replaceUrl: true
-    });
+      // this.form.reset();
+      this.submitted.set(true);
+    }
+  }
 
+  onSuccessDialogClose() {
+    this.successMsg.set(undefined);
+    this.router.navigate(['/home'], { replaceUrl: true });
   }
 
 }

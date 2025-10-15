@@ -55,3 +55,11 @@
     </div>
 
 </section>
+
+@if (errorMsg()) {
+<app-alert [errorMessage]="errorMsg()!" type="error" (closed)="errorMsg.set(undefined)" />
+}
+
+@if (successMsg()) {
+<app-alert [errorMessage]="successMsg()!" type="success" (closed)="onSuccessDialogClose()" />
+}

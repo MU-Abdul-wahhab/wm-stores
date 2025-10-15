@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout/layout.component';
 import { AuthComponent } from './features/auth/auth.component';
-import { NotFoundComponent } from './features/not-found/not-found.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
