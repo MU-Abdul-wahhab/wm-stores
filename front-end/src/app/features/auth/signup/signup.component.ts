@@ -17,6 +17,7 @@ export class SignupComponent {
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   submitted = signal(false);
+  isLoading = signal(false);
   errorMsg = signal<string | undefined>(undefined);
   successMsg = signal<string | undefined>(undefined);
 
@@ -64,6 +65,8 @@ export class SignupComponent {
       return;
     }
 
+    this.isLoading.set(true);
+
     const enteredFirstName = this.form.value.name?.firstName;
     const enteredLastName = this.form.value.name?.lastName;
     const enteredMobileNumber = this.form.value.mobile;
@@ -81,6 +84,7 @@ export class SignupComponent {
             this.form.reset();
             this.submitted.set(true);
           }
+          this.isLoading.set(false);
         },
         error: (err: Error) => {
           this.successMsg.set(undefined);
@@ -88,6 +92,7 @@ export class SignupComponent {
           this.form.patchValue({
             email: ''
           });
+          this.isLoading.set(false);
         }
       });
 

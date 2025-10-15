@@ -7,6 +7,7 @@ export type AuthResponseData = {
         _id: string;
         first_name: string;
         last_name: string;
+        addresses?: string[],
         email: string;
         user_role: string;
         phone?: string;
@@ -25,14 +26,23 @@ export class User {
         public lastName: string,
         public email: string,
         public role: string,
-        private _token: string,
-        private _tokenExpirationDate: Date
+        private _accessToken: string,
+        private _accessTokenExpirationDate: Date,
+        private _refreshToken: string,
+        private _refreshTokenExpirationDate: Date
     ) { }
 
-    get token() {
-        if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+    get accessToken() {
+        if (!this._accessTokenExpirationDate || new Date() > this._accessTokenExpirationDate) {
             return null;
         }
-        return this._token;
+        return this._accessToken;
+    }
+
+    get refreshToken() {
+        if (!this._refreshTokenExpirationDate || new Date() > this._refreshTokenExpirationDate) {
+            return null;
+        }
+        return this._refreshToken;
     }
 }

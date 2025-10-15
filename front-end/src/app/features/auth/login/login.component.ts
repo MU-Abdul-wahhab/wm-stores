@@ -2,25 +2,24 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../../../environments/environment';
-import { AuthResponseData } from '../../../core/services/auth.model';
+import { AlertComponent } from '../../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  private httpClient = inject(HttpClient);
-  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private baseUrl = environment.apiBaseUrl;
+  private destroyRef = inject(DestroyRef);
   submitted = signal(false);
+  isLoading = signal(false);
+  errorMsg = signal<string | undefined>(undefined);
+  successMsg = signal<string | undefined>(undefined);
 
   form = new FormGroup({
     email: new FormControl(this.authService.enteredEmail(), {
@@ -47,22 +46,29 @@ export class LoginComponent {
     const enteredEmail = this.form.value.email;
     const enteredPassword = this.form.value.password;
 
-    console.log(enteredPassword);
-    console.log(enteredEmail);
+    if (enteredEmail && enteredPassword) {
 
-    this.httpClient.post<AuthResponseData>(this.baseUrl + '/login', {
-      email: enteredEmail,
-      password: enteredPassword
-    });
+      const subscription = this.authService.signin({ email: enteredEmail, password: enteredPassword }).subscribe({
+        next: (resData) => {
+          this.onSuccessDialogClose();
+        },
+        error: (err) => {
+          this.successMsg.set(undefined);
+          this.errorMsg.set(err.message);
+          this.isLoading.set(false);
+        }
+      });
 
-    this.form.reset();
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
 
-    this.submitted.set(true);
+      // this.form.reset();
+      this.submitted.set(true);
+    }
+  }
 
-    this.router.navigate(['/home'], {
-      replaceUrl: true
-    });
-
+  onSuccessDialogClose() {
+    this.successMsg.set(undefined);
+    this.router.navigate(['/home'], { replaceUrl: true });
   }
 
 }
