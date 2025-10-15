@@ -1,9 +1,9 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { RouterLink, Router, CanDeactivateFn } from '@angular/router';
+import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
+import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
 
-import { AuthService } from '../../../core/services/auth.service';
-import { AlertComponent } from "../../../shared/alert/alert.component";
+import {AuthService} from '../../../core/services/auth.service';
+import {AlertComponent} from "../../../shared/alert/alert.component";
 
 @Component({
   selector: 'app-signup',
@@ -55,6 +55,7 @@ export class SignupComponent {
   get isEmailInvalid() {
     return (this.form.controls.email.touched && this.form.controls.email.dirty && this.form.controls.email.invalid);
   }
+
   get isPasswordInvalid() {
     return (this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid);
   }
@@ -75,7 +76,13 @@ export class SignupComponent {
 
     if (enteredFirstName && enteredLastName && enteredMobileNumber && enteredEmail && enteredPassword) {
 
-      const subscription = this.authService.signup({ email: enteredEmail, firstName: enteredFirstName, lastName: enteredLastName, mobile: enteredMobileNumber, password: enteredPassword }).subscribe({
+      const subscription = this.authService.signup({
+        email: enteredEmail,
+        firstName: enteredFirstName,
+        lastName: enteredLastName,
+        mobile: enteredMobileNumber,
+        password: enteredPassword
+      }).subscribe({
         next: (resData) => {
           if (resData.status === 'success') {
             this.errorMsg.set(undefined);
@@ -103,7 +110,7 @@ export class SignupComponent {
 
   onSuccessDialogClose() {
     this.successMsg.set(undefined);
-    this.router.navigate(['/auth', 'login'], { replaceUrl: true });
+    this.router.navigate(['/auth', 'login'], {replaceUrl: true});
   }
 
 }
