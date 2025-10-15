@@ -1,12 +1,13 @@
-import { AuthService } from "../services/AuthService";
-import { Utils } from "../utils/Utils";
-import os from "os";
+import {AuthService} from "../services/AuthService";
+import {Utils} from "../utils/Utils";
+import * as os from "os";
+
 
 export class AuthController {
 
     public static async logIn(req, res) {
 
-        const { email, password } = req.body;
+        const {email, password} = req.body;
         const data = {
             email,
             password
@@ -26,7 +27,7 @@ export class AuthController {
 
     public static async signUp(req, res) {
 
-        const { first_name, last_name, email, phone, password } = req.body;
+        const {first_name, last_name, email, phone, password} = req.body;
         const token = Utils.generateToken();
 
         const data = {
@@ -55,7 +56,7 @@ export class AuthController {
     }
 
     public static async verifyEmail(req, res) {
-        const { email, token } = req.query;
+        const {email, token} = req.query;
         const data = {
             email,
             token
@@ -71,7 +72,7 @@ export class AuthController {
     }
 
     public static async getVerificationEmail(req, res) {
-        const { email, password } = req.body;
+        const {email, password} = req.body;
         const token = Utils.generateToken();
         const token_time = Date.now() + new Utils().VERIFICATION_TIME;
 
@@ -97,16 +98,16 @@ export class AuthController {
     }
 
     public static async getNewToken(req, res) {
-        const { access_token, refresh_token } = await AuthService.getNewToken(req.body.refresh_token, req);
+        const {access_token} = await AuthService.getNewToken(req.body.refresh_token, req);
 
         res.status(201).json({
-            access_token,
-            refresh_token
+            access_token
+
         })
     }
 
     public static async getPhoneotp(req, res) {
-        const { email } = req.user;
+        const {email} = req.user;
 
         await AuthService.getPhoneotp(email);
 
@@ -153,8 +154,8 @@ export class AuthController {
 
     public static async resetPassword(req, res) {
 
-        const { new_password, otp } = req.body;
-        const { email } = req.user;
+        const {new_password, otp} = req.body;
+        const {email} = req.user;
 
         let data: any = {
             new_password,
@@ -163,7 +164,7 @@ export class AuthController {
         }
 
         if (req.body.current_password) {
-            data = { ...data, current_password: req.body.current_password }
+            data = {...data, current_password: req.body.current_password}
         }
 
         const user = await AuthService.resetPassword(data);

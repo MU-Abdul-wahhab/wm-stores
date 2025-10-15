@@ -18,6 +18,16 @@ export class LayoutComponent {
         this.isAuthenticated=!!user;
       }
     });
-    this.authService.autoSignin();
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'wmStoreLoggedUserData' && event.newValue === null) {
+        this.authService.logout();
+      }
+    });
+
+    const hasUserData = localStorage.getItem('wmStoreLoggedUserData');
+    if (hasUserData && !this.authService.user$.value) {
+      this.authService.autoSignin();
+    }
   }
 }

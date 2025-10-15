@@ -1,4 +1,4 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {inject, Injectable, OnInit, signal} from '@angular/core';
 import {BehaviorSubject, catchError, tap, throwError} from 'rxjs';
 import {Router} from '@angular/router';
@@ -10,7 +10,7 @@ import {TokenService} from './token.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit {
+export class AuthService {
   enteredEmail = signal<string>('');
   user$ = new BehaviorSubject<User | null>(null);
   private baseUrl = environment.apiBaseUrl;
@@ -20,10 +20,6 @@ export class AuthService implements OnInit {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private tokenService = inject(TokenService);
-
-  ngOnInit() {
-    this.setupStorageListener();
-  }
 
   automaticallySetEnteredMailToLoginField(email: string) {
     this.enteredEmail.set(email);
@@ -50,13 +46,13 @@ export class AuthService implements OnInit {
       tap({
         next: (resData) => {
           this.handleAuthentication(resData);
+          this.log("USER LOGGED IN");
         }
       })
     );
   }
 
   autoSignin() {
-    console.log("AUTO LOGGING IN")
     const userData = localStorage.getItem('wmStoreLoggedUserData');
 
     if (!userData) {
@@ -89,10 +85,19 @@ export class AuthService implements OnInit {
     );
 
     if (loadedUser.accessToken) {
+      this.log("AUTO LOGGING IN");
       this.user$.next(loadedUser);
       const accessTokenExpireTime = this.tokenService.getTokenExpiration(loadedUser.accessToken);
+      if (accessTokenExpireTime.getTime() <= Date.now()) {
+        this.refreshToken().subscribe({
+          error: () => this.logout()
+        });
+        return;
+      }
+
       this.setAutoLogout(accessTokenExpireTime);
       this.setTokenRefresh(accessTokenExpireTime);
+
     } else {
       if (loadedUser.refreshToken) {
         this.refreshToken().subscribe({
@@ -105,7 +110,7 @@ export class AuthService implements OnInit {
   }
 
   logout() {
-    console.log("LOGING OUT USER")
+    this.log("LOGGING OUT USER");
     this.user$.next(null);
     this.router.navigate(['/auth'], {replaceUrl: true});
     localStorage.removeItem('wmStoreLoggedUserData');
@@ -123,19 +128,21 @@ export class AuthService implements OnInit {
 
   setAutoLogout(expirationDate: Date) {
     const expirationDuration = Math.max(expirationDate.getTime() - new Date().getTime(), 0);
+    this.log(`Logout Scheduled In: ${expirationDuration / 1000}s`);
 
     if (this.accessTokenExpirationTimer) {
       clearTimeout(this.accessTokenExpirationTimer);
     }
 
     this.accessTokenExpirationTimer = setTimeout(() => {
+      this.log("AUTOMATIC LOGOUT TRIGGERED");
       this.logout();
     }, expirationDuration);
   }
 
   private setTokenRefresh(accessTokenExpiration: Date) {
-    const refreshTime = accessTokenExpiration.getTime() - new Date().getTime() - (5 * 60 * 1000);
-
+    const refreshTime = accessTokenExpiration.getTime() - new Date().getTime() - (10 * 1000);
+    this.log(`Refresh Scheduled In: ${refreshTime / 1000}s`);
     if (this.refreshTokenTimer) {
       clearTimeout(this.refreshTokenTimer);
     }
@@ -152,7 +159,7 @@ export class AuthService implements OnInit {
     }
   }
 
-  private i = 0;
+  private i = 1;
 
   refreshToken() {
     const user = this.user$.value;
@@ -161,15 +168,21 @@ export class AuthService implements OnInit {
       return throwError(() => new Error('No refresh token available'));
     }
 
-    console.log("REFRESHING TOKEN " + this.i++);
+    this.log("REFRESHING TOKEN " + this.i++);
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${user.accessToken}`,
+    });
 
     return this.httpClient.post<{ access_token: string, refresh_token: string }>(`${this.baseUrl}/auth/getnewtoken`, {
       refresh_token: user.refreshToken
+    }, {
+      headers
     }).pipe(
       tap({
         next: (responseData) => {
           const accessTokenExpireTime = this.tokenService.getTokenExpiration(responseData.access_token);
-          const refreshTokenExpireTime = this.tokenService.getTokenExpiration(responseData.refresh_token);
+          const refreshTokenExpireTime = this.tokenService.getTokenExpiration(user.refreshToken!);
 
           const updatedUser = new User(
             user.id,
@@ -179,15 +192,24 @@ export class AuthService implements OnInit {
             user.role,
             responseData.access_token,
             accessTokenExpireTime,
-            responseData.refresh_token,
+            user.refreshToken!,
             refreshTokenExpireTime,
           );
-          this.user$.next(updatedUser);
+          this.log(`Access Token Expires At: ${accessTokenExpireTime}`);
+          this.log(`Refresh Token Expires At: ${refreshTokenExpireTime}`);
+
+          clearTimeout(this.accessTokenExpirationTimer);
+          clearTimeout(this.refreshTokenTimer);
+
           this.setAutoLogout(accessTokenExpireTime);
+          this.setTokenRefresh(accessTokenExpireTime);
+
+          this.user$.next(updatedUser);
           localStorage.setItem('wmStoreLoggedUserData', JSON.stringify(updatedUser));
         }
       }),
       catchError((error: HttpErrorResponse) => {
+        console.log(error)
         this.logout();
         return throwError(() => error);
       })
@@ -231,16 +253,8 @@ export class AuthService implements OnInit {
     return throwError(() => new Error(errorMsg));
   }
 
-  private setupStorageListener() {
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'wmStoreLoggedUserData') {
-        if (event.newValue === null && this.user$.value) {
-          this.logout();
-        } else if (event.newValue && !this.user$.value) {
-          this.autoSignin();
-        }
-      }
-    });
+  private log(msg: string) {
+    console.log(`[${new Date().toLocaleTimeString()}] ${msg}`);
   }
 
 }
