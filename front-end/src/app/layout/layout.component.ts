@@ -19,11 +19,12 @@ export class LayoutComponent {
       }
     });
 
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'wmStoreLoggedUserData' && event.newValue === null) {
-        this.authService.logout();
-      }
-    });
+    // window.addEventListener('storage', (event) => {
+    //   if (event.key === 'wmStoreLoggedUserData' && event.newValue === null) {
+    //     this.authService.logout();
+    //   }
+    // });
+    this.authService.setupStorageListener();
 
     const hasUserData = localStorage.getItem('wmStoreLoggedUserData');
     if (hasUserData && !this.authService.user$.value) {

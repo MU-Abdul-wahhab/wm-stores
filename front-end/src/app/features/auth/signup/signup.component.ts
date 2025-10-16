@@ -18,6 +18,7 @@ export class SignupComponent {
   private destroyRef = inject(DestroyRef);
   submitted = signal(false);
   isLoading = signal(false);
+  showPassword = signal(false);
   errorMsg = signal<string | undefined>(undefined);
   successMsg = signal<string | undefined>(undefined);
 
@@ -58,6 +59,10 @@ export class SignupComponent {
 
   get isPasswordInvalid() {
     return (this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid);
+  }
+
+  onTogglePasswordVisibility() {
+    this.showPassword.update(showed=> !showed);
   }
 
   onSubmit() {

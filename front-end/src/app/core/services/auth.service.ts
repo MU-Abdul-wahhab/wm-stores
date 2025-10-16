@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {inject, Injectable, OnInit, signal} from '@angular/core';
-import {BehaviorSubject, catchError, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, filter, finalize, tap, throwError, take, map} from 'rxjs';
 import {Router} from '@angular/router';
 
 import {environment} from '../../../environments/environment';
@@ -12,8 +12,13 @@ import {TokenService} from './token.service';
 })
 export class AuthService {
   enteredEmail = signal<string>('');
+  private refreshInProgress = signal(false);
+
+  private refreshSubject = new BehaviorSubject<string | null>(null);
   user$ = new BehaviorSubject<User | null>(null);
+
   private baseUrl = environment.apiBaseUrl;
+
   private accessTokenExpirationTimer: any;
   private refreshTokenTimer: any;
 
@@ -151,8 +156,7 @@ export class AuthService {
 
       this.refreshTokenTimer = setTimeout(() => {
         this.refreshToken().subscribe({
-          error: () => {
-            this.logout();
+          error: (err) => {
           }
         });
       }, refreshTime);
@@ -168,16 +172,23 @@ export class AuthService {
       return throwError(() => new Error('No refresh token available'));
     }
 
+    if (this.refreshInProgress()) {
+      return this.refreshSubject.pipe(
+        filter(token => token !== null),
+        take(1)
+      );
+    }
+
+    this.refreshInProgress.set(true);
+
     this.log("REFRESHING TOKEN " + this.i++);
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${user.accessToken}`,
-    });
+    // const headers = new HttpHeaders({
+    //   Authorization: `Bearer ${user.accessToken}`,
+    // });
 
     return this.httpClient.post<{ access_token: string, refresh_token: string }>(`${this.baseUrl}/auth/getnewtoken`, {
       refresh_token: user.refreshToken
-    }, {
-      headers
     }).pipe(
       tap({
         next: (responseData) => {
@@ -206,14 +217,34 @@ export class AuthService {
 
           this.user$.next(updatedUser);
           localStorage.setItem('wmStoreLoggedUserData', JSON.stringify(updatedUser));
+
+          this.refreshSubject.next(responseData.access_token);
         }
       }),
+      map(res => res.access_token),
       catchError((error: HttpErrorResponse) => {
         console.log(error)
         this.logout();
         return throwError(() => error);
+      }),
+      finalize(() => {
+        this.refreshInProgress.set(false);
       })
     );
+  }
+
+  setupStorageListener() {
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'wmStoreLoggedUserData') {
+        if (event.newValue === null && this.user$.value) {
+          // localStorage was cleared manually, logout
+          this.logout();
+        } else if (event.newValue && !this.user$.value) {
+          // User data was added to localStorage from another tab
+          this.autoSignin();
+        }
+      }
+    });
   }
 
   private handleAuthentication(responseData: AuthResponseData) {
@@ -232,6 +263,10 @@ export class AuthService {
       refreshTokenExpireTime,
     );
     this.user$.next(user);
+    console.log("INITIAL LOGIN REFRESH");
+    console.log(refreshTokenExpireTime);
+    console.log("INITIAL LOGIN ACCESS");
+    console.log(accessTokenExpireTime);
 
     this.setAutoLogout(accessTokenExpireTime);
     this.setTokenRefresh(accessTokenExpireTime);

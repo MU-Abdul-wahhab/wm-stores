@@ -16,8 +16,9 @@ export class LoginComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
-  submitted = signal(false);
   isLoading = signal(false);
+  submitted = signal(false);
+  showPassword = signal(false);
   errorMsg = signal<string | undefined>(undefined);
   successMsg = signal<string | undefined>(undefined);
 
@@ -38,6 +39,10 @@ export class LoginComponent {
     return (this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid);
   }
 
+  onTogglePasswordVisibility() {
+    this.showPassword.update(showed=> !showed);
+  }
+
   onSubmit() {
 
     if (this.form.invalid) {
@@ -45,6 +50,7 @@ export class LoginComponent {
     }
 
     this.isLoading.set(true);
+    this.errorMsg.set(undefined);
     const enteredEmail = this.form.value.email;
     const enteredPassword = this.form.value.password;
 
