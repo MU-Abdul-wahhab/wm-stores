@@ -1,13 +1,12 @@
-import {AuthService} from "../services/AuthService";
-import {Utils} from "../utils/Utils";
-import * as os from "os";
-
+import { AuthService } from "../services/AuthService";
+import { Utils } from "../utils/Utils";
+import os from "os";
 
 export class AuthController {
 
-    public static async logIn(req, res) {
+    public static async logIn(req: any, res: any) {
 
-        const {email, password} = req.body;
+        const { email, password } = req.body;
         const data = {
             email,
             password
@@ -25,9 +24,9 @@ export class AuthController {
         });
     }
 
-    public static async signUp(req, res) {
+    public static async signUp(req: any, res: any) {
 
-        const {first_name, last_name, email, phone, password} = req.body;
+        const { first_name, last_name, email, phone, password } = req.body;
         const token = Utils.generateToken();
 
         const data = {
@@ -55,8 +54,8 @@ export class AuthController {
 
     }
 
-    public static async verifyEmail(req, res) {
-        const {email, token} = req.query;
+    public static async verifyEmail(req: any, res: any) {
+        const { email, token } = req.query;
         const data = {
             email,
             token
@@ -71,8 +70,8 @@ export class AuthController {
         })
     }
 
-    public static async getVerificationEmail(req, res) {
-        const {email, password} = req.body;
+    public static async getVerificationEmail(req: any, res: any) {
+        const { email, password } = req.body;
         const token = Utils.generateToken();
         const token_time = Date.now() + new Utils().VERIFICATION_TIME;
 
@@ -97,17 +96,17 @@ export class AuthController {
 
     }
 
-    public static async getNewToken(req, res) {
-        const {access_token} = await AuthService.getNewToken(req.body.refresh_token, req);
+    public static async getNewToken(req: any, res: any) {
+        const { access_token, refresh_token } = await AuthService.getNewToken(req.body.refresh_token, req);
 
         res.status(201).json({
-            access_token
-
+            access_token,
+            refresh_token
         })
     }
 
-    public static async getPhoneotp(req, res) {
-        const {email} = req.user;
+    public static async getPhoneotp(req: any, res: any) {
+        const { email } = req.user;
 
         await AuthService.getPhoneotp(email);
 
@@ -119,7 +118,7 @@ export class AuthController {
 
     }
 
-    public static async verifyPhone(req, res) {
+    public static async verifyPhone(req: any, res: any) {
         const otp = req.query.otp;
         const email = req.user.email;
         const data = {
@@ -135,7 +134,7 @@ export class AuthController {
         })
     }
 
-    public static async getResetOtp(req, res) {
+    public static async getResetOtp(req: any, res: any) {
 
         const email = req.user.email;
 
@@ -152,10 +151,10 @@ export class AuthController {
 
     }
 
-    public static async resetPassword(req, res) {
+    public static async resetPassword(req: any, res: any) {
 
-        const {new_password, otp} = req.body;
-        const {email} = req.user;
+        const { new_password, otp } = req.body;
+        const { email } = req.user;
 
         let data: any = {
             new_password,
@@ -164,7 +163,7 @@ export class AuthController {
         }
 
         if (req.body.current_password) {
-            data = {...data, current_password: req.body.current_password}
+            data = { ...data, current_password: req.body.current_password }
         }
 
         const user = await AuthService.resetPassword(data);
@@ -179,6 +178,6 @@ export class AuthController {
 Device Name: ${os.cpus()[0].model} ${os.hostname()} <br>
 Date: ${new Date().toLocaleString()}</p>`;
 
-        await AuthService.sendEmail(user.email, "Password Has Chnaged", html);
+        await AuthService.sendEmail(user.email, "Password Has Changed", html);
     }
 }

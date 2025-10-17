@@ -8,7 +8,7 @@ import { Twillio } from "../utils/Twillio";
 
 export class AuthService {
 
-    public static async sendEmail(to, subject, html) {
+    public static async sendEmail(to: any, subject: any, html: any) {
         await NodeMailer.sendMail({
             to: to,
             subject: subject,
@@ -16,12 +16,12 @@ export class AuthService {
         });
     }
 
-    public static async logIn(data: any, req) {
+    public static async logIn(data: any, req: any) {
         const { email, password } = data;
 
         const user = await User.findOne({ email: email });
 
-        if (!user) throw new AppError("Invalid Crendtials", 401);
+        if (!user) throw new AppError("Invalid Credentials", 401);
         if (!user.email_verified) throw new AppError("Email Is Not Verified", 403);
 
         const isCorrect = await Utils.comparePassword(password, user.password);
@@ -154,7 +154,7 @@ export class AuthService {
 
     }
 
-    public static async getNewToken(data: any, req) {
+    public static async getNewToken(data: any, req: any) {
         const refresh_token = data;
 
         const decoded_data = await Jwt.jwtRefreshVerify(refresh_token);
@@ -276,7 +276,7 @@ export class AuthService {
         return token;
     }
 
-    public static async resetPassword(data) {
+    public static async resetPassword(data: any) {
         const { new_password, email, otp, current_password } = data;
 
         const user = await User.findOne({

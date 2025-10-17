@@ -193,7 +193,7 @@ export class AuthService {
       tap({
         next: (responseData) => {
           const accessTokenExpireTime = this.tokenService.getTokenExpiration(responseData.access_token);
-          const refreshTokenExpireTime = this.tokenService.getTokenExpiration(user.refreshToken!);
+          const refreshTokenExpireTime = this.tokenService.getTokenExpiration(responseData.refresh_token);
 
           const updatedUser = new User(
             user.id,
@@ -203,7 +203,7 @@ export class AuthService {
             user.role,
             responseData.access_token,
             accessTokenExpireTime,
-            user.refreshToken!,
+            responseData.refresh_token,
             refreshTokenExpireTime,
           );
           this.log(`Access Token Expires At: ${accessTokenExpireTime}`);
