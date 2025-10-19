@@ -15,4 +15,8 @@ export class TokenService {
             return new Date(new Date().getTime() + 3600 * 1000);
         }
     }
+
+    isValidJwt(token: string): boolean {
+        return typeof token === 'string' && token.split('.').length === 3;
+    }
 }

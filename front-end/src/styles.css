@@ -22,11 +22,23 @@ body {
     text-decoration: none;
 }
 
-*{
+* {
     @apply selection:bg-button-green selection:text-white selection:opacity-100;
 }
 
+.form-control {
+    @apply w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-light focus:border-button-green transition-all duration-200 focus:shadow-sm;
+}
+
+.btn-primary {
+    @apply px-11 py-4 text-sm text-white bg-button-green border-buttonHover-green rounded-md hover:bg-buttonHover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-disabled {
+    @apply px-11 py-4 text-sm text-white bg-button-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
+}
+
 input.ng-invalid.ng-touched.ng-dirty {
-  background-color: #fbdcd6;
-  border-color: #f84e2c;
+    background-color: #fbdcd6;
+    border-color: #f84e2c;
 }

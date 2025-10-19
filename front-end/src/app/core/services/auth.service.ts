@@ -1,11 +1,12 @@
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {inject, Injectable, OnInit, signal} from '@angular/core';
-import {BehaviorSubject, catchError, filter, finalize, tap, throwError, take, map} from 'rxjs';
-import {Router} from '@angular/router';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { BehaviorSubject, catchError, filter, finalize, tap, throwError, take, map } from 'rxjs';
+import { Router } from '@angular/router';
 
-import {environment} from '../../../environments/environment';
-import {AuthResponseData, User} from './auth.model';
-import {TokenService} from './token.service';
+import { environment } from '../../../environments/environment';
+import { AuthResponseData, User } from './auth.model';
+import { TokenService } from './token.service';
+import { CryptoService } from './crypto.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import {TokenService} from './token.service';
 export class AuthService {
   enteredEmail = signal<string>('');
   private refreshInProgress = signal(false);
+  isAuthenticated = signal(false);
 
   private refreshSubject = new BehaviorSubject<string | null>(null);
   user$ = new BehaviorSubject<User | null>(null);
@@ -25,6 +27,7 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private tokenService = inject(TokenService);
+  private cryptoService = inject(CryptoService);
 
   automaticallySetEnteredMailToLoginField(email: string) {
     this.enteredEmail.set(email);
@@ -58,66 +61,78 @@ export class AuthService {
   }
 
   autoSignin() {
-    const userData = localStorage.getItem('wmStoreLoggedUserData');
-
-    if (!userData) {
+    const raw = localStorage.getItem('wmStoreLoggedUserData');
+    if (!raw) {
       this.user$.next(null);
       return;
     }
 
-    const parsedUserData: {
-      id: string,
-      firstName: string,
-      lastName: string,
-      email: string,
-      role: string,
-      _accessToken: string,
-      _accessTokenExpirationDate: Date,
-      _refreshToken: string,
-      _refreshTokenExpirationDate: Date,
-    } = JSON.parse(userData);
+    let parsed: any;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      console.warn('Invalid localStorage JSON');
+      localStorage.removeItem('wmStoreLoggedUserData');
+      this.logout();
+      return;
+    }
 
+    if (!parsed.data || !parsed.hash) {
+      console.warn('Missing hash or data');
+      this.logout();
+      return;
+    }
+
+    if (!this.cryptoService.verifyHash(parsed.data, parsed.hash)) {
+      console.warn('Data tampered — hash mismatch');
+      localStorage.removeItem('wmStoreLoggedUserData');
+      this.logout();
+      return;
+    }
+
+    const userData = parsed.data;
     const loadedUser = new User(
-      parsedUserData.id,
-      parsedUserData.firstName,
-      parsedUserData.lastName,
-      parsedUserData.email,
-      parsedUserData.role,
-      parsedUserData._accessToken,
-      parsedUserData._accessTokenExpirationDate,
-      parsedUserData._refreshToken,
-      parsedUserData._refreshTokenExpirationDate,
+      userData.id,
+      userData.firstName,
+      userData.lastName,
+      userData.email,
+      userData.role,
+      userData._accessToken,
+      userData._accessTokenExpirationDate,
+      userData._refreshToken,
+      userData._refreshTokenExpirationDate,
     );
 
     if (loadedUser.accessToken) {
-      this.log("AUTO LOGGING IN");
+      if (loadedUser.refreshToken) {
+        if (!this.tokenService.isValidJwt(loadedUser.accessToken) ||
+          !this.tokenService.isValidJwt(loadedUser.refreshToken)) {
+          console.warn('Invalid token structure');
+          this.logout();
+          return;
+        }
+      }
+
       this.user$.next(loadedUser);
       const accessTokenExpireTime = this.tokenService.getTokenExpiration(loadedUser.accessToken);
+
       if (accessTokenExpireTime.getTime() <= Date.now()) {
-        this.refreshToken().subscribe({
-          error: () => this.logout()
-        });
-        return;
-      }
-
-      this.setAutoLogout(accessTokenExpireTime);
-      this.setTokenRefresh(accessTokenExpireTime);
-
-    } else {
-      if (loadedUser.refreshToken) {
-        this.refreshToken().subscribe({
-          error: () => this.logout()
-        });
+        this.refreshToken().subscribe({ error: () => this.logout() });
       } else {
-        this.logout();
+        this.setAutoLogout(accessTokenExpireTime);
+        this.setTokenRefresh(accessTokenExpireTime);
       }
+    } else {
+      this.logout();
     }
   }
+
+
 
   logout() {
     this.log("LOGGING OUT USER");
     this.user$.next(null);
-    this.router.navigate(['/auth'], {replaceUrl: true});
+    this.router.navigate(['/auth'], { replaceUrl: true });
     localStorage.removeItem('wmStoreLoggedUserData');
 
     if (this.accessTokenExpirationTimer) {
@@ -216,7 +231,14 @@ export class AuthService {
           this.setTokenRefresh(accessTokenExpireTime);
 
           this.user$.next(updatedUser);
-          localStorage.setItem('wmStoreLoggedUserData', JSON.stringify(updatedUser));
+
+          const userPayload = { ...updatedUser };
+          const hash = this.cryptoService.generateHash(userPayload);
+
+          localStorage.setItem('wmStoreLoggedUserData', JSON.stringify({
+            data: userPayload,
+            hash
+          }));
 
           this.refreshSubject.next(responseData.access_token);
         }
@@ -237,15 +259,27 @@ export class AuthService {
     window.addEventListener('storage', (event) => {
       if (event.key === 'wmStoreLoggedUserData') {
         if (event.newValue === null && this.user$.value) {
-          // localStorage was cleared manually, logout
+          // localStorage cleared
           this.logout();
-        } else if (event.newValue && !this.user$.value) {
-          // User data was added to localStorage from another tab
-          this.autoSignin();
+        } else if (event.newValue) {
+          try {
+            const parsed = JSON.parse(event.newValue);
+            if (!parsed.hash || !parsed.data || !this.cryptoService.verifyHash(parsed.data, parsed.hash)) {
+              console.warn('External modification detected — logging out');
+              this.logout();
+            } else {
+              // Optional: silently revalidate in case other tab refreshed token
+              this.autoSignin();
+            }
+          } catch {
+            console.warn('Invalid JSON in storage event');
+            this.logout();
+          }
         }
       }
     });
   }
+
 
   private handleAuthentication(responseData: AuthResponseData) {
     const accessTokenExpireTime = this.tokenService.getTokenExpiration(responseData.access_token);
@@ -262,7 +296,9 @@ export class AuthService {
       responseData.refresh_token,
       refreshTokenExpireTime,
     );
+
     this.user$.next(user);
+
     console.log("INITIAL LOGIN REFRESH");
     console.log(refreshTokenExpireTime);
     console.log("INITIAL LOGIN ACCESS");
@@ -271,7 +307,13 @@ export class AuthService {
     this.setAutoLogout(accessTokenExpireTime);
     this.setTokenRefresh(accessTokenExpireTime);
 
-    localStorage.setItem('wmStoreLoggedUserData', JSON.stringify(user));
+    const userPayload = { ...user };
+    const hash = this.cryptoService.generateHash(userPayload);
+
+    localStorage.setItem('wmStoreLoggedUserData', JSON.stringify({
+      data: userPayload,
+      hash
+    }));
   }
 
   private handleError(errorRes: HttpErrorResponse) {

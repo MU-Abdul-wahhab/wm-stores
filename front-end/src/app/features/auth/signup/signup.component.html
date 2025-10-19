@@ -19,12 +19,10 @@
             <form class="space-y-3" [formGroup]="form" (ngSubmit)="onSubmit()">
 
                 <div class="space-y-3 md:space-y-0 md:space-x-2 md:flex md:items-center" formGroupName="name">
-                    <input type="text" id="firstName" required formControlName="firstName"
-                        class="w-full md:w-1/2 px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                    <input type="text" id="firstName" required formControlName="firstName" class="form-control md:w-1/2"
                         placeholder="First Name" />
 
-                    <input type="text" id="lastName" required formControlName="lastName"
-                        class="w-full md:w-1/2 px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                    <input type="text" id="lastName" required formControlName="lastName" class="form-control md:w-1/2"
                         placeholder="Last Name" />
                 </div>
                 @if(isNamesInvalid){
@@ -32,8 +30,7 @@
                     characters long</p>
                 }
                 <div>
-                    <input type="email" id="email" required formControlName="email"
-                        class="w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                    <input type="email" id="email" required formControlName="email" class="form-control"
                         placeholder="Email" />
 
                     @if(isEmailInvalid){
@@ -41,57 +38,45 @@
                     }
                 </div>
                 <div>
-                    <input type="text" id="phone" required formControlName="mobile"
-                        class="w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-extralight"
+                    <input type="text" id="phone" required formControlName="mobile" class="form-control"
                         placeholder="Phone Number" />
                     @if(isMobileInvalid){
                     <p class="text-xs text-red-600 font-light mt-3">Please Enter a Valid Sri Lankan Mobile</p>
                     }
                 </div>
                 <div>
-                  <div class="relative">
-                    <input
-                      [type]="showPassword() ? 'text' : 'password'"
-                      id="password"
-                      required
-                      formControlName="password"
-                      placeholder="Password"
-                      class="w-full px-5 py-4 pr-12 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-light"
-                    />
+                    <div class="relative">
+                        <input [type]="showPassword() ? 'text' : 'password'" id="password" required
+                            formControlName="password" placeholder="Password" class="form-control pr-12" />
 
-                    <!-- Eye Icon -->
-                    <button
-                      type="button"
-                      (click)="onTogglePasswordVisibility()"
-                      class="absolute cursor-pointer inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                    >
-                      <!-- Eye open (when password visible) -->
-                      @if (showPassword()) {
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" class="w-5 h-5">
-                          <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.036 12.322a1.012 1.012 0 010-.644C3.423 7.51 7.338 4.5 12 4.5c4.662 0 8.577 3.01 9.964 7.178.07.21.07.434 0 .644C20.577 16.49 16.662 19.5 12 19.5c-4.662 0-8.577-3.01-9.964-7.178z"/>
-                          <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                      } @else {
-                        <!-- Eye closed (Heroicons v2, official Tailwind UI) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                             fill="none" stroke="currentColor" stroke-width="32"
-                             stroke-linecap="round" stroke-linejoin="round"
-                             class="w-5 h-5">
-                          <!-- Eye outline -->
-                          <path
-                            d="M255.9 144C166.6 144 92.6 204.3 64 256c28.6 51.7 102.6 112 191.9 112s163.3-60.3 191.9-112c-28.6-51.7-102.6-112-191.9-112z"/>
-                          <!-- Pupil -->
-                          <circle cx="256" cy="256" r="48"/>
-                          <!-- Slash line -->
-                          <line x1="96" y1="416" x2="416" y2="96"/>
-                        </svg>
-                      }
-                    </button>
-                  </div>
+                        <!-- Eye Icon -->
+                        <button type="button" (click)="onTogglePasswordVisibility()"
+                            class="absolute cursor-pointer inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none">
+                            <!-- Eye open (when password visible) -->
+                            @if (showPassword()) {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.644C3.423 7.51 7.338 4.5 12 4.5c4.662 0 8.577 3.01 9.964 7.178.07.21.07.434 0 .644C20.577 16.49 16.662 19.5 12 19.5c-4.662 0-8.577-3.01-9.964-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            } @else {
+                            <!-- Eye closed (Heroicons v2, official Tailwind UI) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none"
+                                stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-5 h-5">
+                                <!-- Eye outline -->
+                                <path
+                                    d="M255.9 144C166.6 144 92.6 204.3 64 256c28.6 51.7 102.6 112 191.9 112s163.3-60.3 191.9-112c-28.6-51.7-102.6-112-191.9-112z" />
+                                <!-- Pupil -->
+                                <circle cx="256" cy="256" r="48" />
+                                <!-- Slash line -->
+                                <line x1="96" y1="416" x2="416" y2="96" />
+                            </svg>
+                            }
+                        </button>
+                    </div>
 
                     @if(isPasswordInvalid){
                     <p class="text-xs text-red-600 font-light mt-3">Please enter a valid password - must be at least 6
@@ -102,7 +87,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2 cursor-pointer">
                         <input type="checkbox" id="checkbox" formControlName="agreement"
-                            class=" cursor-pointer w-4 h-4 accent-button-green transition duration-150" />
+                            class=" cursor-pointer w-4 h-4 accent-button-green transition-all duration-1000" />
                         <label for="checkbox"
                             class="cursor-pointer text-sm text-black opacity-75 font-extralight selection:bg-button-green selection:text-white selection:opacity-100">I
                             agree to terms & Policy.</label>
@@ -110,13 +95,12 @@
 
                 </div>
 
-                <button type="submit" [disabled]="(!form.valid || isLoading())"
-                    [class]="form.valid
-    ? 'px-11 py-4 text-sm text-white bg-button-green border-buttonHover-green rounded-md hover:bg-buttonHover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200 flex items-center'
-    : 'px-11 py-4 text-sm text-white bg-button-green rounded-md cursor-not-allowed opacity-50 transition duration-200 flex items-center'">
+                <button type="submit" [disabled]="(!form.valid || isLoading())" [class]="form.valid
+    ? 'btn-primary flex items-center'
+    : 'btn-disabled flex items-center'">
                     @if(isLoading()){
-                    <svg class="mr-3 h-5 w-5 animate-spin text-white"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg class="mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
                         <circle class="opacity-50" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>
                         <path fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
