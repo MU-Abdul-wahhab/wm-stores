@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
 import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
 
@@ -9,7 +9,8 @@ import {AlertComponent} from "../../../shared/alert/alert.component";
   selector: 'app-signup',
   imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupComponent {
 

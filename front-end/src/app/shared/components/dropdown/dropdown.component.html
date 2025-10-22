@@ -1,0 +1,11 @@
+<div class="bg-white shadow-lg rounded-md border border-gray-200 py-2 z-10 min-w-60" [@list]
+    (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <ul class="flex flex-col">
+        @for (item of dropdownItems(); track $index) {
+        <li class="px-4 py-3 hover:text-buttonHover-green cursor-pointer transition-all duration-200 text-gray-700"
+            (click)="selectItem(item)">
+            {{ item }}
+        </li>
+        }
+    </ul>
+</div>

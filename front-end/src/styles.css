@@ -27,7 +27,7 @@ body {
 }
 
 .form-control {
-    @apply w-full px-5 py-4 border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-light focus:border-button-green transition-all duration-200 focus:shadow-sm;
+    @apply w-full border border-gray-300 rounded-sm outline-0 text-sm placeholder:text-black placeholder:opacity-75 placeholder:font-light focus:border-button-green transition-all duration-200 focus:shadow-sm;
 }
 
 .btn-primary {

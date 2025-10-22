@@ -1,15 +1,16 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
 import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
-import {AuthService} from '../../../core/services/auth.service';
 
+import {AuthService} from '../../../core/services/auth.service';
 import {AlertComponent} from '../../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
 
@@ -59,8 +60,8 @@ export class LoginComponent {
       const subscription = this.authService.signin({email: enteredEmail, password: enteredPassword}).subscribe({
         next: (resData) => {
           this.isLoading.set(false);
+          this.successMsg.set('Successfully Logged in!');
           this.form.reset();
-          this.onSuccessDialogClose();
         },
         error: (err) => {
           this.successMsg.set(undefined);

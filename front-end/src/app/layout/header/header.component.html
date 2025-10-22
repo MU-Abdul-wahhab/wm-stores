@@ -1,0 +1,108 @@
+<header class="w-full bg-button-green text-white p-1 text-[13px] hidden lg:block">
+    <div class="container mx-auto flex items-center justify-between">
+
+        <div class="flex items-center">
+            <p>
+                <i class="fa-solid fa-mobile-screen"></i> &nbsp;
+                <span class="font-extralight">(+94) - 72 257 8559</span>
+            </p>
+            <p class="mx-2 text-xl font-extralight">|</p>
+            <p>
+                <i class="fa-solid fa-location-dot"></i> &nbsp;
+                <span class="font-extralight">Our location</span>
+            </p>
+        </div>
+
+        <div class="flex items-center flex-1">
+            <div class="text-rotator">
+                @for (message of messages; track message; let i = $index) {
+                <div class="text-item" [class.active]="i === currentIndex" [class.leaving]="i === leavingIndex"
+                    [class.entering]="i !== currentIndex && i !== leavingIndex">
+                    <p class="font-medium">{{ message }}</p>
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="flex items-center">
+            <div class="pointer-events-none inset-y-0 flex items-center px-2 text-white">
+                <i class="fa-solid fa-dollar-sign text-xs"></i>
+            </div>
+
+            <div class="relative inline-block" #dropdownContainer (mouseenter)="onDropdownEnter()"
+                (mouseleave)="onDropdownMouseLeave()">
+                <p #currencySelect
+                    class="text-white bg-transparent cursor-pointer appearance-none pr-8 pl-3 py-1 border border-white/30 rounded focus:outline-none focus:border-white transition-colors w-24">
+                    {{ dropdownItems[0] }}
+                </p>
+
+                @if (showDropdown) {
+                <app-dropdown class="absolute top-full left-0 w-full mt-1 z-50" />
+                }
+
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+
+            <p class="mx-2 text-xl font-extralight">|</p>
+            <a routerLink="/auth">
+                <i class="fa-solid fa-user"></i> &nbsp;
+                <span class="font-extralight">Log In / Sign Up</span>
+            </a>
+        </div>
+
+    </div>
+</header>
+
+<nav class="py-6">
+    <div class="container mx-auto flex items-center justify-between">
+
+        <div class="flex items-center">
+            <img src="logo.png" alt="logo" class="h-10" />
+        </div>
+
+        <div class="flex-1 flex items-center mx-5 lg:mx-40">
+            <div class="relative">
+                <button type="button" title="search"
+                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-caret-down text-lg transition-colors duration-200"></i>
+                </button>
+
+                <input type="text" id="category" required placeholder="Search for items..."
+                    class="form-control px-5 py-3 pr-7 italic max-w-44" />
+            </div>
+            <div class="relative flex-1">
+                <button type="button" title="search"
+                    class="absolute inset-y-0 left-4 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-magnifying-glass text-lg transition-colors duration-200"></i>
+                </button>
+
+                <input type="text" id="search" required placeholder="Search for items..."
+                    class="form-control px-5 py-3 pl-12 italic" />
+            </div>
+        </div>
+
+        <div class="flex items-center text-3xl text-slate-700 space-x-7">
+            <!-- Heart Icon with badge -->
+            <div class="relative cursor-pointer">
+                <i class="fa-regular fa-heart"></i>
+                <span
+                    class="absolute -top-2 -right-3 bg-[var(--color-orange-500)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow">
+                    4
+                </span>
+            </div>
+
+            <!-- Shopping Bag Icon with badge -->
+            <div class="relative cursor-pointer">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span
+                    class="absolute -top-2 -right-3 bg-[var(--color-button-green)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow">
+                    2
+                </span>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
