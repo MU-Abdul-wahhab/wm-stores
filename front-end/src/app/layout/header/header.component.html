@@ -30,9 +30,23 @@
             </div>
 
             <!-- Currency Selector -->
-            <app-dropdown [_options]="currencies" [selected]="selectedCurrency" placeholder="Select currency"
-                [extraClasses]="['py-1', 'border', 'border-gray-300', 'rounded', 'text-buttonHover-green']"
-                (selectionChange)="onCurrencyChange($event)" class="w-32" />
+            <app-dropdown triggerElement="hover" width="min-w-40" position="center" #currencyDropdown>
+                <div class="dropdown-trigger">
+                    <div
+                        class="cursor-pointer appearance-none pr-8 pl-3 py-1 border border-gray-300 rounded text-white">
+                        <p class="truncate">{{ selectedCurrency || 'Select currency' }}</p>
+                    </div>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                        <i class="fa-solid fa-caret-down text-xs duration-200" [class.rotate-180]="currencyDropdown.isOpen()"></i>
+                    </div>
+                </div>
+
+                <div class="dropdown-content">
+                    <app-custom-select [_options]="currencies" [selected]="selectedCurrency"
+                        (selectionChange)="onCurrencyChange($event)" (closeRequest)="currencyDropdown.close()">
+                    </app-custom-select>
+                </div>
+            </app-dropdown>
 
             <p class="mx-2 text-xl font-extralight">|</p>
             <a routerLink="/auth">
@@ -52,12 +66,26 @@
         </div>
 
         <div class="flex-1 flex items-center mx-5 lg:mx-40">
+
             <!-- Category Selector -->
-            <app-dropdown [_options]="categories" [selected]="selectedCategory" placeholder="Select Category"
-                [needAnSearchBar]="true"
-                [extraStyles]="{'border-top-right-radius':'0', 'border-bottom-right-radius':'0'}"
-                [extraClasses]="['py-3', 'border', 'border-gray-300', 'hover:border-button-green', 'rounded', 'font-extrabold', 'text-center', 'text-black']"
-                (selectionChange)="onCurrencyChange($event)" class="w-40" />
+            <app-dropdown triggerElement="click" width="min-w-56" position="left" #categoryDropdown>
+                <div class="dropdown-trigger w-40">
+                    <div class="cursor-pointer appearance-none pr-8 pl-3 py-3 border border-gray-300 hover:border-button-green rounded font-extrabold text-center text-black text-sm"
+                        [style.border-top-right-radius]="'0'" [style.border-bottom-right-radius]="'0'">
+                        <p class="truncate">{{ selectedCategory || 'Select Category' }}</p>
+                    </div>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                        <i class="fa-solid fa-caret-down text-xs duration-200" [class.rotate-180]="categoryDropdown.isOpen()"></i>
+                    </div>
+                </div>
+
+                <div class="dropdown-content">
+                    <app-custom-select [_options]="categories" [selected]="selectedCategory" [needAnSearchBar]="true"
+                        (selectionChange)="onCategoryChange($event)" (closeRequest)="categoryDropdown.close()">
+                    </app-custom-select>
+                </div>
+            </app-dropdown>
+
             <div class="relative flex-1">
                 <button type="button" title="search"
                     class="absolute inset-y-0 left-4 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
@@ -70,6 +98,7 @@
         </div>
 
         <div class="flex items-center text-3xl text-slate-700 space-x-7">
+
             <!-- Heart Icon with badge -->
             <div class="relative cursor-pointer">
                 <i class="fa-regular fa-heart"></i>
@@ -79,16 +108,24 @@
                 </span>
             </div>
 
-            <!-- Shopping Bag Icon with badge -->
-            <div class="relative cursor-pointer">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span
-                    class="absolute -top-2 -right-3 bg-[var(--color-button-green)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow">
-                    2
-                </span>
-            </div>
-        </div>
+            <!-- Cart Preview -->
+            <app-dropdown triggerElement="click" width="min-w-[345px]" position="right">
+                <div class="dropdown-trigger">
+                    <div class="relative cursor-pointer">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span
+                            class="absolute -top-2 -right-3 bg-button-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow">
+                            2
+                        </span>
+                    </div>
+                </div>
 
+                <div class="dropdown-content">
+                    <app-preview></app-preview>
+                </div>
+            </app-dropdown>
+
+        </div>
 
     </div>
 </nav>

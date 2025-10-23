@@ -1,15 +1,15 @@
-import { Component, output, ViewChild, HostListener, input, signal, ElementRef, viewChild, effect } from '@angular/core';
-import { NgClass, NgStyle } from '@angular/common';
+import { Component, output, input, signal, effect } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-custom-select',
-  imports: [NgClass, NgStyle, FormsModule],
+  imports: [NgClass, FormsModule],
   templateUrl: './custom-select.component.html',
   styleUrl: './custom-select.component.css'
 })
 export class CustomSelectComponent {
-// Inputs
+  // Inputs
   _options = input<string[]>([]);
   options = signal<string[]>([]);
   filteredOptions = signal<string[]>([]);
@@ -22,16 +22,13 @@ export class CustomSelectComponent {
 
   // Outputs
   selectionChange = output<string>();
+  closeRequest = output<void>(); // Add this output
 
   // Signals
   isOpen = signal(false);
   selectedValue = signal<string | null>(null);
-  isMouseOver = signal(false);
 
   value = signal('');
-
-  @ViewChild('selectContainer', { read: ElementRef })
-  selectContainer!: ElementRef<HTMLDivElement>;
 
   constructor() {
     effect(() => {
@@ -69,31 +66,12 @@ export class CustomSelectComponent {
     this.isOpen.set(!this.isOpen());
   }
 
-  onMouseEnter() {
-    this.isMouseOver.set(true);
-  }
-
-  onMouseLeave() {
-    this.isMouseOver.set(false);
-
-    setTimeout(() => {
-      if (!this.isMouseOver()) {
-        this.isOpen.set(false);
-      }
-    }, 150);
-  }
-
   selectItem(item: string) {
     this.selectedValue.set(item);
     this.selectionChange.emit(item);
     this.value.set('');
-    this.isOpen.set(false);
-  }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (!this.selectContainer?.nativeElement.contains(event.target as Node)) {
-      this.isOpen.set(false);
-    }
+    // Emit close request when item is selected
+    this.closeRequest.emit();
   }
 }

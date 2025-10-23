@@ -2,10 +2,12 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
+import { CustomSelectComponent } from "../../shared/components/custom-select/custom-select.component";
+import { PreviewComponent } from "../../features/cart/preview/preview.component";
 
 @Component({
   selector: 'app-header',
-  imports: [DropdownComponent, RouterLink],
+  imports: [DropdownComponent, RouterLink, CustomSelectComponent, PreviewComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -33,6 +35,11 @@ export class HeaderComponent implements OnInit {
   onCurrencyChange(currency: string) {
     this.selectedCurrency = currency;
     console.log('Currency changed to:', currency);
+  }
+
+  onCategoryChange(category: string) {
+    this.selectedCategory = category;
+    console.log('Category changed to:', category);
   }
 
   private startRotation() {

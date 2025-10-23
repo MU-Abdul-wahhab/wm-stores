@@ -1,49 +1,18 @@
-<div class="relative inline-block w-full text-sm" #selectContainer (mouseenter)="onMouseEnter()"
-    (mouseleave)="onMouseLeave()">
+<div class="relative inline-block" #dropdownContainer (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
 
-    <!-- Select Trigger -->
-    <div class="cursor-pointer appearance-none pr-8 pl-3 
-                  focus:outline-none transition-colors bg-white" [ngClass]="extraClasses()" [ngStyle]="extraStyles()"
-        (click)="toggleDropdown()" (mouseenter)="toggleDropdown()">
-        <p class="truncate">{{ selectedValue() || placeholder() }}</p>
+    <!-- Trigger Slot -->
+    <div class="cursor-pointer" (click)="toggleDropdown()">
+        <ng-content select=".dropdown-trigger"></ng-content>
     </div>
 
-    <!-- Dropdown Indicator -->
-    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-        <i class="fa-solid fa-caret-down text-xs transition-transform duration-200" [class.rotate-180]="isOpen()"></i>
-    </div>
-
-    <!-- Dropdown Menu -->
+    <!-- Dropdown Content -->
     @if (isOpen()) {
-    <div class="absolute top-full left-0 w-full mt-1 z-50 bg-white shadow-lg rounded-md border border-gray-200 min-w-56 px-4"
-        [@dropdownAnimation]>
+    <div class="absolute top-full mt-1 z-50 bg-white shadow-lg rounded-md border border-gray-200 py-3 px-4"
+        [class]="width()" [class.left-0]="position() === 'left'" [class.right-0]="position() === 'right'"
+        [class.left-1-2]="position() === 'center'" [class.transform]="position() === 'center'"
+        [class.-translate-x-1-2]="position() === 'center'" [@dropdownAnimation]>
 
-        <!-- Sticky Search Bar -->
-        @if(needAnSearchBar()){
-        <div class="sticky top-0 bg-white py-3 z-10">
-            <input type="text" title="search" class="form-control px-4 py-3 text-xs w-full" placeholder="Search..."
-                [(ngModel)]="value" />
-        </div>
-        }
-
-        <!-- Scrollable List with Custom Scrollbar -->
-        <div #listContainer class="max-h-60 overflow-y-auto custom-scrollbar">
-            <ul class="flex flex-col py-2">
-                @for (item of filteredOptions(); track $index) {
-                <li #listItems
-                    class="px-4 py-2 hover:bg-[#9ddbc9] cursor-pointer transition-colors duration-200 text-gray-700 hover:text-black truncate"
-                    [ngClass]="{
-                    'hover:text-gray-700': item === selectedValue(),
-                    'bg-[#ececec]': item === selectedValue(),
-                    'hover:bg-[#ececec]': item === selectedValue(),
-                }" (click)="selectItem(item)">
-                    {{ item }}
-                </li>
-                } @empty {
-                <li class="px-4 py-2 text-gray-500 text-center">No results found</li>
-                }
-            </ul>
-        </div>
+        <ng-content select=".dropdown-content"></ng-content>
     </div>
     }
 </div>
