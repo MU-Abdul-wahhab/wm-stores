@@ -9,7 +9,7 @@
       <form class="space-y-4" [formGroup]="form" (ngSubmit)="onSubmit()">
 
         <div>
-          <input type="email" id="email" required formControlName="email" class="form-control px-5 py-4"
+          <input type="email" id="email" required formControlName="email" class="form-control px-5 py-4 text-sm"
             placeholder="Your Email" />
           @if (isEmailInvalid) {
           <p class="text-xs text-red-600 font-light mt-3">Please enter a valid email address.</p>
@@ -18,7 +18,7 @@
         <div>
           <div class="relative">
             <input [type]="showPassword() ? 'text' : 'password'" id="password" required formControlName="password"
-              placeholder="Password" class="form-control pr-12 px-5 py-4" />
+              placeholder="Password" class="form-control pr-12 px-5 py-4 text-sm" />
 
             <!-- Eye Icon -->
             <button type="button" (click)="onTogglePasswordVisibility()"

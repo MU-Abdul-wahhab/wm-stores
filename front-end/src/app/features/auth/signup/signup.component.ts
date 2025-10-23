@@ -3,7 +3,7 @@ import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/
 import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
 
 import {AuthService} from '../../../core/services/auth.service';
-import {AlertComponent} from "../../../shared/alert/alert.component";
+import {AlertComponent} from "../../../shared/components/alert/alert.component";
 
 @Component({
   selector: 'app-signup',

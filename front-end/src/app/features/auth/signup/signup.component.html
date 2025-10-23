@@ -15,10 +15,10 @@
             <form class="space-y-3" [formGroup]="form" (ngSubmit)="onSubmit()">
 
                 <div class="space-y-3 md:space-y-0 md:space-x-2 md:flex md:items-center" formGroupName="name">
-                    <input type="text" id="firstName" required formControlName="firstName" class="form-control md:w-1/2 px-5 py-4"
+                    <input type="text" id="firstName" required formControlName="firstName" class="form-control md:w-1/2 px-5 py-4 text-sm"
                         placeholder="First Name" />
 
-                    <input type="text" id="lastName" required formControlName="lastName" class="form-control md:w-1/2 px-5 py-4"
+                    <input type="text" id="lastName" required formControlName="lastName" class="form-control md:w-1/2 px-5 py-4 text-sm"
                         placeholder="Last Name" />
                 </div>
                 @if(isNamesInvalid){
@@ -26,7 +26,7 @@
                     characters long</p>
                 }
                 <div>
-                    <input type="email" id="email" required formControlName="email" class="form-control px-5 py-4"
+                    <input type="email" id="email" required formControlName="email" class="form-control px-5 py-4 text-sm"
                         placeholder="Email" />
 
                     @if(isEmailInvalid){
@@ -34,7 +34,7 @@
                     }
                 </div>
                 <div>
-                    <input type="text" id="phone" required formControlName="mobile" class="form-control px-5 py-4"
+                    <input type="text" id="phone" required formControlName="mobile" class="form-control px-5 py-4 text-sm"
                         placeholder="Phone Number" />
                     @if(isMobileInvalid){
                     <p class="text-xs text-red-600 font-light mt-3">Please Enter a Valid Sri Lankan Mobile</p>
@@ -43,7 +43,7 @@
                 <div>
                     <div class="relative">
                         <input [type]="showPassword() ? 'text' : 'password'" id="password" required
-                            formControlName="password" placeholder="Password" class="form-control pr-12 px-5 py-4" />
+                            formControlName="password" placeholder="Password" class="form-control pr-12 px-5 py-4 text-sm" />
 
                         <!-- Eye Icon -->
                         <button type="button" (click)="onTogglePasswordVisibility()"

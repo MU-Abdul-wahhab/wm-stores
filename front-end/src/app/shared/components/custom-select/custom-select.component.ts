@@ -1,28 +1,15 @@
 import { Component, output, ViewChild, HostListener, input, signal, ElementRef, viewChild, effect } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { NgClass, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.css',
-  animations: [
-    trigger('dropdownAnimation', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' }),
-        animate('150ms ease-out', style({ opacity: 1, transform: 'translateY(0) scale(1)' })),
-      ]),
-      transition(':leave', [
-        animate('100ms ease-in', style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' })),
-      ]),
-    ]),
-  ],
+  selector: 'app-custom-select',
   imports: [NgClass, NgStyle, FormsModule],
+  templateUrl: './custom-select.component.html',
+  styleUrl: './custom-select.component.css'
 })
-export class DropdownComponent {
-  // Inputs
+export class CustomSelectComponent {
+// Inputs
   _options = input<string[]>([]);
   options = signal<string[]>([]);
   filteredOptions = signal<string[]>([]);

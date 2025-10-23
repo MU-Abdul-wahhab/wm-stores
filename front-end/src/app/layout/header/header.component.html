@@ -29,25 +29,9 @@
                 <i class="fa-solid fa-dollar-sign text-xs"></i>
             </div>
 
-            <!-- <div class="relative inline-block" #dropdownContainer (mouseenter)="onDropdownEnter()"
-                (mouseleave)="onDropdownMouseLeave()">
-                <p #currencySelect
-                    class="text-white bg-transparent cursor-pointer appearance-none pr-8 pl-3 py-1 border border-white/30 rounded focus:outline-none focus:border-white transition-colors w-24">
-                    {{ dropdownItems[0] }}
-                </p>
-
-                @if (showDropdown) {
-                <app-dropdown class="absolute top-full left-0 w-full mt-1 z-50" />
-                }
-
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white">
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </div>
-            </div> -->
-
             <!-- Currency Selector -->
-            <app-dropdown [options]="currencies" [selected]="selectedCurrency" placeholder="Select currency"
-                [extraStyles]="{}" [extraClasses]="['py-1', 'border', 'border-gray-300', 'rounded', 'text-buttonHover-green']"
+            <app-dropdown [_options]="currencies" [selected]="selectedCurrency" placeholder="Select currency"
+                [extraClasses]="['py-1', 'border', 'border-gray-300', 'rounded', 'text-buttonHover-green']"
                 (selectionChange)="onCurrencyChange($event)" class="w-32" />
 
             <p class="mx-2 text-xl font-extralight">|</p>
@@ -69,7 +53,8 @@
 
         <div class="flex-1 flex items-center mx-5 lg:mx-40">
             <!-- Category Selector -->
-            <app-dropdown [options]="categories" [selected]="selectedCategory" placeholder="Select Category"
+            <app-dropdown [_options]="categories" [selected]="selectedCategory" placeholder="Select Category"
+                [needAnSearchBar]="true"
                 [extraStyles]="{'border-top-right-radius':'0', 'border-bottom-right-radius':'0'}"
                 [extraClasses]="['py-3', 'border', 'border-gray-300', 'hover:border-button-green', 'rounded', 'font-extrabold', 'text-center', 'text-black']"
                 (selectionChange)="onCurrencyChange($event)" class="w-40" />
@@ -80,7 +65,7 @@
                 </button>
 
                 <input type="text" id="search" required placeholder="Search for items..."
-                    class="form-control px-5 py-3 pl-12 italic" />
+                    class="form-control px-5 py-3 pl-12 italic text-sm" />
             </div>
         </div>
 
