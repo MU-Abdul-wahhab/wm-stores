@@ -29,7 +29,7 @@
                 <i class="fa-solid fa-dollar-sign text-xs"></i>
             </div>
 
-            <div class="relative inline-block" #dropdownContainer (mouseenter)="onDropdownEnter()"
+            <!-- <div class="relative inline-block" #dropdownContainer (mouseenter)="onDropdownEnter()"
                 (mouseleave)="onDropdownMouseLeave()">
                 <p #currencySelect
                     class="text-white bg-transparent cursor-pointer appearance-none pr-8 pl-3 py-1 border border-white/30 rounded focus:outline-none focus:border-white transition-colors w-24">
@@ -43,7 +43,12 @@
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white">
                     <i class="fa-solid fa-chevron-down text-xs"></i>
                 </div>
-            </div>
+            </div> -->
+
+            <!-- Currency Selector -->
+            <app-dropdown [options]="currencies" [selected]="selectedCurrency" placeholder="Select currency"
+                [extraStyles]="{}" [extraClasses]="['py-1', 'border', 'border-gray-300', 'rounded', 'text-buttonHover-green']"
+                (selectionChange)="onCurrencyChange($event)" class="w-32" />
 
             <p class="mx-2 text-xl font-extralight">|</p>
             <a routerLink="/auth">
@@ -63,15 +68,11 @@
         </div>
 
         <div class="flex-1 flex items-center mx-5 lg:mx-40">
-            <div class="relative">
-                <button type="button" title="search"
-                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
-                    <i class="fa-solid fa-caret-down text-lg transition-colors duration-200"></i>
-                </button>
-
-                <input type="text" id="category" required placeholder="Search for items..."
-                    class="form-control px-5 py-3 pr-7 italic max-w-44" />
-            </div>
+            <!-- Category Selector -->
+            <app-dropdown [options]="categories" [selected]="selectedCategory" placeholder="Select Category"
+                [extraStyles]="{'border-top-right-radius':'0', 'border-bottom-right-radius':'0'}"
+                [extraClasses]="['py-3', 'border', 'border-gray-300', 'hover:border-button-green', 'rounded', 'font-extrabold', 'text-center', 'text-black']"
+                (selectionChange)="onCurrencyChange($event)" class="w-40" />
             <div class="relative flex-1">
                 <button type="button" title="search"
                     class="absolute inset-y-0 left-4 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
