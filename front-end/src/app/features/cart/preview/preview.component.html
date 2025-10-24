@@ -1,12 +1,14 @@
 <div class="py-4">
 
-    <div class="max-h-52">
-        <div class="overflow-y-auto text-sm pb-7 custom-scrollbar border-b border-b-gray-400">
+    <div class="border-b border-b-slate-300 pb-7">
+        <div class="max-h-44 overflow-y-auto overflow-x-none text-sm custom-scrollbar">
             <ul class="flex flex-col space-y-7 mr-3">
                 @for (item of cartItems(); track item.id) {
-                <li class="cursor-pointer">
+                @if (isDropdownOpen()) {
+                <li class="cursor-pointer" [@itemAnimation]>
                     <app-preview-item [cartItem]="item" (cartRemove)="onClose($event)" />
                 </li>
+                }
                 } @empty {
                 <li class="px-4 py-2 text-gray-500 text-center">No Cart Items</li>
                 }
@@ -16,7 +18,7 @@
 
     <div class="mt-5 flex items-center justify-between">
         <p class="text-black opacity-50 text-lg font-semibold">Total</p>
-        <p class="text-button-green text-2xl font-bold">${{ total() }}.00</p>
+        <p class="text-primary-green text-2xl font-bold">${{ total() }}.00</p>
     </div>
 
     <div class="mt-5 flex items-center justify-between">

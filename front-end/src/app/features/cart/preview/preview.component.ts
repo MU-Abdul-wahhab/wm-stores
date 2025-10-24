@@ -1,11 +1,24 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+
 import { PreviewItemComponent } from "./preview-item/preview-item.component";
 
 @Component({
   selector: 'app-preview',
   imports: [PreviewItemComponent],
   templateUrl: './preview.component.html',
-  styleUrl: './preview.component.css'
+  styleUrl: './preview.component.css',
+  animations: [
+    trigger('itemAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(25px) scale(0.95)' }),
+        animate('200ms ease-in', style({ opacity: 1, transform: 'translateX(0) scale(1)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateX(25px) scale(0.95)' }))
+      ])
+    ])
+  ]
 })
 export class PreviewComponent {
   cartItems = signal([
@@ -22,16 +35,27 @@ export class PreviewComponent {
       qty: 1,
       price: 3200.00,
       avatar: 'https://wp.alithemes.com/html/evara/evara-frontend/assets/imgs/shop/thumbnail-2.jpg'
-    }
+    },
+    {
+      id: 'c3',
+      name: 'Colorful Pattern Shirts',
+      qty: 2,
+      price: 200.00,
+      avatar: 'https://wp.alithemes.com/html/evara/evara-frontend/assets/imgs/shop/product-1-2.jpg'
+    },
   ]);
 
   total = computed(() => {
     let t = 0;
     this.cartItems().forEach(item => {
-      t += item.price;
+      t += (item.price * item.qty);
     });
     return t;
   });
+
+  cartItemCount = computed(() => this.cartItems().length);
+
+  isDropdownOpen = input.required<boolean>();
 
   onClose(itemId: string) {
     this.cartItems.set(this.cartItems().filter((item) => item.id !== itemId));

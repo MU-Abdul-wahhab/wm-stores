@@ -24,9 +24,9 @@
             <button type="button" (click)="onTogglePasswordVisibility()"
               class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
               @if (showPassword()) {
-              <i class="fa-regular fa-eye text-lg transition-colors duration-200"></i>
+              <i class="bi bi-eye text-lg transition-colors duration-200"></i>
               } @else {
-              <i class="fa-regular fa-eye-slash text-lg transition-colors duration-200"></i>
+              <i class="bi bi-eye-slash text-lg transition-colors duration-200"></i>
               }
             </button>
           </div>
@@ -40,7 +40,7 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2 cursor-pointer">
             <input type="checkbox" id="checkbox"
-              class="cursor-pointer w-4 h-4 accent-button-green transition-all duration-1000" />
+              class="cursor-pointer w-4 h-4 accent-primary-green transition-all duration-1000" />
             <label for="checkbox" class="cursor-pointer text-sm text-black opacity-75 font-medium">Remember me</label>
           </div>
 
@@ -62,7 +62,7 @@
         </button>
 
         <p class="text-xs text-black  font-medium text-center mt-3">Don't Have an Account?
-          <a [routerLink]="['../signup']" class="text-buttonHover-green cursor-pointer">Sign up </a>now
+          <a [routerLink]="['../signup']" class="text-hover-green cursor-pointer">Sign up </a>now
         </p>
 
       </form>

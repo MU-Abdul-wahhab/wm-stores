@@ -4,7 +4,7 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-preview-item',
   imports: [],
   templateUrl: './preview-item.component.html',
-  styleUrl: './preview-item.component.css'
+  styleUrl: './preview-item.component.css',
 })
 export class PreviewItemComponent {
   cartItem = input.required<{

@@ -5,6 +5,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrl: './dropdown.component.css',
+  host: {
+    'class': 'flex items-center'
+  },
   animations: [
     trigger('dropdownAnimation', [
       transition(':enter', [
