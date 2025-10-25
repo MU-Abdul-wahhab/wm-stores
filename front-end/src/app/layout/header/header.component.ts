@@ -5,7 +5,6 @@ import {DropdownComponent} from '../../shared/components/dropdown/dropdown.compo
 import {CustomSelectComponent} from "../../shared/components/custom-select/custom-select.component";
 import {PreviewComponent} from "../../features/cart/preview/preview.component";
 import {HamburgerComponent} from '../../shared/components/hamburger/hamburger.component';
-import {NavSidebarComponent} from "../nav-sidebar/nav-sidebar.component";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +12,7 @@ import {NavSidebarComponent} from "../nav-sidebar/nav-sidebar.component";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   host: {
-    'class': 'sticky top-0'
+    'class': 'sticky top-0 z-50'
   }
 })
 export class HeaderComponent implements OnInit {

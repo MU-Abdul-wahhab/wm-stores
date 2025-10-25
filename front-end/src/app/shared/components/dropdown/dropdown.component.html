@@ -8,8 +8,8 @@
   <!-- Dropdown Content -->
   @if (isOpen()) {
     <div [ngClass]="{
-    'absolute top-full mt-1 bg-white shadow-lg rounded-md border border-gray-200 py-3 px-4': !noneAbsouluteSelect()
-    }" class="z-50"
+    'absolute top-full mt-1 bg-white shadow-lg rounded-md border border-gray-200 py-3 px-4': !noneAbsoluteSelect()
+    }" class="z-50 origin-top"
          [class]="width()" [class.left-0]="position() === 'left'" [class.right-0]="position() === 'right'"
          [class.left-1-2]="position() === 'center'" [class.transform]="position() === 'center'"
          [class.-translate-x-1-2]="position() === 'center'" [@dropdownAnimation]>

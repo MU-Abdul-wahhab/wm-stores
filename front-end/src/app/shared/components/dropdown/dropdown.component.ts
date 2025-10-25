@@ -12,11 +12,11 @@ import {NgClass} from '@angular/common';
   animations: [
     trigger('dropdownAnimation', [
       transition(':enter', [
-        style({opacity: 0, transform: 'translateY(20px) scale(0.95)'}),
-        animate('150ms ease-out', style({opacity: 1, transform: 'translateY(0) scale(1)'})),
+        style({ opacity: 0, transform: 'scaleY(0)' }),
+        animate('350ms ease-out', style({ opacity: 1, transform: 'scaleY(1)' })),
       ]),
       transition(':leave', [
-        animate('100ms ease-in', style({opacity: 0, transform: 'translateY(20px) scale(0.95)'})),
+        animate('350ms ease-in', style({ opacity: 0, transform: 'scaleY(0)' })),
       ]),
     ]),
   ],
@@ -29,7 +29,7 @@ export class DropdownComponent {
   triggerElement = input<'hover' | 'click'>('hover');
   position = input<'left' | 'right' | 'center'>('left');
   width = input<string>('min-w-56');
-  noneAbsouluteSelect = input<boolean>(false);
+  noneAbsoluteSelect = input<boolean>(false);
 
   options = input<string[]>([]);
 

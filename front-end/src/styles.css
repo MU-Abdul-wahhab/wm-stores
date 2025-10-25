@@ -42,6 +42,10 @@ input.ng-invalid.ng-touched.ng-dirty {
 }
 
 /* Buttons */
+.btn {
+  @apply text-sm rounded-md hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
 .btn-primary {
   @apply text-sm text-white bg-primary-green border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
 }
