@@ -1,18 +1,20 @@
-<div class="relative inline-block" #dropdownContainer (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+<div class="relative w-full block" #dropdownContainer (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
 
-    <!-- Trigger Slot -->
-    <div class="cursor-pointer" (click)="toggleDropdown()">
-        <ng-content select=".dropdown-trigger"></ng-content>
+  <!-- Trigger Slot -->
+  <div class="cursor-pointer" (click)="toggleDropdown()">
+    <ng-content select=".dropdown-trigger"></ng-content>
+  </div>
+
+  <!-- Dropdown Content -->
+  @if (isOpen()) {
+    <div [ngClass]="{
+    'absolute top-full mt-1 bg-white shadow-lg rounded-md border border-gray-200 py-3 px-4': !noneAbsouluteSelect()
+    }" class="z-50"
+         [class]="width()" [class.left-0]="position() === 'left'" [class.right-0]="position() === 'right'"
+         [class.left-1-2]="position() === 'center'" [class.transform]="position() === 'center'"
+         [class.-translate-x-1-2]="position() === 'center'" [@dropdownAnimation]>
+
+      <ng-content select=".dropdown-content"/>
     </div>
-
-    <!-- Dropdown Content -->
-    @if (isOpen()) {
-    <div class="absolute top-full mt-1 z-50 bg-white shadow-lg rounded-md border border-gray-200 py-3 px-4"
-        [class]="width()" [class.left-0]="position() === 'left'" [class.right-0]="position() === 'right'"
-        [class.left-1-2]="position() === 'center'" [class.transform]="position() === 'center'"
-        [class.-translate-x-1-2]="position() === 'center'" [@dropdownAnimation]>
-
-        <ng-content select=".dropdown-content"></ng-content>
-    </div>
-    }
+  }
 </div>

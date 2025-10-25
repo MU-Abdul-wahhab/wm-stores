@@ -1,23 +1,25 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import {Component, DestroyRef, OnInit, inject, HostListener, signal} from '@angular/core';
+import {RouterLink} from "@angular/router";
 
-import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
-import { CustomSelectComponent } from "../../shared/components/custom-select/custom-select.component";
-import { PreviewComponent } from "../../features/cart/preview/preview.component";
-import { HamburgerComponent } from '../../shared/components/hamburger/hamburger.component';
-import { NavSidebarComponent } from "../nav-sidebar/nav-sidebar.component";
+import {DropdownComponent} from '../../shared/components/dropdown/dropdown.component';
+import {CustomSelectComponent} from "../../shared/components/custom-select/custom-select.component";
+import {PreviewComponent} from "../../features/cart/preview/preview.component";
+import {HamburgerComponent} from '../../shared/components/hamburger/hamburger.component';
+import {NavSidebarComponent} from "../nav-sidebar/nav-sidebar.component";
 
 @Component({
   selector: 'app-header',
   imports: [DropdownComponent, RouterLink, CustomSelectComponent, PreviewComponent, HamburgerComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  host:{
-    'class':'sticky top-0'
+  host: {
+    'class': 'sticky top-0'
   }
 })
 export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
+
+  screenWidth = signal<number>(window.innerWidth);
 
   currentIndex = 0;
   leavingIndex = -1;
@@ -45,6 +47,11 @@ export class HeaderComponent implements OnInit {
   onCategoryChange(category: string) {
     this.selectedCategory = category;
     console.log('Category changed to:', category);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.screenWidth.set(window.innerWidth);
   }
 
   private startRotation() {

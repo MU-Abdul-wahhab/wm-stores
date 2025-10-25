@@ -14,13 +14,10 @@
 
 <!-- Overlay -->
 @if(isOpen()){
-<div @overlayAnimation class="fixed top-0 left-0 right-0 bottom-0 z-10 bg-black/70" (click)="onHamburgerClose()"></div>
+<div @overlayAnimation class="fixed top-0 left-0 right-0 bottom-0 z-10 block lg:hidden bg-black/70" (click)="onHamburgerClose()"></div>
 }
 
 @if(isOpen()){
 <!-- Sidebar -->
-<aside @sidebarAnimation
-    class="bg-white rounded-tl-sm rounded-bl-sm block lg:hidden z-20 fixed top-0 bottom-0 right-0 min-h-screen shadow shadow-blue-100 max-w-96 sm:w-96">
     <app-nav-sidebar (hamburgerClosed)="onHamburgerClose()" />
-</aside>
 }

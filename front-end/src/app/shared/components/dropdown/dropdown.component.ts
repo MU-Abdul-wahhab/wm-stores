@@ -1,5 +1,6 @@
 import { Component, input, signal, ElementRef, ViewChild, HostListener, output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-dropdown',
@@ -11,20 +12,24 @@ import { animate, style, transition, trigger } from '@angular/animations';
   animations: [
     trigger('dropdownAnimation', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' }),
-        animate('150ms ease-out', style({ opacity: 1, transform: 'translateY(0) scale(1)' })),
+        style({opacity: 0, transform: 'translateY(20px) scale(0.95)'}),
+        animate('150ms ease-out', style({opacity: 1, transform: 'translateY(0) scale(1)'})),
       ]),
       transition(':leave', [
-        animate('100ms ease-in', style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' })),
+        animate('100ms ease-in', style({opacity: 0, transform: 'translateY(20px) scale(0.95)'})),
       ]),
     ]),
   ],
+  imports: [
+    NgClass
+  ]
 })
 export class DropdownComponent {
   // Inputs
   triggerElement = input<'hover' | 'click'>('hover');
   position = input<'left' | 'right' | 'center'>('left');
   width = input<string>('min-w-56');
+  noneAbsouluteSelect = input<boolean>(false);
 
   options = input<string[]>([]);
 
