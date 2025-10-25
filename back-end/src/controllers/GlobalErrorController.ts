@@ -34,13 +34,12 @@ export class GlobalErrorController {
 
     private static sendErrorProd(err: AppError, res: Response) {
         if (err.isOperational) {
-            console.log("working");
             res.status(err.statusCode || 500).json({
                 status: err.status,
                 message: err.message,
             });
         } else {
-            console.error(err);
+
             res.status(500).json({
                 status: 'Error',
                 message: 'Something went wrong',

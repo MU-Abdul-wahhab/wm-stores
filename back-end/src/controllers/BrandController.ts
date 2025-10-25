@@ -7,9 +7,10 @@ export class BrandController {
 
         const { name, description } = req.body;
         const image = `/src/uploads/${req.file.fieldname}/${req.file.filename}`;
-
+      
         let data: any = {
-            name, description, image
+            name, description, image,
+            created_by : req.user.email
         }
 
         if (req.body.category) {
