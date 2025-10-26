@@ -40,7 +40,15 @@ export class CategoryService {
         const value = category[field];
         await category.save();
         return {
-            field,value
+            field, value
         }
     }
+
+    public static async getAllCategories(options) {
+
+        // @ts-ignore
+        const categories = await Category.paginate({}, options);
+        return categories;
+    }
+
 }

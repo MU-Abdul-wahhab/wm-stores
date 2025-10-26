@@ -7,6 +7,7 @@ import * as argon2 from 'argon2';
 import Multer from "multer";
 import fs from "fs";
 import path from "path";
+import { Request } from "express";
 
 const storageOptions = Multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,7 +27,7 @@ const storageOptions = Multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg+xml') {
         cb(null, true);
     } else {
         cb(null, false);
@@ -64,7 +65,7 @@ export class Utils {
         try {
             const isMatch = await bcrypt.compare(password, encryptedPassword);
             if (!isMatch) {
-               return false;
+                return false;
             } else {
                 return true;
             }
@@ -85,12 +86,44 @@ export class Utils {
         const filePath = path.join(__dirname, '..', '..', image);
         fs.unlink(filePath, (err) => {
             if (err) {
-                console.error('Error deleting the file:', err , image);
+                console.error('Error deleting the file:', err, image);
             } else {
                 console.log('File deleted successfully');
             }
         });
     }
 
+    public static getSearchOptions(query: any, populate: {}, allowedKeyParameter: string[], allowedSortValue: string[]) {
 
+        const invalidKeys = Object.keys(query).filter(key => !allowedKeyParameter.includes(key));
+        if (invalidKeys.length > 0) {
+            throw new Error(`Invalid query parameter(s): ${invalidKeys.join(", ")}`);
+        }
+
+        const sortQuery = query.sort ? query.sort : "created_at";
+        const sortFields = sortQuery.split(",");
+
+        const invalidSortFields = sortFields.filter(field => !allowedSortValue.includes(field));
+        if (invalidSortFields.length > 0) {
+            throw new Error(`Invalid sort field(s): ${invalidSortFields.join(", ")}`);
+        }
+
+
+        const sort: Record<string, 1 | -1> = {};
+        sortFields.forEach(field => {
+            const order = field.startsWith("-") ? -1 : 1;
+            const fieldName = field.replace("-", "");
+            sort[fieldName] = order;
+        });
+
+        const options = {
+            page: query.page || 1,
+            limit: query.limit || 5,
+            populate,
+            sort,
+            select: "-__v",
+        };
+
+        return options;
+    }
 }

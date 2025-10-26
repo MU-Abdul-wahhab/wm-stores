@@ -15,11 +15,7 @@ class CategoryRouter {
     }
 
     private getRoutes() {
-        this.router.get("/test", (req, res) => {
-            res.status(200).json({
-                message: "working"
-            })
-        })
+        this.router.get("/categories", asyncHandler(CategoryController.getAllCategories));
     }
 
     private postRoutes() {
@@ -39,7 +35,7 @@ class CategoryRouter {
             GlobalMiddleware.checkError,
             asyncHandler(CategoryController.updateCategoryStatus)
         );
-      
+
     }
 }
 

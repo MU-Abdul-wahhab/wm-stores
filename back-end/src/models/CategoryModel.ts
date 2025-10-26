@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { AppError } from "../utils/AppError";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const specSchema = new mongoose.Schema({
-    field: { type: String, required: true, unique: true },
+    field: { type: String, required: true },
     type: {
         type: String, required: true,
         enum: ["string", "number", "boolean"],
@@ -55,8 +56,7 @@ categorySchema.pre("save", async function (next) {
     next();
 
 });
-
+categorySchema.plugin(mongoosePaginate);
 const Category = mongoose.model("categories", categorySchema);
 
 export default Category;
-

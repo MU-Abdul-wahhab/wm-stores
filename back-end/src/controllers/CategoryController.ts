@@ -1,6 +1,7 @@
 // CategoryController.ts content
 
 import { CategoryService } from "../services/CategoryService";
+import { Utils } from "../utils/Utils";
 
 export class CategoryController {
 
@@ -40,6 +41,22 @@ export class CategoryController {
         res.status(200).json({
             status: "success",
             message: `Category ${response.field} Updated to ${response.value}`,
+        })
+    }
+
+    public static async getAllCategories(req, res) {
+        const populate = { path: "brands", select: "name" };
+        const allowedKeyParameter = ["page", "limit", "sort"];
+        const allowedSortValue = ["name", "-name"];
+
+        const options = Utils.getSearchOptions(req.query, populate, allowedKeyParameter, allowedSortValue);
+
+        const categories = await CategoryService.getAllCategories(options);
+
+        res.status(200).json({
+            status: "success",
+            message: "Categories fetched successfully",
+            categories
         })
     }
 
