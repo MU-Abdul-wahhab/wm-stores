@@ -15,7 +15,7 @@ class BrandRouter {
     }
 
     private getRoutes() {
-
+        this.router.get("/brands", asyncHandler(BrandController.getAllBrands));
     }
     private postRoutes() {
         this.router.post("/create",

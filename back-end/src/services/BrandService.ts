@@ -22,7 +22,7 @@ export class BrandService {
             for (const id of data.category) {
                 const categoryExists = await Category.findById(id);
                 if (!categoryExists) {
-                      Utils.deleteFile(image);
+                    Utils.deleteFile(image);
                     throw new AppError(`Invalid Category ID: ${id}`, 400);
                 }
             }
@@ -38,8 +38,11 @@ export class BrandService {
 
     }
 
-    public static async updateBrand(data: any) {
+    public static async getAllBrands(options) {
 
+        // @ts-ignore
+        const brands = await Brand.paginate({}, options);
+        return brands;
     }
 
 }

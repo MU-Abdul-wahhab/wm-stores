@@ -1,5 +1,6 @@
 import { body, param, query } from "express-validator";
 import { AppError } from "../utils/AppError";
+import path from "path";
 
 export class CategoryValidator {
 
@@ -12,6 +13,10 @@ export class CategoryValidator {
             body("description", "Description is Required").notEmpty(),
             body("category", "Category Image is Required").custom((category, { req }) => {
                 if (req.file) {
+                    const ext = path.extname(req.file.originalname).toLowerCase();
+                    if (ext !== ".svg") {
+                        throw new AppError("Only .svg icons are allowed", 400);
+                    }
                     return true
                 } else {
                     throw new AppError("File Not Uploaded", 400);
@@ -50,7 +55,7 @@ export class CategoryValidator {
     static updateCategoryStatus() {
         return [
             param("id").isMongoId().withMessage("Invalid category ID"),
-            query("field").optional().isString().isIn(["isFeatured" , "status"]).withMessage("Invalid Field")
+            query("field").optional().isString().isIn(["isFeatured", "status"]).withMessage("Invalid Field")
         ]
     }
 

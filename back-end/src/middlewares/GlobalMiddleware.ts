@@ -51,11 +51,10 @@ export class GlobalMiddleware {
 
     static parseJSON(field: string) {
         return (req, res, next) => {
-            console.log(req.body[field]);
+
             if (Array.isArray(req.body[field])) {
                 try {
                     req.body[field] = req.body[field].map(value => JSON.parse(value));
-                    console.log(req.body[field]);
                 } catch (err) {
                     throw new AppError("Invalid Specs Format", 400);
                 }
@@ -64,7 +63,7 @@ export class GlobalMiddleware {
         }
     }
 
-    static convertArray(field : string) {
+    static convertArray(field: string) {
         return (req, res, next) => {
             if (req.body[field] && !Array.isArray(req.body[field])) {
                 req.body[field] = [req.body[field]];
