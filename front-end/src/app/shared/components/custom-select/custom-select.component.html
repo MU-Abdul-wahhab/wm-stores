@@ -1,0 +1,23 @@
+<!-- Sticky Search Bar -->
+@if(needAnSearchBar()){
+<div class="sticky top-0 bg-white py-3 z-10">
+    <input type="text" title="search" class="form-control px-4 py-3 text-xs w-full" placeholder="Search..."
+        [(ngModel)]="value" />
+</div>
+}
+
+<!-- Scrollable List with Custom Scrollbar -->
+<div class="max-h-60 overflow-y-auto text-sm custom-scrollbar">
+    <ul class="flex flex-col py-2">
+        @for (item of filteredOptions(); track $index) {
+        <li class="px-4 py-2 hover:bg-light-green cursor-pointer transition-colors duration-200 text-gray-700 hover:text-black truncate"
+            [ngClass]="{
+                'bg-light-gray': item === selectedValue(),
+            }" (click)="selectItem(item)">
+            {{ item }}
+        </li>
+        } @empty {
+        <li class="px-4 py-2 text-gray-500 text-center">No results found</li>
+        }
+    </ul>
+</div>

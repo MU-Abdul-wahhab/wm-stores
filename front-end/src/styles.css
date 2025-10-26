@@ -2,31 +2,82 @@
 @import "tailwindcss";
 
 @theme {
-    --breakpoint-*: initial;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --breakpoint-xxl: 1400px;
+  --breakpoint-*: initial;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
 
-    --color-button-green: #088178;
-    --color-buttonHover-green: #046963;
-    --color-orange-500: #ffa500;
+  --color-primary-green: #088178;
+  --color-light-green: #9ddbc9;
+  --color-hover-green: #046963;
+  --color-orange-500: #ffa500;
+  --color-primary-gray: #1a1a1a;
+  --color-secondary-gray: #494949;
+  --color-light-gray: #ececec;
+  --color-light-bg-gray: #eeeeee;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
 }
 
-*{
-    @apply selection:bg-button-green selection:text-white selection:opacity-100;
+* {
+  @apply selection:bg-primary-green selection:text-white selection:opacity-100;
+}
+
+/* Forms */
+.form-control {
+  @apply w-full border border-gray-300 rounded-sm outline-0 placeholder:text-black placeholder:opacity-75 placeholder:font-medium focus:border-primary-green transition-all duration-200 focus:shadow-sm;
 }
 
 input.ng-invalid.ng-touched.ng-dirty {
   background-color: #fbdcd6;
   border-color: #f84e2c;
+}
+
+/* Buttons */
+.btn {
+  @apply text-sm rounded-md hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-primary {
+  @apply text-sm text-white bg-primary-green border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-hover {
+  @apply text-sm text-primary-green bg-white border-2 border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:text-white hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-disabled {
+  @apply text-sm text-white bg-primary-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
+}
+
+/* Scroll Bar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #088178 #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #9ddbc9;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7bc7b0;
 }

@@ -1,15 +1,16 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
 import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
 
 import {AuthService} from '../../../core/services/auth.service';
-import {AlertComponent} from "../../../shared/alert/alert.component";
+import {AlertComponent} from "../../../shared/components/alert/alert.component";
 
 @Component({
   selector: 'app-signup',
   imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupComponent {
 
@@ -18,6 +19,7 @@ export class SignupComponent {
   private destroyRef = inject(DestroyRef);
   submitted = signal(false);
   isLoading = signal(false);
+  showPassword = signal(false);
   errorMsg = signal<string | undefined>(undefined);
   successMsg = signal<string | undefined>(undefined);
 
@@ -58,6 +60,10 @@ export class SignupComponent {
 
   get isPasswordInvalid() {
     return (this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid);
+  }
+
+  onTogglePasswordVisibility() {
+    this.showPassword.update(showed=> !showed);
   }
 
   onSubmit() {

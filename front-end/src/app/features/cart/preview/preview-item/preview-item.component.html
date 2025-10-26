@@ -1,0 +1,17 @@
+<article class="relative flex items-start space-x-4">
+
+    <p>
+        <img [src]="cartItem().avatar" [alt]="cartItem().name" class="h-16 w-16 sm:h-20 sm:w-20" />
+    </p>
+
+    <div>
+        <h1 class="text-primary-green text-base sm:text-lg">{{ cartItem().name }}</h1>
+        <h6 class="text-gray-900 text-base sm:text-lg">{{ cartItem().qty }} x ${{ cartItem().price }}.00</h6>
+    </div>
+
+    <button type="button" title="Close" (click)="onClose()"
+        class="absolute right-0 top-0 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+        <i class="bi bi-x-lg font-extrabold transition-colors duration-200"></i>
+    </button>
+
+</article>

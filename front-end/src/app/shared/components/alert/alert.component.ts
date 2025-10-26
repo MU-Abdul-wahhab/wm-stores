@@ -35,7 +35,7 @@ export class AlertComponent {
   buttonColor = computed(() => {
     return this.isError()
       ? 'bg-orange-500 hover:bg-orange-600'
-      : 'bg-button-green hover:bg-buttonHover-green';
+      : 'bg-primary-green hover:bg-hover-green';
   });
 
   ngAfterViewInit(): void {

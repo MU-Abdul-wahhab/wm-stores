@@ -1,23 +1,25 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
 import {RouterLink, Router, CanDeactivateFn} from '@angular/router';
-import {AuthService} from '../../../core/services/auth.service';
 
-import {AlertComponent} from '../../../shared/alert/alert.component';
+import {AuthService} from '../../../core/services/auth.service';
+import {AlertComponent} from '../../../shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink, AlertComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
 
   private router = inject(Router);
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
-  submitted = signal(false);
   isLoading = signal(false);
+  submitted = signal(false);
+  showPassword = signal(false);
   errorMsg = signal<string | undefined>(undefined);
   successMsg = signal<string | undefined>(undefined);
 
@@ -38,6 +40,10 @@ export class LoginComponent {
     return (this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid);
   }
 
+  onTogglePasswordVisibility() {
+    this.showPassword.update(showed=> !showed);
+  }
+
   onSubmit() {
 
     if (this.form.invalid) {
@@ -45,6 +51,7 @@ export class LoginComponent {
     }
 
     this.isLoading.set(true);
+    this.errorMsg.set(undefined);
     const enteredEmail = this.form.value.email;
     const enteredPassword = this.form.value.password;
 
@@ -53,8 +60,8 @@ export class LoginComponent {
       const subscription = this.authService.signin({email: enteredEmail, password: enteredPassword}).subscribe({
         next: (resData) => {
           this.isLoading.set(false);
+          this.successMsg.set('Successfully Logged in!');
           this.form.reset();
-          this.onSuccessDialogClose();
         },
         error: (err) => {
           this.successMsg.set(undefined);

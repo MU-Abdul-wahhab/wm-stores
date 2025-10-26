@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.dropdown-content-container {
+  overflow: hidden;
+}
+
+.left-1-2 {
+    @apply left-1/2;
+}
+
+.-translate-x-1-2 {
+    @apply -translate-x-1/2;
+}

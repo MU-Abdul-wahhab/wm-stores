@@ -1,23 +1,20 @@
-import {Component, inject} from '@angular/core';
-import {AuthService} from '../core/services/auth.service';
+import { Component, computed, inject, OnInit } from '@angular/core';
+
+import { AuthService } from '../core/services/auth.service';
+import { HeaderComponent } from "./header/header.component";
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [],
+  imports: [HeaderComponent, FooterComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent {
 
   private authService = inject(AuthService);
-  isAuthenticated = false;
+  isAuthenticated = computed(() => {
+    return this.authService.isAuthenticated();
+  });
 
-  ngOnInit(){
-    this.authService.user$.subscribe({
-      next: user => {
-        this.isAuthenticated=!!user;
-      }
-    });
-    this.authService.autoSignin();
-  }
 }

@@ -1,0 +1,23 @@
+<!-- hamburger btn -->
+<!-- <button title="hamburger" id="menu-btn" type="button" class="block hamburger z-50 md: focus:outline-none lg:hidden" [class.open]="isOpen()" (click)="onHamburgerClick()">
+
+    <span class="hamburger-top"></span>
+    <span class="hamburger-middle"></span>
+    <span class="hamburger-bottom"></span>
+
+</button> -->
+
+<!-- Hamburger trigger button -->
+<button type="button" title="Hamburger" class="cursor-pointer block lg:hidden focus:outline-none" (click)="onHamburgerOpen()">
+    <i class="bi bi-list"></i>
+</button>
+
+<!-- Overlay -->
+@if(isOpen()){
+<div @overlayAnimation class="fixed top-0 left-0 right-0 bottom-0 z-10 block lg:hidden bg-black/70" (click)="onHamburgerClose()"></div>
+}
+
+@if(isOpen()){
+<!-- Sidebar -->
+    <app-nav-sidebar (hamburgerClosed)="onHamburgerClose()" />
+}
