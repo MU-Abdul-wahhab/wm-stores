@@ -35,15 +35,15 @@ export class CategoryController {
             id, field
         }
 
-      const response = await CategoryService.updateCategoryStatus(data);
+        const response = await CategoryService.updateCategoryStatus(data);
 
         res.status(200).json({
             status: "success",
             message: `Category ${response.field} Updated to ${response.value}`,
         })
     }
-}
 
+}
 // 1. Brands
 // 2. Name
 // 3. Description

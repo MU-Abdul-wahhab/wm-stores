@@ -22,6 +22,7 @@ class BrandRouter {
             GlobalMiddleware.auth,
             GlobalMiddleware.checkRole("admin"),
             new Utils().multer.single("brand"),
+            GlobalMiddleware.convertArray("category"),
             BrandValidator.createBrand(),
             GlobalMiddleware.checkError,
             asyncHandler(BrandController.createBrand));

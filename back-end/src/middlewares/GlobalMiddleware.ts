@@ -21,7 +21,6 @@ export class GlobalMiddleware {
 
     static async auth(req, res, next) {
         let token;
-
         if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
             token = req.headers.authorization.split(" ")[1];
         }
@@ -60,6 +59,15 @@ export class GlobalMiddleware {
                 } catch (err) {
                     throw new AppError("Invalid Specs Format", 400);
                 }
+            }
+            next();
+        }
+    }
+
+    static convertArray(field : string) {
+        return (req, res, next) => {
+            if (req.body[field] && !Array.isArray(req.body[field])) {
+                req.body[field] = [req.body[field]];
             }
             next();
         }
