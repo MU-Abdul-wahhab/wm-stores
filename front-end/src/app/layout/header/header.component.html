@@ -1,70 +1,69 @@
 @if (screenWidth() >= 992) {
-  <header class="w-full px-4 bg-primary-green text-white p-1 text-[13px] hidden lg:block">
-    <div class="container mx-auto flex items-center justify-around lg:justify-between">
+<header class="w-full px-4 bg-primary-green text-white p-1 text-[13px] hidden lg:block">
+  <div class="container mx-auto flex items-center justify-around lg:justify-between">
 
-      <div class="flex items-center">
-        <p>
-          <i class="bi bi-phone"></i>&nbsp;
-          <span class="font-extralight">(+94) - 72 257 8559</span>
-        </p>
-        <p class="mx-2 text-xl font-extralight">|</p>
-        <p>
-          <i class="bi bi-geo-alt"></i>&nbsp;
-          <span class="font-extralight">Our location</span>
-        </p>
-      </div>
-
-      <div class="flex items-center flex-1">
-        <div class="text-rotator">
-          @for (message of messages; track message; let i = $index) {
-            <div class="text-item" [class.active]="i === currentIndex" [class.leaving]="i === leavingIndex"
-                 [class.entering]="i !== currentIndex && i !== leavingIndex">
-              <p class="font-medium">{{ message }}</p>
-            </div>
-          }
-        </div>
-      </div>
-
-      <div class="flex items-center">
-        <div class="pointer-events-none inset-y-0 flex items-center px-2 text-white">
-          <i class="bi bi-currency-dollar"></i>
-        </div>
-
-        <!-- Currency Selector -->
-        <app-dropdown triggerElement="hover" width="min-w-40" position="center" #currencyDropdown>
-          <div class="dropdown-trigger">
-            <div
-              class="cursor-pointer appearance-none pr-8 pl-3 py-1 border border-gray-300 rounded text-white">
-              <p class="truncate">{{ selectedCurrency || 'Select currency' }}</p>
-            </div>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-              <i class="bi bi-caret-down-fill text-[10px] duration-200"
-                 [class.rotate-180]="currencyDropdown.isOpen()"></i>
-            </div>
-          </div>
-
-          <div class="dropdown-content">
-            <app-custom-select [_options]="currencies" [selected]="selectedCurrency"
-                               (selectionChange)="onCurrencyChange($event)" (closeRequest)="currencyDropdown.close()">
-            </app-custom-select>
-          </div>
-        </app-dropdown>
-
-        <p class="mx-2 text-xl font-extralight">|</p>
-        <a routerLink="/auth" class="flex items-center">
-          <i class="bi bi-person text-lg"></i>&nbsp;
-          <span class="font-extralight">Log In / Sign Up</span>
-        </a>
-      </div>
-
+    <div class="flex items-center">
+      <p>
+        <i class="bi bi-phone"></i>&nbsp;
+        <span class="font-extralight">(+94) - 72 257 8559</span>
+      </p>
+      <p class="mx-2 text-xl font-extralight">|</p>
+      <p>
+        <i class="bi bi-geo-alt"></i>&nbsp;
+        <span class="font-extralight">Our location</span>
+      </p>
     </div>
-  </header>
+
+    <div class="flex items-center flex-1">
+      <div class="text-rotator">
+        @for (message of messages; track message; let i = $index) {
+        <div class="text-item" [class.active]="i === currentIndex" [class.leaving]="i === leavingIndex"
+          [class.entering]="i !== currentIndex && i !== leavingIndex">
+          <p class="font-medium">{{ message }}</p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <div class="pointer-events-none inset-y-0 flex items-center px-2 text-white">
+        <i class="bi bi-currency-dollar"></i>
+      </div>
+
+      <!-- Currency Selector -->
+      <app-dropdown triggerElement="hover" width="min-w-40" position="center" #currencyDropdown>
+        <div class="dropdown-trigger">
+          <div class="cursor-pointer appearance-none pr-8 pl-3 py-1 border border-gray-300 rounded text-white max-w-32">
+            <p class="truncate">{{ selectedCurrency || 'Select currency' }}</p>
+          </div>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+            <i class="bi bi-caret-down-fill text-[10px] duration-200"
+              [class.rotate-180]="currencyDropdown.isOpen()"></i>
+          </div>
+        </div>
+
+        <div class="dropdown-content">
+          <app-custom-select [_options]="currencies" [selected]="selectedCurrency"
+            (selectionChange)="onCurrencyChange($event)" (closeRequest)="currencyDropdown.close()">
+          </app-custom-select>
+        </div>
+      </app-dropdown>
+
+      <p class="mx-2 text-xl font-extralight">|</p>
+      <a routerLink="/auth" class="flex items-center">
+        <i class="bi bi-person text-lg"></i>&nbsp;
+        <span class="font-extralight">Log In / Sign Up</span>
+      </a>
+    </div>
+
+  </div>
+</header>
 }
 <nav class="px-4 py-2 md:py-4 lg:py-6 border-b-2 border-b-primary-green md:border-b-0 bg-white">
   <div class="container mx-auto flex items-center justify-between md:border-y md:border-y-slate-300 lg:border-y-0">
 
     <div class="flex items-center">
-      <img src="logo.png" alt="logo" class="h-10"/>
+      <img src="logo.png" alt="logo" class="h-10" />
     </div>
 
     <div class="flex-1 mx-5 lg:mx-40">
@@ -78,29 +77,27 @@
               [style.border-top-right-radius]="'0'" [style.border-bottom-right-radius]="'0'">
               <p class="truncate">{{ selectedCategory || 'Select Category' }}</p>
             </div>
-            <div
-              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
               <i class="bi bi-caret-down-fill text-[10px] mt-1 duration-200"
-                 [class.rotate-180]="categoryDropdown.isOpen()"></i>
+                [class.rotate-180]="categoryDropdown.isOpen()"></i>
             </div>
           </div>
 
           <div class="dropdown-content">
-            <app-custom-select [_options]="categories" [selected]="selectedCategory"
-                               [needAnSearchBar]="true" (selectionChange)="onCategoryChange($event)"
-                               (closeRequest)="categoryDropdown.close()">
+            <app-custom-select [_options]="categories" [selected]="selectedCategory" [needAnSearchBar]="true"
+              (selectionChange)="onCategoryChange($event)" (closeRequest)="categoryDropdown.close()">
             </app-custom-select>
           </div>
         </app-dropdown>
 
         <div class="relative flex-1">
           <button type="button" title="search"
-                  class="absolute inset-y-0 left-4 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+            class="absolute inset-y-0 left-4 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
             <i class="bi bi-search text-lg transition-colors duration-200"></i>
           </button>
 
           <input type="text" id="search" required placeholder="Search for items..."
-                 class="form-control px-5 py-3 pl-12 italic text-sm"/>
+            class="form-control px-5 py-3 pl-12 italic text-sm" />
         </div>
       </div>
 
@@ -117,31 +114,31 @@
         <i class="bi bi-suit-heart"></i>
         <span
           class="absolute -top-0 -right-2 md:-top-1 md:-right-3 bg-primary-green text-white text-xs md:text-sm rounded-full w-4 h-4 md:h-5 md:w-5 flex items-center justify-center shadow">
-                    4
-                </span>
+          4
+        </span>
       </div>
 
       <!-- Cart Preview -->
-      <app-dropdown [triggerElement]="screenWidth() >= 992 ? 'hover':'click'" [width]="screenWidth() >= 576 ? 'min-w-[345px]':'min-w-[285px]'" position="right"
-                    #cartDropdown>
+      <app-dropdown [triggerElement]="screenWidth() >= 992 ? 'hover':'click'"
+        [width]="screenWidth() >= 576 ? 'min-w-[345px]':'min-w-[285px]'" position="right" #cartDropdown>
         <div class="dropdown-trigger">
           <div class="relative cursor-pointer">
             <i class="bi bi-bag"></i>
             @if (preview.cartItemCount() !== 0) {
-              <span
-                class="absolute -top-0 -right-2 md:-top-1 md:-right-3 bg-primary-green text-white text-xs md:text-sm rounded-full w-4 h-4 md:h-5 md:w-5 flex items-center justify-center shadow">
-                            {{ preview.cartItemCount() }}
-                        </span>
+            <span
+              class="absolute -top-0 -right-2 md:-top-1 md:-right-3 bg-primary-green text-white text-xs md:text-sm rounded-full w-4 h-4 md:h-5 md:w-5 flex items-center justify-center shadow">
+              {{ preview.cartItemCount() }}
+            </span>
             }
           </div>
         </div>
 
         <div class="dropdown-content">
-          <app-preview [isDropdownOpen]="cartDropdown.isOpen()" #preview/>
+          <app-preview [isDropdownOpen]="cartDropdown.isOpen()" #preview />
         </div>
       </app-dropdown>
 
-      <app-hamburger/>
+      <app-hamburger />
 
     </div>
 
@@ -149,160 +146,149 @@
 </nav>
 
 @if (screenWidth() >= 992) {
-  <menu class="pb-6 px-4 hidden lg:block bg-white">
-    <div class="container mx-auto flex items-center justify-between border-y border-y-slate-300 py-4">
+<menu class="px-4 hidden lg:block bg-white sticky top-0 z-40" [class.border-b-2]="isSticky()"
+  [class.border-b-primary-green]="isSticky()">
+  <div class="container mx-auto flex items-center justify-between py-4" [class.border-y]="!isSticky()"
+    [class.border-y-slate-300]="!isSticky()">
 
-      <div class="flex-1">
-        <app-dropdown triggerElement="click" width="min-w-56" position="left" #category>
-          <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-            <div class="cursor-pointer appearance-none pr-4 flex items-center space-x-2">
-              <i class="bi bi-grid text-secondary-gray text-lg font-bold"></i>
-              <p class="text-primary-green text-lg font-semibold">Browse Categories</p>
+    <div class="flex-1">
+      <app-dropdown triggerElement="click" width="min-w-56" position="left" #category>
+        <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+          <div class="cursor-pointer appearance-none pr-4 flex items-center space-x-2">
+            <i class="bi bi-grid text-secondary-gray text-lg font-bold"></i>
+            <p class="text-primary-green text-lg font-semibold">Browse Categories</p>
+          </div>
+        </div>
+
+        <div class="dropdown-content">
+          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="category.close()">
+          </app-custom-select>
+        </div>
+      </app-dropdown>
+    </div>
+
+    <div class="flex-3 flex items-center">
+
+      <ul class="w-full flex justify-around items-center">
+        <li>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #home>
+            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+              <div class="cursor-pointer appearance-none pr-4">
+                <p class="truncate">
+                  {{ 'Home' }}</p>
+              </div>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="home.isOpen()"></i>
+              </div>
             </div>
-          </div>
 
-          <div class="dropdown-content">
-            <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                               (closeRequest)="category.close()">
-            </app-custom-select>
-          </div>
-        </app-dropdown>
-      </div>
+            <div class="dropdown-content">
+              <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="home.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
 
-      <div class="flex-3 flex items-center">
+        <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
+          About
+        </li>
 
-        <ul class="w-full flex justify-around items-center">
-          <li>
-            <app-dropdown triggerElement="hover" width="min-w-56" position="left" #home>
-              <div
-                class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-                <div class="cursor-pointer appearance-none pr-4">
-                  <p class="truncate">
-                    {{ 'Home' }}</p>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <i class="bi bi-chevron-down text-[10px] mt-1 duration-200"
-                     [class.rotate-180]="home.isOpen()"></i>
-                </div>
+        <li>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #shop>
+            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+              <div class="cursor-pointer appearance-none pr-4">
+                <p class="truncate">
+                  {{ 'Shop' }}</p>
               </div>
-
-              <div class="dropdown-content">
-                <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                                   (closeRequest)="home.close()">
-                </app-custom-select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="shop.isOpen()"></i>
               </div>
-            </app-dropdown>
-          </li>
+            </div>
 
-          <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
-            About
-          </li>
+            <div class="dropdown-content">
+              <app-custom-select
+                [_options]="['Shop Grid – Right Sidebar', 'Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar']"
+                (closeRequest)="shop.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
 
-          <li>
-            <app-dropdown triggerElement="hover" width="min-w-56" position="left" #shop>
-              <div
-                class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-                <div class="cursor-pointer appearance-none pr-4">
-                  <p class="truncate">
-                    {{ 'Shop' }}</p>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <i class="bi bi-chevron-down text-[10px] mt-1 duration-200"
-                     [class.rotate-180]="shop.isOpen()"></i>
-                </div>
+
+        <li>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #menu>
+            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+              <div class="cursor-pointer appearance-none pr-4">
+                <p class="truncate">
+                  {{ 'Mega menu' }}</p>
               </div>
-
-              <div class="dropdown-content">
-                <app-custom-select
-                  [_options]="['Shop Grid – Right Sidebar', 'Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar']"
-                  (closeRequest)="shop.close()">
-                </app-custom-select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="menu.isOpen()"></i>
               </div>
-            </app-dropdown>
-          </li>
+            </div>
 
+            <div class="dropdown-content">
+              <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="menu.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
 
-          <li>
-            <app-dropdown triggerElement="hover" width="min-w-56" position="left" #menu>
-              <div
-                class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-                <div class="cursor-pointer appearance-none pr-4">
-                  <p class="truncate">
-                    {{ 'Mega menu' }}</p>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <i class="bi bi-chevron-down text-[10px] mt-1 duration-200"
-                     [class.rotate-180]="menu.isOpen()"></i>
-                </div>
+        <li>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #blog>
+            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+              <div class="cursor-pointer appearance-none pr-4">
+                <p class="truncate">
+                  {{ 'Blog' }}</p>
               </div>
-
-              <div class="dropdown-content">
-                <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                                   (closeRequest)="menu.close()">
-                </app-custom-select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="blog.isOpen()"></i>
               </div>
-            </app-dropdown>
-          </li>
+            </div>
 
-          <li>
-            <app-dropdown triggerElement="hover" width="min-w-56" position="left" #blog>
-              <div
-                class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-                <div class="cursor-pointer appearance-none pr-4">
-                  <p class="truncate">
-                    {{ 'Blog' }}</p>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <i class="bi bi-chevron-down text-[10px] mt-1 duration-200"
-                     [class.rotate-180]="blog.isOpen()"></i>
-                </div>
+            <div class="dropdown-content">
+              <app-custom-select
+                [_options]="['Blog Category Grid', 'Blog Category List', 'Blog Category Big', 'Blog Category Wide']"
+                (closeRequest)="blog.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
+
+        <li>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #pages>
+            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
+              <div class="cursor-pointer appearance-none pr-4">
+                <p class="truncate">
+                  {{ 'Pages' }}</p>
               </div>
-
-              <div class="dropdown-content">
-                <app-custom-select
-                  [_options]="['Blog Category Grid', 'Blog Category List', 'Blog Category Big', 'Blog Category Wide']"
-                  (closeRequest)="blog.close()">
-                </app-custom-select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="pages.isOpen()"></i>
               </div>
-            </app-dropdown>
-          </li>
+            </div>
 
-          <li>
-            <app-dropdown triggerElement="hover" width="min-w-56" position="left" #pages>
-              <div
-                class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-                <div class="cursor-pointer appearance-none pr-4">
-                  <p class="truncate">
-                    {{ 'Pages' }}</p>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <i class="bi bi-chevron-down text-[10px] mt-1 duration-200"
-                     [class.rotate-180]="pages.isOpen()"></i>
-                </div>
-              </div>
+            <div class="dropdown-content">
+              <app-custom-select
+                [_options]="['About Us', 'Contact', 'My Account', 'login/register', 'Privacy Policy', 'Terms of Services', '404 Page']"
+                (closeRequest)="pages.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
 
-              <div class="dropdown-content">
-                <app-custom-select
-                  [_options]="['About Us', 'Contact', 'My Account', 'login/register', 'Privacy Policy', 'Terms of Services', '404 Page']"
-                  (closeRequest)="pages.close()">
-                </app-custom-select>
-              </div>
-            </app-dropdown>
-          </li>
-
-          <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
-            Contact
-          </li>
-        </ul>
-
-      </div>
-
-      <div class="flex-1 flex items-center justify-end space-x-1">
-        <i class="bi bi-headset text-gray-700 text-lg font-bold"></i>
-        <p class="text-primary-gray font-bold text-sm mr-3">Hotline</p>
-        <p class="text-primary-green text-lg font-semibold">1900 - 888</p>
-      </div>
+        <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
+          Contact
+        </li>
+      </ul>
 
     </div>
-  </menu>
+
+    <div class="flex-1 flex items-center justify-end space-x-1">
+      <i class="bi bi-headset text-gray-700 text-lg font-bold"></i>
+      <p class="text-primary-gray font-bold text-sm mr-3">Hotline</p>
+      <p class="text-primary-green text-lg font-semibold">1900 - 888</p>
+    </div>
+
+  </div>
+</menu>
 }
