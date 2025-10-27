@@ -1,9 +1,11 @@
-import {Component, HostListener, output} from '@angular/core';
+import {Component, HostListener, output, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 import {DropdownComponent} from "../../shared/components/dropdown/dropdown.component";
 import {CustomSelectComponent} from "../../shared/components/custom-select/custom-select.component";
+import { IMAGES } from '../../shared/constants/image-path';
+import { NAV_LINKS, NavLink } from '../../shared/constants/nav-links';
 
 @Component({
   selector: 'app-nav-sidebar',
@@ -16,7 +18,13 @@ import {CustomSelectComponent} from "../../shared/components/custom-select/custo
   }
 })
 export class NavSidebarComponent {
+  APP_LOGO = IMAGES.APP_LOGO;
+  NAV_LINKS = signal(NAV_LINKS);
   hamburgerClosed = output<void>();
+
+   getSubNavLabels(subLinks?: NavLink[]): string[] {
+    return subLinks ? subLinks.map(sub => sub.label) : [];
+  }
 
   onHamburgerClose() {
     this.hamburgerClosed.emit();

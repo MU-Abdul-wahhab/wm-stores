@@ -5,6 +5,8 @@ import { DropdownComponent } from '../../shared/components/dropdown/dropdown.com
 import { CustomSelectComponent } from "../../shared/components/custom-select/custom-select.component";
 import { PreviewComponent } from "../../features/cart/preview/preview.component";
 import { HamburgerComponent } from '../../shared/components/hamburger/hamburger.component';
+import { IMAGES } from '../../shared/constants/image-path';
+import { NAV_LINKS, NavLink } from '../../shared/constants/nav-links';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +19,8 @@ import { HamburgerComponent } from '../../shared/components/hamburger/hamburger.
 })
 export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
+  APP_LOGO = IMAGES.APP_LOGO;
+  NAV_LINKS = signal(NAV_LINKS);
 
   screenWidth = signal<number>(window.innerWidth);
   isSticky = signal(false);
@@ -35,6 +39,11 @@ export class HeaderComponent implements OnInit {
   selectedCurrency = this.currencies[0];
   selectedCategory = this.categories[0];
 
+  getSubNavLabels(subLinks?: NavLink[]): string[] {
+    return subLinks ? subLinks.map(sub => sub.label) : [];
+  }
+
+
   ngOnInit() {
     this.startRotation();
   }
@@ -47,10 +56,6 @@ export class HeaderComponent implements OnInit {
   onCategoryChange(category: string) {
     this.selectedCategory = category;
     console.log('Category changed to:', category);
-  }
-
-  onScreenScroll() {
-    console.log("scrolling");
   }
 
   @HostListener('window:resize')

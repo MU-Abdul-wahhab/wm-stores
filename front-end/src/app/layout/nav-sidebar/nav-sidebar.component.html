@@ -1,11 +1,11 @@
 <header class="px-8 py-5">
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <img src="logo.png" alt="logo" class="h-10"/>
+      <img [src]="APP_LOGO" alt="logo" class="h-10" />
     </div>
 
     <button type="button" title="Close" (click)="onHamburgerClose()"
-            class="flex items-center text-primary-gray hover:text-black text-2xl focus:outline-none cursor-pointer">
+      class="flex items-center text-primary-gray hover:text-black text-2xl focus:outline-none cursor-pointer">
       <i class="bi bi-x-lg fa-sm mt-2 font-bold transition-colors duration-200"></i>
     </button>
   </div>
@@ -15,16 +15,16 @@
 
   <div class="relative">
     <button type="button" title="search"
-            class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+      class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
       <i class="bi bi-search text-lg transition-colors duration-200"></i>
     </button>
 
     <input type="text" title="search" class="form-control px-4 pr-10 py-3 text-sm w-full"
-           placeholder="Search for items..."/>
+      placeholder="Search for items..." />
   </div>
 
   <div class="py-6">
-    <app-dropdown [noneAbsoluteSelect]="true"  triggerElement="click" width="min-w-56" position="left" #category>
+    <app-dropdown [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #category>
       <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
         <div class="cursor-pointer appearance-none pr-4 flex items-center space-x-2">
           <i class="bi bi-grid text-secondary-gray text-2xl font-bold"></i>
@@ -34,8 +34,7 @@
       </div>
 
       <div class="dropdown-content">
-        <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                           (closeRequest)="category.close()">
+        <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="category.close()">
         </app-custom-select>
       </div>
     </app-dropdown>
@@ -43,149 +42,49 @@
 
   <ul class="w-full flex flex-col space-y-3 justify-around items-start">
 
+    @for(link of NAV_LINKS(); track link.label){
+    @if(link.subNavLink){
+
     <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #home>
+      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left"
+        #label>
         <div
           class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
 
           <div class="cursor-pointer appearance-none">
             <p class="truncate">
-              {{ 'Home' }}</p>
+              {{ link.label }}</p>
           </div>
 
           <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="home.isOpen()"></i>
+            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="label.isOpen()"></i>
           </div>
 
         </div>
 
         <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="home.close()">
+          <app-custom-select [_options]="getSubNavLabels(link.subNavLink)" (closeRequest)="label.close()">
           </app-custom-select>
         </div>
       </app-dropdown>
     </li>
+
+    }@else{
 
     <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #shop>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
+      <div
+        class="w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
 
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ 'Shop' }}</p>
-          </div>
-
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="shop.isOpen()"></i>
-          </div>
-
+        <div class="cursor-pointer appearance-none">
+          <p class="truncate">
+            {{ link.label }}</p>
         </div>
 
-        <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="shop.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
+      </div>
     </li>
 
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #mega>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
-
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ 'Mega menu' }}</p>
-          </div>
-
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="mega.isOpen()"></i>
-          </div>
-
-        </div>
-
-        <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="mega.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
-    </li>
-
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #blog>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
-
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ 'Blog' }}</p>
-          </div>
-
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="blog.isOpen()"></i>
-          </div>
-
-        </div>
-
-        <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="blog.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
-    </li>
-
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #pages>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
-
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ 'Pages' }}</p>
-          </div>
-
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="pages.isOpen()"></i>
-          </div>
-
-        </div>
-
-        <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="pages.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
-    </li>
-
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left" #currency>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
-
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ 'Currency' }}</p>
-          </div>
-
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="currency.isOpen()"></i>
-          </div>
-
-        </div>
-
-        <div class="dropdown-content">
-          <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']"
-                             (closeRequest)="currency.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
-    </li>
+    }
+    }
 
   </ul>
 
