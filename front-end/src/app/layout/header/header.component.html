@@ -59,11 +59,12 @@
   </div>
 </header>
 }
+
 <nav class="px-4 py-2 md:py-4 lg:py-6 border-b-2 border-b-primary-green md:border-b-0 bg-white">
   <div class="container mx-auto flex items-center justify-between md:border-y md:border-y-slate-300 lg:border-y-0">
 
     <div class="flex items-center">
-      <img src="logo.png" alt="logo" class="h-10" />
+      <img [src]="APP_LOGO" alt="App Logo" class="h-10" />
     </div>
 
     <div class="flex-1 mx-5 lg:mx-40">
@@ -170,115 +171,37 @@
     <div class="flex-3 flex items-center">
 
       <ul class="w-full flex justify-around items-center">
+
+        @for(link of NAV_LINKS(); track link.label){
+        @if(link.subNavLink){
+
         <li>
-          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #home>
+          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #label>
             <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
               <div class="cursor-pointer appearance-none pr-4">
                 <p class="truncate">
-                  {{ 'Home' }}</p>
+                  {{ link.label }}</p>
               </div>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="home.isOpen()"></i>
+                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="label.isOpen()"></i>
               </div>
             </div>
 
             <div class="dropdown-content">
-              <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="home.close()">
+              <app-custom-select [_options]="getSubNavLabels(link.subNavLink)" (closeRequest)="label.close()">
               </app-custom-select>
             </div>
           </app-dropdown>
         </li>
+
+        }@else{
 
         <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
-          About
+          {{ link.label }}
         </li>
 
-        <li>
-          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #shop>
-            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-              <div class="cursor-pointer appearance-none pr-4">
-                <p class="truncate">
-                  {{ 'Shop' }}</p>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="shop.isOpen()"></i>
-              </div>
-            </div>
-
-            <div class="dropdown-content">
-              <app-custom-select
-                [_options]="['Shop Grid – Right Sidebar', 'Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar','Shop Grid – Right Sidebar']"
-                (closeRequest)="shop.close()">
-              </app-custom-select>
-            </div>
-          </app-dropdown>
-        </li>
-
-
-        <li>
-          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #menu>
-            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-              <div class="cursor-pointer appearance-none pr-4">
-                <p class="truncate">
-                  {{ 'Mega menu' }}</p>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="menu.isOpen()"></i>
-              </div>
-            </div>
-
-            <div class="dropdown-content">
-              <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="menu.close()">
-              </app-custom-select>
-            </div>
-          </app-dropdown>
-        </li>
-
-        <li>
-          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #blog>
-            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-              <div class="cursor-pointer appearance-none pr-4">
-                <p class="truncate">
-                  {{ 'Blog' }}</p>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="blog.isOpen()"></i>
-              </div>
-            </div>
-
-            <div class="dropdown-content">
-              <app-custom-select
-                [_options]="['Blog Category Grid', 'Blog Category List', 'Blog Category Big', 'Blog Category Wide']"
-                (closeRequest)="blog.close()">
-              </app-custom-select>
-            </div>
-          </app-dropdown>
-        </li>
-
-        <li>
-          <app-dropdown triggerElement="hover" width="min-w-56" position="left" #pages>
-            <div class="dropdown-trigger text-primary-gray font-bold text-sm hover:text-primary-green duration-150">
-              <div class="cursor-pointer appearance-none pr-4">
-                <p class="truncate">
-                  {{ 'Pages' }}</p>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                <i class="bi bi-chevron-down text-[10px] mt-1 duration-200" [class.rotate-180]="pages.isOpen()"></i>
-              </div>
-            </div>
-
-            <div class="dropdown-content">
-              <app-custom-select
-                [_options]="['About Us', 'Contact', 'My Account', 'login/register', 'Privacy Policy', 'Terms of Services', '404 Page']"
-                (closeRequest)="pages.close()">
-              </app-custom-select>
-            </div>
-          </app-dropdown>
-        </li>
-
-        <li class="text-primary-gray font-bold text-sm hover:text-primary-green duration-150 cursor-pointer">
-          Contact
-        </li>
+        }
+        }
       </ul>
 
     </div>
