@@ -8,6 +8,7 @@ const brandSchema = new mongoose.Schema({
     image: { type: String, required: [true, "Brand Logo is Required"] },
     description: { type: String, required: [true, "Brand Description is Required"] },
     created_by: { type: String },
+    updated_by: { type: String },
     __v: { type: Number, select: false }
 }, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }

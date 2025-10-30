@@ -17,6 +17,11 @@ export class GlobalErrorController {
                     GlobalErrorController.handleJwtExpire(),
                     res
                 );
+            }else if(error.name === "MulterError"){
+                return GlobalErrorController.sendErrorProd(
+                    GlobalErrorController.handleMulterError(),
+                    res
+                );
             }
 
             GlobalErrorController.sendErrorProd(error, res);
@@ -49,5 +54,9 @@ export class GlobalErrorController {
 
     private static handleJwtExpire() {
         return new AppError("Invalid Token Please Login Again", 401);
+    }
+
+    private static handleMulterError(){
+         return new AppError("Invalid File Upload", 400);
     }
 }

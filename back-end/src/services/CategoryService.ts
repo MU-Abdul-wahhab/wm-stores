@@ -47,7 +47,7 @@ export class CategoryService {
     public static async getAllCategories(options) {
 
         // @ts-ignore
-        const categories = await Category.paginate({}, options);
+        const categories = await Category.paginate({status : true}, options);
         return categories;
     }
 

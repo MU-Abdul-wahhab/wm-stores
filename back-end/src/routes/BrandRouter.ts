@@ -12,10 +12,12 @@ class BrandRouter {
         this.router = Router();
         this.getRoutes();
         this.postRoutes();
+        this.patchtRoutes();
     }
 
     private getRoutes() {
-        this.router.get("/brands", asyncHandler(BrandController.getAllBrands));
+        this.router.get("/brands", GlobalMiddleware.setRole, asyncHandler(BrandController.getAllBrands));
+        this.router.get("/:key", GlobalMiddleware.setRole, asyncHandler(BrandController.getBrandByKey));
     }
     private postRoutes() {
         this.router.post("/create",
@@ -26,6 +28,39 @@ class BrandRouter {
             BrandValidator.createBrand(),
             GlobalMiddleware.checkError,
             asyncHandler(BrandController.createBrand));
+    }
+
+    private patchtRoutes() {
+        this.router.patch("/:id",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            BrandValidator.updateBrand(),
+            GlobalMiddleware.checkError,
+            asyncHandler(BrandController.updateBrand));
+
+        this.router.patch("/:id/logo",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            new Utils().multer.single("brand"),
+            BrandValidator.updateBrandImage(),
+            GlobalMiddleware.checkError,
+            asyncHandler(BrandController.updateBrandImage));
+
+        this.router.patch("/:id/add-category",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            BrandValidator.addCategoryToBrand(),
+            GlobalMiddleware.checkError,
+            asyncHandler(BrandController.addCategoryToBrand)
+        );
+
+         this.router.patch("/:id/remove-category",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            BrandValidator.removeCategoryToBrand(),
+            GlobalMiddleware.checkError,
+            asyncHandler(BrandController.removeCategoryToBrand)
+        );
     }
 
 }

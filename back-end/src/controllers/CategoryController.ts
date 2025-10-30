@@ -23,8 +23,6 @@ export class CategoryController {
             message: "Category has created successfully",
             category
         })
-
-
     }
 
     public static async updateCategoryStatus(req, res) {
@@ -47,9 +45,13 @@ export class CategoryController {
     public static async getAllCategories(req, res) {
         const populate = { path: "brands", select: "name" };
         const allowedKeyParameter = ["page", "limit", "sort"];
-        const allowedSortValue = ["name", "-name"];
-
-        const options = Utils.getSearchOptions(req.query, populate, allowedKeyParameter, allowedSortValue);
+        const allowedSortValue = ["name", "-name", "created_at", "-created_at"];
+        
+        let admin: boolean = false;
+        if (req.user?.user_role === "admin") {
+            admin = true;
+        }
+        const options = Utils.getSearchOptions(req.query, populate, allowedKeyParameter, allowedSortValue, admin);
 
         const categories = await CategoryService.getAllCategories(options);
 

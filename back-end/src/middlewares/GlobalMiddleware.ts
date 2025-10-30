@@ -38,6 +38,29 @@ export class GlobalMiddleware {
 
     }
 
+    static async setRole(req, res, next) {
+        let token;
+        let isAdmin = false;
+
+        if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            token = req.headers.authorization.split(" ")[1];
+        }
+
+        if (!token) {
+            req.isAdmin = isAdmin;
+            return next();
+        }
+
+        const decoded = await Jwt.jwtVerify(token);
+        const user = await User.findOne({ email: decoded.email })
+
+        if (!user) return next(new AppError("Unauthorized Access", 401));
+
+        isAdmin = decoded.user_role === "admin" ? true : false;
+        req.isAdmin = isAdmin;
+        next();
+    }
+
     static checkRole(role: string) {
         return (req, res, next) => {
             const user = req.user;
