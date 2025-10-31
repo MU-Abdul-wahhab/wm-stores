@@ -52,10 +52,77 @@ export class CategoryValidator {
         ]
     }
 
-    static updateCategoryStatus() {
+    static updateCategoryFeature() {
         return [
             param("id").isMongoId().withMessage("Invalid category ID"),
-            query("field").optional().isString().isIn(["isFeatured", "status"]).withMessage("Invalid Field")
+        ]
+    }
+
+    static updateCategory() {
+        return [
+            body().custom(value => {
+                if (!value || typeof value !== "object") {
+                    throw new Error("Invalid request body");
+                }
+
+                const { name, description, status , featured } = value;
+                if (name === undefined && description === undefined && status === undefined && featured === undefined) {
+                    throw new Error("At least one of name, description, status, or featured must be provided");
+                }
+                return true;
+            }),
+            body("name").optional().isString().toLowerCase().notEmpty().trim()
+                .withMessage("Name is required"),
+            body("description").optional().isString().notEmpty()
+                .withMessage("Description is required"),
+            body("status").optional().isBoolean()
+                .withMessage("Status must be a boolean"),
+        ];
+    }
+
+    static updateCategoryImage() {
+        return [
+            body("category", "Category Image is Required").custom((image, { req }) => {
+                if (req.file) {
+                    return true
+                } else {
+                    throw new AppError("File Not Uploaded", 400);
+                }
+            })
+        ]
+    }
+
+    static addBrandToCategory() {
+        return [
+            body("brands", "Brands must be an array of valid MongoDB IDs")
+            .isArray({ min: 1 }).withMessage("Brands must be a non-empty array")
+            .bail()
+            .custom(value => {
+                const uniqueValues = new Set(value);
+                if (uniqueValues.size !== value.length) {
+                throw new Error("Brands must contain unique values");
+                }
+                return true;
+            }),
+            body("brands.*", "Each brand must be a valid MongoDB ID")
+            .isMongoId().withMessage("Invalid ObjectId format"),
+        ]
+    }
+
+     static removeBrandFromCategory() {
+        return [
+            body("brands", "Brands must be an array of valid MongoDB IDs")
+            .isArray({ min: 1 }).withMessage("Brands must be a non-empty array")
+            .bail()
+            .custom(value => {
+                const uniqueValues = new Set(value);
+                if (uniqueValues.size !== value.length) {
+                throw new Error("Brands must contain unique values");
+                }
+                return true;
+            }),
+            body("brands.*", "Each brand must be a valid MongoDB ID")
+            .isMongoId().withMessage("Invalid ObjectId format"),
         ]
     }
 

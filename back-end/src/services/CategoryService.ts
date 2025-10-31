@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import Category from "../models/CategoryModel";
+import Brand from "../models/BrandModel";
 import { AppError } from "../utils/AppError";
 import { Utils } from "../utils/Utils";
 
@@ -28,27 +30,104 @@ export class CategoryService {
 
     }
 
-    public static async updateCategoryStatus(data: any) {
-        const categoryId = data.id;
-
-        const field = data.field ? data.field : "status";
-
-        const category = await Category.findById(categoryId);
-        if (!category) throw new AppError("Category Not Found", 400);
-        if (field !== "status" && field !== "isFeatured") throw new AppError("Sometthing went wrong", 400)
-        category[field] = !category[field];
-        const value = category[field];
-        await category.save();
-        return {
-            field, value
-        }
-    }
-
     public static async getAllCategories(options) {
 
         // @ts-ignore
-        const categories = await Category.paginate({status : true}, options);
+        const categories = await Category.paginate({ status: true }, options);
         return categories;
+    }
+
+    public static async getCategoryByKey(key: string) {
+        // @ts-ignore
+        let category;
+
+        if (mongoose.Types.ObjectId.isValid(key)) {
+            category = await Category.findById(key);
+        } else {
+            category = await Category.findOne({ name: key });
+        }
+
+        return category?.populate({ path: "brands", select: "name , image" });
+    }
+
+    public static async updateCategory(id: string, updateData: any) {
+        // Update name , description , status
+
+        const category = await Category.findById(id);
+
+        if (!category) {
+            throw new AppError("Category not found", 404);
+        }
+
+        const newCategory = await Category.findByIdAndUpdate(id, updateData, { new: true });
+
+        return newCategory;
+    }
+
+    public static async updateCategoryImage(data: { id: string, image: string, updated_by: string }) {
+        const { id, image, updated_by } = data;
+        const isExist = await Category.findById(id);
+        if (!isExist) {
+            Utils.deleteFile(image);
+            throw new AppError("Category not found", 404);
+        }
+        Utils.deleteFile(isExist.image);
+        const updatedCategory = await Category.findByIdAndUpdate(id, { image, updated_by }, { new: true });
+        return updatedCategory;
+    }
+
+    public static async addBrandToCategory(id: string, brands: mongoose.Types.ObjectId[]) {
+        // Add brands to category
+        const category = await Category.findById(id);
+
+        if (!category) {
+            throw new AppError("Category not found", 404);
+        }
+
+        const validBrands = await Brand.find({ _id: { $in: brands } });
+
+        if (validBrands.length !== brands.length) {
+            throw new AppError("One or more Brands IDs are invalid", 400);
+        }
+
+        const uniqueCategories = new Set([...category.brands.map(String), ...brands.map(String)]);
+
+        // @ts-ignore
+        category.brands = Array.from(uniqueCategories) as mongoose.Types.ObjectId[];
+        await category.save();
+
+        return category.populate({ path: "brands", select: "name , image" });
+
+    }
+    public static async removeBrandFromCategory(id: string, brands: mongoose.Types.ObjectId[]) {
+
+        const isValidCategory = await Category.findById(id);
+        if(!isValidCategory){
+            throw new AppError("Category not found", 404);
+        }
+
+        const validBrands = await Brand.find({ _id: { $in: brands } });
+
+        if (validBrands.length !== brands.length) {
+            throw new AppError("One or more Brand IDs are invalid", 400);
+        }
+
+        const isExistInCategory = await Category.findOne({ _id: id, brands: { $in: brands } });
+
+        if (!isExistInCategory) {
+            throw new AppError("None of the provided brands are associated with the category", 400);
+        }
+
+        const updatedCategory = await Category.findByIdAndUpdate(
+            id,
+            { $pull: { brands: { $in: brands } } },
+            { new: true }
+        ).populate("brands", "name");
+
+        if (!updatedCategory) {
+            throw new AppError("Category not found", 404);
+        }
+        return updatedCategory.populate({ path: "brands", select: "name , image" });
     }
 
 }
