@@ -1,0 +1,30 @@
+<img [src]="carouselCard().img_path" alt="Slider 1" class="h-full w-full cover">
+
+<div class="flex flex-col space-y-2 md:space-y-6 xl:space-y-8 absolute bottom-1 md:bottom-1/6 left-1/12 text-black">
+  <div>
+    <p
+      class="text-base md:text-xl xl:text-2xl font-medium md:mb-1 xl:mb-2 max-w-64 md:max-w-[450px] xl:max-w-[550px] truncate">{{
+        carouselCard().title_line_1
+      }}</p>
+    <h2
+      class="text-xl md:text-4xl xl:text-5xl font-extrabold tracking-wide cursor-default max-w-64 md:max-w-[450px] xl:max-w-[550px] truncate">{{
+        carouselCard().title_line_2 }}</h2>
+  </div>
+
+  <h1
+    class="text-2xl md:text-5xl xl:text-6xl font-extrabold tracking-wide text-primary-green max-w-64 md:max-w-[450px] xl:max-w-[550px] truncate">{{
+      carouselCard().title_line_3 }}</h1>
+  <p
+    class="text-xs md:text-sm xl:text-base text-black opacity-75 max-w-64 md:max-w-[450px] xl:max-w-[550px] line-clamp-2">Save
+    more with coupons &
+    up to {{
+      carouselCard().coupon_percentage }}% off</p>
+
+  <div>
+    <button
+      class="py-3.5 px-20 text-primary-green font-bold text-sm md:text-base xl:text-lg bg-brush bg-center bg-cover bg-no-repeat">Shop
+      Now
+    </button>
+  </div>
+</div>
+

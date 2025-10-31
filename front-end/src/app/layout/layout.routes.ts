@@ -8,8 +8,8 @@ export const routes: Routes = [
         path: '',
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'cart', component: CartComponent},
+            { path: 'home', component: HomeComponent, title: 'Evara - Home' },
+            { path: 'cart', component: CartComponent, title: 'Evara - Cart'},
             // { path: '**', redirectTo: 'home', pathMatch: 'full' }
         ]
     }

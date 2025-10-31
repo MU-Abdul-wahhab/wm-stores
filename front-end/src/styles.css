@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
 
 @theme {
   --breakpoint-*: initial;
@@ -20,8 +23,22 @@
   --color-secondary-light-gray: #8E8E90;
 }
 
+@layer utilities {
+  .bg-brush {
+    background-image: url('../public/images/misc/brush-bg.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+:root,
+body,
+.e-carousel * {
+  font-family: "Poppins", sans-serif !important;
+}
+
 body {
-  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -57,6 +74,10 @@ input.ng-invalid.ng-touched.ng-dirty {
 
 .btn-disabled {
   @apply text-sm text-white bg-primary-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
+}
+
+.btn-control{
+  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 z-10;
 }
 
 /* Scroll Bar */
