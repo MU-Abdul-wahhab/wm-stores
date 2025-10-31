@@ -1,12 +1,12 @@
 import { Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'app-preview-item',
+  selector: 'app-cart-preview-item',
   imports: [],
-  templateUrl: './preview-item.component.html',
-  styleUrl: './preview-item.component.css',
+  templateUrl: './cart-preview-item.component.html',
+  styleUrl: './cart-preview-item.component.css',
 })
-export class PreviewItemComponent {
+export class CartPreviewItemComponent {
   cartItem = input.required<{
     id: string,
     name: string,

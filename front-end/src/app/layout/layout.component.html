@@ -1,6 +1,10 @@
-<app-header />
-@if(isAuthenticated()){
+<app-header/>
+@if (isAuthenticated()) {
   <p>U Can access authorized pages..</p>
 }
-<br/><br/><br/><br/>
-<app-footer />
+<br>
+<router-outlet/>
+<br>
+<app-footer/>
+
+<app-move-top-btn/>
