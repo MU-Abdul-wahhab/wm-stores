@@ -93,7 +93,7 @@ export class Utils {
         });
     }
 
-    public static getSearchOptions(query: any, populate: {}, allowedKeyParameter: string[], allowedSortValue: string[]) {
+    public static getSearchOptions(query: any, populate: {}, allowedKeyParameter: string[], allowedSortValue: string[], admin: boolean) {
 
         const invalidKeys = Object.keys(query).filter(key => !allowedKeyParameter.includes(key));
         if (invalidKeys.length > 0) {
@@ -116,12 +116,18 @@ export class Utils {
             sort[fieldName] = order;
         });
 
+        let select = "-__v";
+
+        if (!admin) {
+            select += " -created_at -updated_at -created_by -updated_by";
+        }
+
         const options = {
             page: query.page || 1,
             limit: query.limit || 5,
             populate,
             sort,
-            select: "-__v",
+            select,
         };
 
         return options;
