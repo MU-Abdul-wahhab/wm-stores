@@ -1,13 +1,14 @@
 import { Component, computed, input, signal } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
-import { PreviewItemComponent } from "./preview-item/preview-item.component";
+import { CartPreviewItemComponent } from "././cart-preview-item/cart-preview-item.component";
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-preview',
-  imports: [PreviewItemComponent],
-  templateUrl: './preview.component.html',
-  styleUrl: './preview.component.css',
+  imports: [CartPreviewItemComponent, RouterLink],
+  templateUrl: './cart-preview.component.html',
+  styleUrl: './cart-preview.component.css',
   animations: [
     trigger('itemAnimation', [
       transition(':enter', [
@@ -20,7 +21,7 @@ import { PreviewItemComponent } from "./preview-item/preview-item.component";
     ])
   ]
 })
-export class PreviewComponent {
+export class CartPreviewComponent {
   cartItems = signal([
     {
       id: 'c1',

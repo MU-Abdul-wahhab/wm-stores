@@ -1,214 +1,234 @@
 <article class="w-full px-4 bg-[#aeccc5] py-7 text-primary-gray">
-    <div class="container mx-auto grid gap-4 grid-rows-2 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-1">
+  <div class="container mx-auto grid gap-4 grid-rows-2 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-1">
 
-        <div
-            class="w-full px-6 sm:px-0 sm:w-auto flex items-center justify-center sm:justify-start col-span-2 sm:col-span-1">
-            <h3 class="text-xl font-semibold">
-                <i class="bi bi-envelope-at mr-4 text-3xl"></i>
-                <span class="align-top">Sign up to Newsletter</span>
-            </h3>
-        </div>
-
-        <div class="items-center hidden sm:flex lg:col-span-1">
-            <h3 class="text-sm font-semibold">
-                <span class="align-top">...and receive $25 coupon for first shopping.</span>
-            </h3>
-        </div>
-
-        <div class="w-full px-6 sm:px-0 lg:w-auto flex items-center col-span-2 lg:col-span-1">
-
-            <input type="text" id="search" required placeholder="Enter your email"
-                class="form-control pl-9 pr-5 py-4 bg-white text-xs h-full w-1/2" />
-
-            <button type="button" title="Subscribe" id="subscribe-btn"
-                class="btn text-white bg-primary-gray hover:bg-primary-green py-4 w-1/2">
-                Subscribe
-            </button>
-        </div>
-
+    <div
+      class="w-full px-6 sm:px-0 sm:w-auto flex items-center justify-center sm:justify-start col-span-2 sm:col-span-1">
+      <h3 class="text-xl font-semibold">
+        <i class="bi bi-envelope-at mr-4 text-3xl"></i>
+        <span class="align-top">Sign up to Newsletter</span>
+      </h3>
     </div>
+
+    <div class="items-center hidden sm:flex lg:col-span-1">
+      <h3 class="text-sm font-semibold">
+        <span class="align-top">...and receive $25 coupon for first shopping.</span>
+      </h3>
+    </div>
+
+    <div class="w-full px-6 sm:px-0 lg:w-auto flex items-center col-span-2 lg:col-span-1">
+
+      <input type="text" id="search" required placeholder="Enter your email"
+             class="form-control pl-9 pr-5 py-4 bg-white text-xs h-full w-1/2"/>
+
+      <button type="button" title="Subscribe" id="subscribe-btn"
+              class="btn text-white bg-primary-gray hover:bg-primary-green py-4 w-1/2">
+        Subscribe
+      </button>
+    </div>
+
+  </div>
 </article>
 
 <footer class="w-full px-4 bg-[#FFF8F7] pt-8 text-primary-gray">
-    <div class="container mx-auto">
+  <div class="container mx-auto">
 
-        <div class="flex flex-col lg:flex-row gap-9 lg:gap-0 items-start justify-between">
+    <div class="flex flex-col lg:flex-row gap-9 lg:gap-0 items-start justify-between">
 
-            <div
-                class="flex flex-2 w-full lg:w-auto items-start justify-around lg:justify-between flex-col md:flex-row gap-9">
+      <div
+        class="flex flex-2 w-full lg:w-auto items-start justify-around lg:justify-between flex-col md:flex-row gap-9">
 
-                <div class="flex-1 flex flex-col items-start text-justify w-full md:w-auto">
-                    <div class="flex items-center justify-center md:justify-start mb-1 w-full">
-                        <img [src]="IMAGES.APP_LOGO" alt="App Logo" class="h-12" />
-                    </div>
+        <div class="flex-1 flex flex-col items-start text-justify w-full md:w-auto">
+          <div class="flex items-center justify-center md:justify-start mb-1 w-full">
+            <a routerLink="/">
+              <img [src]="IMAGES.APP_LOGO" alt="App Logo" class="h-12"/>
+            </a>
+          </div>
 
-                    <p class="text-black opacity-50 font-semibold my-4">Contact</p>
+          <p class="text-black opacity-50 font-semibold my-4">Contact</p>
 
-                    <div class="space-y-2">
-                        <p class="text-base text-[#465B52]">
-                            <span class="font-semibold text-primary-green">Address:</span>
-                            562 Wellington Road, Street
-                            32, San Francisco
-                        </p>
-                        <p class="text-base text-[#465B52]">
-                            <span class="font-semibold text-primary-green">Phone:</span>
-                            +01 2222 365 /(+91) 01 2345 6789
-                        </p>
-                        <p class="text-base text-[#465B52]"><span class="font-semibold text-primary-green">Hours:</span>
-                            10:00 - 18:00, Mon - Sat
-                        </p>
-                    </div>
+          <div class="space-y-2">
+            <p class="text-base text-[#465B52]">
+              <span class="font-semibold text-primary-green">Address:</span>
+              562 Wellington Road, Street
+              32, San Francisco
+            </p>
+            <p class="text-base text-[#465B52]">
+              <span class="font-semibold text-primary-green">Phone:</span>
+              +01 2222 365 /(+91) 01 2345 6789
+            </p>
+            <p class="text-base text-[#465B52]"><span class="font-semibold text-primary-green">Hours:</span>
+              10:00 - 18:00, Mon - Sat
+            </p>
+          </div>
 
-                    <br>
+          <br>
 
-                    <div class="flex flex-col space-y-4 text-black opacity-50 text-sm mt-2">
-                        <p class="font-semibold">Follow Us</p>
-                        <div class="flex space-x-4">
-                            <i class="bi bi-facebook fa-lg"></i>
-                            <i class="bi bi-twitter fa-lg"></i>
-                            <i class="bi bi-instagram fa-lg"></i>
-                            <i class="bi bi-youtube fa-lg"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-1 flex items-start justify-between w-full lg:justify-start lg:w-auto lg:gap-12">
-                    <div class="flex flex-col items-start text-justify text-primary-gray">
-                        <p class="text-lg font-semibold -tracking-tighter">About</p>
-                        <br>
-                        <div class="space-y-4">
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                About Us
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Delivery Information
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Privacy Policy
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Terms & Conditions
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Contact Us
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                FAQs
-                            </p><p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Support Center
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-start text-justify">
-                        <p class="text-lg font-semibold -tracking-tighter">My Account</p>
-                        <br>
-                        <div class="space-y-4">
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                <a routerLink="/auth">Sign In</a>
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                <a routerLink="#">View Cart</a>
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                <a routerLink="#">My Wishlist</a>
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                <a routerLink="#">Track My Order</a>
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Help
-                            </p>
-                            <p
-                                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
-                                Other
-                            </p>
-                        </div>
-                    </div>
-                </div>
+          <div class="flex flex-col space-y-4 text-black opacity-50 text-sm mt-2">
+            <p class="font-semibold">Follow Us</p>
+            <div class="flex space-x-4">
+              <i class="bi bi-facebook fa-lg"></i>
+              <i class="bi bi-twitter fa-lg"></i>
+              <i class="bi bi-instagram fa-lg"></i>
+              <i class="bi bi-youtube fa-lg"></i>
             </div>
-
-            <div class="flex flex-1 w-full lg:w-auto flex-col md:flex-row lg:flex-col items-start space-y-5">
-
-                <div class="flex-2 lg:flex-1 flex flex-col items-start text-justify">
-                    <p class="text-lg font-semibold -tracking-tighter">Install App</p>
-
-                    <br>
-                    <p class="text-base text-[#465B52]">
-                        From App Store or Google Play
-                    </p>
-                    <br>
-
-                    <div
-                        class="flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 lg:space-y-3  lg:space-x-0 flex lg:flex-col">
-                        <button type="button" title="App Store"
-                            class="btn rounded-lg border-2 h-12 border-gray-300 hover:border-primary-green  overflow-hidden">
-                            <img [src]="IMAGES.APP_STORE" alt="App Store" class="h-full w-full" />
-                        </button>
-                        <button type="button" title="Play Store"
-                            class="btn rounded-lg border-2 h-12 border-gray-300 hover:border-primary-green  overflow-hidden">
-                            <img [src]="IMAGES.PLAY_STORE" alt="Play Store" class="h-full w-full" />
-                        </button>
-                    </div>
-                </div>
-
-                <div class="flex-1 flex flex-col items-start text-justify">
-                    <br>
-                    <p class="text-base text-[#465B52]">
-                        Secured Payment Gateways
-                    </p>
-                    <br>
-                    <p class="h-8">
-                        <img [src]="IMAGES.PAYMENT_METHODS" alt="Payment Methods" class="h-full w-full" />
-                    </p>
-                </div>
-            </div>
-
+          </div>
         </div>
 
-        <br><br>
+        <div class="flex-1 flex items-start justify-between w-full lg:justify-start lg:w-auto lg:gap-12">
+          <div class="flex flex-col items-start text-justify text-primary-gray">
+            <p class="text-lg font-semibold -tracking-tighter">About</p>
+            <br>
+            <div class="space-y-4">
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                About Us
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Delivery Information
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Privacy Policy
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Terms & Conditions
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Contact Us
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                FAQs
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Support Center
+              </p>
+            </div>
+          </div>
 
-        <!-- <div
-            class="flex flex-col lg:flex-row items-center justify-between border-t border-t-slate-300 py-4 text-xs md:text-sm font-light text-secondary-light-gray">
-            <p>&copy; 2022, <span class="text-primary-green font-semibold">Evara</span> - HTML Ecommerce Template</p>
-            <p>Designed by <span class="text-primary-green">Alithemes.com</span>. All rights reserved</p>
-        </div> -->
-
-        <div
-            class="flex flex-col xl:flex-row items-center justify-between border-t border-t-slate-300 py-4 text-xs md:text-sm font-light text-secondary-light-gray">
-            <p class="text-center md:text-start">
-                &copy; 2025,
-                <span class="text-primary-green font-semibold underline">
-                    <a href="https://wp.alithemes.com/html/evara/evara-frontend/index-3.html" target="_blank"
-                        rel="noopener noreferrer">
-                        Evara UI Concept
-                    </a>
-                </span>
-                by
-                <span class="text-primary-green">Alithemes</span>. Recreated and developed by
-                <span class="text-primary-green font-semibold underline">
-                    <a href="https://www.linkedin.com/in/abdulmalik-dev/" target="_blank" rel="noopener noreferrer">
-                        Abdul Malik
-                    </a>
-                </span> using Angular & Tailwind CSS.
-            </p>
-            <p>
-                Design credit: <span class="text-primary-green">Alithemes</span> | Development credit:
-                <span class="text-primary-green">Abdul Malik</span>
-            </p>
+          <div class="flex flex-col items-start text-justify">
+            <p class="text-lg font-semibold -tracking-tighter">My Account</p>
+            <br>
+            <div class="space-y-4">
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                <a routerLink="/auth">Sign In</a>
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                <a routerLink="/cart">View Cart</a>
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                <a routerLink="#">My Wishlist</a>
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                <a routerLink="#">Track My Order</a>
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Help
+              </p>
+              <p
+                class="text-sm font-light hover:text-primary-green hover:translate-x-1 duration-200 cursor-pointer">
+                Other
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="flex flex-1 w-full lg:w-auto flex-col md:flex-row lg:flex-col items-start space-y-5">
+
+        <div class="flex-2 lg:flex-1 flex flex-col items-start text-justify">
+          <p class="text-lg font-semibold -tracking-tighter">Install App</p>
+
+          <br>
+          <p class="text-base text-[#465B52]">
+            From App Store or Google Play
+          </p>
+          <br>
+
+          <div
+            class="flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 lg:space-y-3  lg:space-x-0 flex lg:flex-col">
+            <button type="button" title="App Store"
+                    class="btn rounded-lg h-12 border-2 border-[#FFF8F7] hover:border-primary-green  overflow-hidden">
+              <img [src]="IMAGES.APP_STORE" alt="App Store" class="h-full w-full"/>
+            </button>
+            <button type="button" title="Play Store"
+                    class="btn rounded-lg h-12 border-2 border-[#FFF8F7] hover:border-primary-green  overflow-hidden">
+              <img [src]="IMAGES.PLAY_STORE" alt="Play Store" class="h-full w-full"/>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex-1 flex flex-col items-start text-justify">
+          <br>
+          <p class="text-base text-[#465B52]">
+            Secured Payment Gateways
+          </p>
+          <br>
+          <p class="h-8">
+            <img [src]="IMAGES.PAYMENT_METHODS" alt="Payment Methods" class="h-full w-full"/>
+          </p>
+        </div>
+      </div>
 
     </div>
+
+    <br><br>
+
+    <!-- <div
+        class="flex flex-col lg:flex-row items-center justify-between border-t border-t-slate-300 py-4 text-xs md:text-sm font-light text-secondary-light-gray">
+        <p>&copy; 2022, <span class="text-primary-green font-semibold">Evara</span> - HTML Ecommerce Template</p>
+        <p>Designed by <span class="text-primary-green">Alithemes.com</span>. All rights reserved</p>
+    </div> -->
+
+    <div
+      class="flex flex-col items-center justify-between border-t border-t-slate-300 py-4 text-xs md:text-sm font-light text-secondary-light-gray">
+      <p class="text-center md:text-start">
+        &copy; 2025,
+        <span class="text-primary-green font-semibold underline">
+      <a href="https://wp.alithemes.com/html/evara/evara-frontend/index-3.html"
+         target="_blank"
+         rel="noopener noreferrer">
+        Evara UI Concept
+      </a>
+    </span>
+        by
+        <span class="text-primary-green">Alithemes</span>. Recreated and developed by
+        <span class="text-primary-green font-semibold underline">
+      <a href="https://www.linkedin.com/in/abdulmalik-dev/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Abdul Malik
+      </a>
+    </span>
+        (Front-End) &amp;
+        <span class="text-primary-green font-semibold underline">
+      <a href="https://www.linkedin.com/in/abdulwahhab-dev/" target="_blank" rel="noopener noreferrer">
+        Abdul Wahhab
+      </a>
+    </span>
+        (Back-End) using Angular, Tailwind CSS &amp; NodeJs.
+      </p>
+      <p class="text-center xl:text-right">
+        Design credit: <a href="https://themeforest.net/user/alithemes" target="_blank" rel="noopener noreferrer"> <span
+        class="text-primary-green underline">Alithemes</span></a> |
+        Front-End: <a href="https://www.linkedin.com/in/abdulmalik-dev/" target="_blank"
+                      rel="noopener noreferrer"> <span
+        class="text-primary-green underline">Abdul Malik</span></a> |
+        Back-End: <a href="https://www.linkedin.com/in/abdulwahhab-dev/" target="_blank"
+                     rel="noopener noreferrer"> <span
+        class="text-primary-green underline">Abdul Wahhab</span></a>
+      </p>
+    </div>
+
+
+  </div>
 </footer>

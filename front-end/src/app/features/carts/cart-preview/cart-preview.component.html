@@ -6,7 +6,7 @@
                 @for (item of cartItems(); track item.id) {
                 @if (isDropdownOpen()) {
                 <li class="cursor-pointer" [@itemAnimation]>
-                    <app-preview-item [cartItem]="item" (cartRemove)="onClose($event)" />
+                    <app-cart-preview-item [cartItem]="item" (cartRemove)="onClose($event)" />
                 </li>
                 }
                 } @empty {
@@ -22,7 +22,7 @@
     </div>
 
     <div class="mt-5 flex items-center justify-between">
-        <a href="#" class="btn-hover px-6 py-2" title="View Cart">View Cart</a>
+        <a routerLink="/cart" class="btn-hover px-6 py-2" title="View Cart">View Cart</a>
         <button class="btn-primary px-6 py-2" title="Checkout">Checkout</button>
     </div>
 </div>

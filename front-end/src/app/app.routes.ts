@@ -1,12 +1,18 @@
-import { Routes } from '@angular/router';
-
-import { LayoutComponent } from './layout/layout.component';
-import { AuthComponent } from './features/auth/auth.component';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import {Routes} from '@angular/router';
+import {AuthComponent} from './features/auth/auth.component';
+import {NotFoundComponent} from './shared/components/not-found/not-found.component';
+import {LayoutComponent} from './layout/layout.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: LayoutComponent },
-    { path: 'auth', component:  AuthComponent, loadChildren: () => import('./features/auth/auth.routes').then(mod => mod.routes)},
-    { path: '**', component: NotFoundComponent }
+  {
+    path: 'auth',
+    component: AuthComponent,
+    loadChildren: () => import('./features/auth/auth.routes').then(mod => mod.routes)
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    loadChildren: () => import('./layout/layout.routes').then(mod => mod.routes)
+  },
+  {path: '**', component: NotFoundComponent}
 ];

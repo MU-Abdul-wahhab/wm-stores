@@ -3,14 +3,15 @@ import { RouterLink } from "@angular/router";
 
 import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
 import { CustomSelectComponent } from "../../shared/components/custom-select/custom-select.component";
-import { PreviewComponent } from "../../features/cart/preview/preview.component";
+import { CartPreviewComponent } from "../../features/carts/cart-preview/cart-preview.component";
 import { HamburgerComponent } from '../../shared/components/hamburger/hamburger.component';
 import { IMAGES } from '../../shared/constants/image-path';
 import { NAV_LINKS, NavLink } from '../../shared/constants/nav-links';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [DropdownComponent, RouterLink, CustomSelectComponent, PreviewComponent, HamburgerComponent],
+  imports: [DropdownComponent, RouterLink, CustomSelectComponent, CartPreviewComponent, HamburgerComponent, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   // host: {
