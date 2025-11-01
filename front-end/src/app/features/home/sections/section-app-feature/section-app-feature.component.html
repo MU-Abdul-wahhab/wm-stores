@@ -1,0 +1,33 @@
+<section id="section-app-feature" class="w-full px-4 py-6">
+  <div class="container mx-auto">
+
+    <!-- Header Row -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl md:text-2xl font-semibold">
+        Why
+        <span class="text-primary-green font-bold">Evara?</span>
+      </h2>
+
+      <!-- Custom Nav Buttons -->
+      <div class="lg:hidden gap-3 flex">
+        <button class="btn-control" (click)="onPreviousBtn()">
+          <i class="bi bi-chevron-left text-sm"></i>
+        </button>
+        <button class="btn-control" (click)="onNextBtn()">
+          <i class="bi bi-chevron-right text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="relative">
+      <owl-carousel-o #owlCar [options]="owlOptions">
+        @for (feature of appFeatures(); track feature.title) {
+          <ng-template carouselSlide>
+            <app-section-app-feature-card [appFeature]="feature"/>
+          </ng-template>
+        }
+      </owl-carousel-o>
+    </div>
+  </div>
+</section>

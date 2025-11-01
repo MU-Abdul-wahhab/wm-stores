@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
+
+import {IMAGES} from '../../constants/image-path';
 
 @Component({
   selector: 'app-not-found',
@@ -8,5 +10,5 @@ import {RouterLink} from '@angular/router';
   styleUrl: './not-found.component.css'
 })
 export class NotFoundComponent {
-
+  NOT_FOUND = signal(IMAGES.NOT_FOUND);
 }

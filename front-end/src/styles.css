@@ -13,23 +13,14 @@
   --breakpoint-xxl: 1400px;
 
   --color-primary-green: #088178;
-  --color-light-green: #9ddbc9;
   --color-hover-green: #046963;
+  --color-light-green: #E8F6EA;
   --color-orange-500: #ffa500;
   --color-primary-gray: #1a1a1a;
   --color-secondary-gray: #494949;
   --color-light-gray: #ececec;
   --color-light-bg-gray: #eeeeee;
   --color-secondary-light-gray: #8E8E90;
-}
-
-@layer utilities {
-  .bg-brush {
-    background-image: url('../public/images/misc/brush-bg.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
 }
 
 :root,
@@ -76,9 +67,17 @@ input.ng-invalid.ng-touched.ng-dirty {
   @apply text-sm text-white bg-primary-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
 }
 
-.btn-control{
-  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 z-10;
+.btn-control {
+  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300;
 }
+
+.bg-brush {
+  background-image: url('../public/images/misc/brush-bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 
 /* Scroll Bar */
 .custom-scrollbar {
