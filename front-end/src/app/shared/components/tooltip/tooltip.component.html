@@ -1,0 +1,10 @@
+<span
+  class="tooltip-content"
+  [ngClass]="[
+    positionClass(),
+    show() ? 'opacity-100 visible animate-tooltip-in' : 'opacity-0 invisible animate-tooltip-out'
+  ]"
+>
+  {{ text() }}
+  <div class="tooltip-arrow"></div>
+</span>

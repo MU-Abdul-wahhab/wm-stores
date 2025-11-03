@@ -7,12 +7,12 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    loadChildren: () => import('./features/auth/auth.routes').then(mod => mod.routes)
+    loadChildren: () => import('./features/auth/auth.routes').then(mod => mod.routes),
   },
   {
     path: '',
     component: LayoutComponent,
     loadChildren: () => import('./layout/layout.routes').then(mod => mod.routes)
   },
-  {path: '**', component: NotFoundComponent}
+  {path: '**', component: NotFoundComponent, title: 'Evara - Not Found'}
 ];

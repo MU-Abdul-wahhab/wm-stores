@@ -140,7 +140,7 @@
         </div>
 
         <div class="dropdown-content">
-          <app-preview [isDropdownOpen]="cartDropdown.isOpen()" #preview/>
+          <app-preview [isDropdownOpen]="cartDropdown.isOpen()" (closeRequest)="cartDropdown.close()" #preview/>
         </div>
       </app-dropdown>
 

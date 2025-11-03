@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import {Component, computed, input, output, signal} from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { CartPreviewItemComponent } from "././cart-preview-item/cart-preview-item.component";
@@ -45,6 +45,7 @@ export class CartPreviewComponent {
       avatar: 'https://wp.alithemes.com/html/evara/evara-frontend/assets/imgs/shop/product-1-2.jpg'
     },
   ]);
+  closeRequest = output<void>();
 
   total = computed(() => {
     let t = 0;
@@ -58,7 +59,11 @@ export class CartPreviewComponent {
 
   isDropdownOpen = input.required<boolean>();
 
-  onClose(itemId: string) {
+  onCartItemClose(itemId: string) {
     this.cartItems.set(this.cartItems().filter((item) => item.id !== itemId));
+  }
+
+  onBtnClick(){
+    this.closeRequest.emit();
   }
 }
