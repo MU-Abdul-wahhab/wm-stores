@@ -60,6 +60,22 @@ class CategoryRouter {
             GlobalMiddleware.checkError,
             asyncHandler(CategoryController.removeBrandFromCategory)
         );
+
+        this.router.patch("/:id/add-spec",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.addSpecToCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.addSpecToCategory)
+        );
+
+        this.router.patch("/:categoryId/remove-spec",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.removeSpecFromCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.removeSpecFromCategory)
+        );
     }
 }
 

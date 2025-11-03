@@ -102,7 +102,7 @@ export class CategoryService {
     public static async removeBrandFromCategory(id: string, brands: mongoose.Types.ObjectId[]) {
 
         const isValidCategory = await Category.findById(id);
-        if(!isValidCategory){
+        if (!isValidCategory) {
             throw new AppError("Category not found", 404);
         }
 
@@ -128,6 +128,40 @@ export class CategoryService {
             throw new AppError("Category not found", 404);
         }
         return updatedCategory.populate({ path: "brands", select: "name , image" });
+    }
+
+    public static async addSpecToCategory(id: string, specs: any) {
+        // Add specs to category
+        const category = await Category.findById(id);
+        if (!category) {
+            throw new AppError("Category not found", 404);
+        }
+
+        category.specs.push(...specs);
+        await category.save();
+
+        return category.populate({ path: "specs", select: "name , image" });
+    }
+
+    public static async removeSpecFromCategory(id: string, specId: mongoose.Types.ObjectId[]) {
+        const category = await Category.findById(id);
+        if (!category) {
+            throw new AppError("Category not found", 404);
+        }
+
+        const isValidSpecId = category.specs.some(spec => spec._id && specId.includes(spec._id));
+
+        if (!isValidSpecId) {
+            throw new AppError("Invalid Spec ID", 400);
+        }
+
+        const updatedCategory = await Category.findByIdAndUpdate(
+            { _id: category._id },
+            { $pull: { specs: { _id: { $in: specId } } } },
+            { new: true }
+        );
+
+        return updatedCategory;
     }
 
 }

@@ -123,4 +123,30 @@ export class CategoryController {
         });
     }
 
+    public static async addSpecToCategory(req, res) {
+        // Add specs to category
+
+        const updatedCategory = await CategoryService.addSpecToCategory(req.params.id, req.body.specs);
+
+        res.status(201).json({
+            status: "success",
+            message: "Specs added to category successfully",
+            category: updatedCategory
+        });
+    }
+
+    public static async removeSpecFromCategory(req, res) {
+        // Remove specs from category
+        const categoryId = req.params.categoryId;
+        const specIds = req.query.specId;
+
+       const category = await CategoryService.removeSpecFromCategory(categoryId, specIds);
+
+        res.status(201).json({
+            status: "success",
+            message: "Specs removed from category successfully",
+            category
+        });
+    }
+
 }
