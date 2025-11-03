@@ -22,4 +22,38 @@ export const IMAGES = {
       DAILY_SUPPORT: 'images/banners/section-app-feature/feature-6.png',
     },
   },
+  products: {
+    product1: {
+      defaultImgPath: 'images/products/product-1/default-product-1.jpg',
+      hoverImgPath: 'images/products/product-1/hover-product-1.jpg',
+    },
+    product2: {
+      defaultImgPath: 'images/products/product-2/default-product-2.jpg',
+      hoverImgPath: 'images/products/product-2/hover-product-2.jpg',
+    },
+    product3: {
+      defaultImgPath: 'images/products/product-3/default-product-3.jpg',
+      hoverImgPath: 'images/products/product-3/hover-product-3.jpg',
+    },
+    product4: {
+      defaultImgPath: 'images/products/product-4/default-product-4.jpg',
+      hoverImgPath: 'images/products/product-4/hover-product-4.jpg',
+    },
+    product5: {
+      defaultImgPath: 'images/products/product-5/default-product-5.jpg',
+      hoverImgPath: 'images/products/product-5/hover-product-5.jpg',
+    },
+    product6: {
+      defaultImgPath: 'images/products/product-6/default-product-6.jpg',
+      hoverImgPath: 'images/products/product-6/hover-product-6.jpg',
+    },
+    product7: {
+      defaultImgPath: 'images/products/product-7/default-product-7.jpg',
+      hoverImgPath: 'images/products/product-7/hover-product-7.jpg',
+    },
+    product8: {
+      defaultImgPath: 'images/products/product-8/default-product-8.jpg',
+      hoverImgPath: 'images/products/product-8/hover-product-8.jpg',
+    },
+  }
 }

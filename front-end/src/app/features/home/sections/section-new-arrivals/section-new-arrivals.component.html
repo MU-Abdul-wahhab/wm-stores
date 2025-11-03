@@ -41,15 +41,10 @@
     </div>
 
 
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
-        <app-product-card/>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-6 sm:px-0">
+      @for (product of products(); track product.id) {
+        <app-product-card [product]="product"/>
+      }
     </div>
   </div>
 </section>
