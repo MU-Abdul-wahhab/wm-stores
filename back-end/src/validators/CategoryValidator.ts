@@ -52,11 +52,138 @@ export class CategoryValidator {
         ]
     }
 
-    static updateCategoryStatus() {
+    static updateCategoryFeature() {
         return [
             param("id").isMongoId().withMessage("Invalid category ID"),
-            query("field").optional().isString().isIn(["isFeatured", "status"]).withMessage("Invalid Field")
         ]
     }
+
+    static updateCategory() {
+        return [
+            body().custom(value => {
+                if (!value || typeof value !== "object") {
+                    throw new Error("Invalid request body");
+                }
+
+                const { name, description, status, featured } = value;
+                if (name === undefined && description === undefined && status === undefined && featured === undefined) {
+                    throw new Error("At least one of name, description, status, or featured must be provided");
+                }
+                return true;
+            }),
+            body("name").optional().isString().toLowerCase().notEmpty().trim()
+                .withMessage("Name is required"),
+            body("description").optional().isString().notEmpty()
+                .withMessage("Description is required"),
+            body("status").optional().isBoolean()
+                .withMessage("Status must be a boolean"),
+        ];
+    }
+
+    static updateCategoryImage() {
+        return [
+            body("category", "Category Image is Required").custom((image, { req }) => {
+                if (req.file) {
+                    return true
+                } else {
+                    throw new AppError("File Not Uploaded", 400);
+                }
+            })
+        ]
+    }
+
+    static addBrandToCategory() {
+        return [
+            body("brands", "Brands must be an array of valid MongoDB IDs")
+                .isArray({ min: 1 }).withMessage("Brands must be a non-empty array")
+                .bail()
+                .custom(value => {
+                    const uniqueValues = new Set(value);
+                    if (uniqueValues.size !== value.length) {
+                        throw new Error("Brands must contain unique values");
+                    }
+                    return true;
+                }),
+            body("brands.*", "Each brand must be a valid MongoDB ID")
+                .isMongoId().withMessage("Invalid ObjectId format"),
+        ]
+    }
+
+    static removeBrandFromCategory() {
+        return [
+            body("brands", "Brands must be an array of valid MongoDB IDs")
+                .isArray({ min: 1 }).withMessage("Brands must be a non-empty array")
+                .bail()
+                .custom(value => {
+                    const uniqueValues = new Set(value);
+                    if (uniqueValues.size !== value.length) {
+                        throw new Error("Brands must contain unique values");
+                    }
+                    return true;
+                }),
+            body("brands.*", "Each brand must be a valid MongoDB ID")
+                .isMongoId().withMessage("Invalid ObjectId format"),
+        ]
+    }
+
+    static addSpecToCategory() {
+        return [
+            body("specs", "Specs must be a non-empty array")
+                .isArray({ min: 1 })
+                .withMessage("Specs must be a non-empty array")
+                .bail()
+                .custom(value => {
+                    const uniqueValues = new Set(value.map((spec) => spec.field));
+                    if (uniqueValues.size !== value.length) {
+                        throw new Error("Specs must contain unique field names");
+                    }
+                    return true;
+                }),
+
+            body("specs.*.field")
+                .notEmpty().withMessage("Field cannot be empty")
+                .isString().withMessage("Field must be a string")
+                .toLowerCase(),
+
+            body("specs.*.type")
+                .notEmpty().withMessage("Type is required")
+                .isIn(["string", "number", "boolean"]).withMessage("Invalid type"),
+
+            body("specs.*.required")
+                .toBoolean()
+                .isBoolean().withMessage("Required must be a boolean"),
+
+            body("specs.*.unit")
+                .optional()
+                .isString().withMessage("Unit must be a string"),
+
+            body("specs.*.unit_required")
+                .optional()
+                .toBoolean()
+                .isBoolean().withMessage("Unit Required must be a boolean"),
+
+            body("specs.*").custom((spec) => {
+                const { unit_required, unit } = spec;
+
+                if (unit_required && (!unit || unit.trim() === "")) {
+                    throw new Error("Unit is required as per unit_required setting");
+                }
+
+                if (!unit_required && unit && unit.trim() !== "") {
+                    throw new Error("Unit should be empty when unit_required is false");
+                }
+
+                return true;
+            }),
+        ]
+    }
+
+    static removeSpecFromCategory() {
+        return [
+            param("categoryId").isMongoId().withMessage("Invalid category ID"),
+            query("specId").isMongoId().withMessage("Invalid specs ID")
+        ]
+    }
+
 
 }

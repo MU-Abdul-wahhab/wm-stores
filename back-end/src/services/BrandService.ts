@@ -52,12 +52,12 @@ export class BrandService {
         let brand;
 
         if (mongoose.Types.ObjectId.isValid(key)) {
-            brand = await Brand.findById(key).populate({ path: "category", select: "name , image" });
+            brand = await Brand.findById(key);
         } else {
-            brand = await Brand.findOne({ name: key }).populate({ path: "category", select: "name , image" });
+            brand = await Brand.findOne({ name: key });
         }
 
-        return brand;
+        return brand?.populate({ path: "category", select: "name , image" });
 
     }
 
@@ -114,6 +114,12 @@ export class BrandService {
     }
 
     public static async removeCategoryToBrand(id: string, categories: mongoose.Types.ObjectId[]) {
+
+        const brand = await Brand.findById(id);
+
+        if (!brand) {
+            throw new AppError("Brand not found", 404);
+        }
 
         const validCategories = await Category.find({ _id: { $in: categories } });
 

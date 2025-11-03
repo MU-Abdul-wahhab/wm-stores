@@ -34,7 +34,9 @@ const categorySchema = new mongoose.Schema({
     image: { type: String, required: [true, "Category Image is Required"] },
     isFeatured: { type: Boolean },
     status: { type: Boolean, default: true },
-    specs: [specSchema]
+    specs: [specSchema],
+    created_by: { type: String },
+    updated_by: { type: String }
 },
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }

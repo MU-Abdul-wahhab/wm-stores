@@ -15,7 +15,8 @@ class CategoryRouter {
     }
 
     private getRoutes() {
-        this.router.get("/categories", asyncHandler(CategoryController.getAllCategories));
+        this.router.get("/categories", GlobalMiddleware.setRole, asyncHandler(CategoryController.getAllCategories));
+        this.router.get("/:key", GlobalMiddleware.setRole, asyncHandler(CategoryController.getCategoryByKey));
     }
 
     private postRoutes() {
@@ -29,13 +30,52 @@ class CategoryRouter {
     }
 
     private patchRoutes() {
-        this.router.patch("/:id/status", GlobalMiddleware.auth,
+        this.router.patch("/:id",
+            GlobalMiddleware.auth,
             GlobalMiddleware.checkRole("admin"),
-            CategoryValidator.updateCategoryStatus(),
+            CategoryValidator.updateCategory(),
             GlobalMiddleware.checkError,
-            asyncHandler(CategoryController.updateCategoryStatus)
+            asyncHandler(CategoryController.updateCategory));
+
+        this.router.patch("/:id/logo",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            new Utils().multer.single("category"),
+            CategoryValidator.updateCategoryImage(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.updateCategoryImage));
+
+        this.router.patch("/:id/add-brand",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.addBrandToCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.addBrandToCategory)
         );
 
+        this.router.patch("/:id/remove-brand",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.removeBrandFromCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.removeBrandFromCategory)
+        );
+
+        this.router.patch("/:id/add-spec",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.addSpecToCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.addSpecToCategory)
+        );
+
+        this.router.patch("/:categoryId/remove-spec",
+            GlobalMiddleware.auth,
+            GlobalMiddleware.checkRole("admin"),
+            CategoryValidator.removeSpecFromCategory(),
+            GlobalMiddleware.checkError,
+            asyncHandler(CategoryController.removeSpecFromCategory)
+        );
     }
 }
 
