@@ -1,0 +1,110 @@
+<div
+  class="border border-extra-light-green rounded-3xl bg-white flex flex-col items-center justify-around lg:justify-between cursor-pointer hover:-translate-y-2 transition-all duration-300 group
+  shadow-sm hover:shadow-lg p-3 h-[376px] relative"
+>
+  <div class="relative rounded-2xl h-[61%] w-full overflow-hidden">
+    <div class="h-full w-full bg-light-bg-gray"></div>
+
+    <p class="absolute top-2.5 left-2.5 bg-rose-400 rounded-xl text-white text-xs py-0.5 px-2">
+      Hot
+    </p>
+
+    <div class="absolute bottom-2/5 left-1/5 space-x-2.5 flex transition-all duration-1000">
+
+      <div
+        (mouseenter)="showQuickTooltip.set(true)"
+        (mouseleave)="showQuickTooltip.set(false)"
+      >
+        <p class="btn-control relative">
+          <i class="bi bi-eye text-lg"></i>
+
+          @if (showQuickTooltip()) {
+            <app-tooltip
+              text="Quick view"
+              [show]="showQuickTooltip()"
+              position="top"
+            />
+          }
+        </p>
+      </div>
+
+      <div
+        (mouseenter)="showShareTooltip.set(true)"
+        (mouseleave)="showShareTooltip.set(false)"
+      >
+        <p class="btn-control relative">
+          <i class="bi bi-share text-lg"></i>
+
+          @if (showShareTooltip()) {
+            <app-tooltip
+              text="Share"
+              [show]="showShareTooltip()"
+              position="top"
+            />
+          }
+        </p>
+      </div>
+
+      <div
+        (mouseenter)="showWishListTooltip.set(true)"
+        (mouseleave)="showWishListTooltip.set(false)"
+      >
+        <p class="btn-control relative">
+          <i class="bi bi-suit-heart text-lg"></i>
+
+          @if (showWishListTooltip()) {
+            <app-tooltip
+              text="Add To Wishlist"
+              [show]="showWishListTooltip()"
+              position="top"
+            />
+          }
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="relative bg-white h-[39%] w-full py-3 px-2 flex flex-col space-y-0.5">
+    <p class="text-gray-700 opacity-85 font-extralight text-xs">Clothing</p>
+
+    <h2 class="text-black line-clamp-1 hover:text-primary-green duration-300 transition-colors text-lg font-semibold">
+      Colorful Pattern Shirts
+    </h2>
+
+    <div class="space-x-1 flex items-center">
+      <i class="bi bi-star text-yellow-400 text-xs cursor-default"></i>
+      <i class="bi bi-star text-yellow-400 text-xs cursor-default"></i>
+      <i class="bi bi-star text-yellow-400 text-xs cursor-default"></i>
+      <i class="bi bi-star text-yellow-400 text-xs cursor-default"></i>
+      <i class="bi bi-star text-yellow-400 text-xs cursor-default"></i>
+      <p class="ml-2 text-sm text-gray-700 cursor-text">90%</p>
+    </div>
+
+    <div class="space-x-3 mt-1 flex items-center">
+      <h2 class="text-primary-green text-lg font-semibold cursor-text">$238.85</h2>
+      <p class="line-through text-gray-700 opacity-75 font-extralight text-sm cursor-text">$245.8</p>
+    </div>
+
+    <!-- 🛒 CART ICON WITH TOOLTIP -->
+    <div
+      class="absolute bottom-2.5 right-2.5"
+      (mouseenter)="showCartTooltip.set(true)"
+      (mouseleave)="showCartTooltip.set(false)"
+    >
+      <p class="btn-control relative">
+        <i class="bi bi-bag-plus text-lg"></i>
+
+        @if (showCartTooltip()) {
+          <app-tooltip
+            [text]="'Add to Cart'"
+            [show]="showCartTooltip()"
+            position="top"
+          />
+        }
+      </p>
+    </div>
+
+  </div>
+</div>

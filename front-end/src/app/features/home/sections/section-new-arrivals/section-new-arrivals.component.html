@@ -1,0 +1,55 @@
+<section id="section-app-feature" class="w-full px-4 py-6">
+  <div class="container mx-auto">
+
+    <!-- Header Row -->
+    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 items-center justify-between mb-6">
+
+      <div class="flex items-center space-x-2.5">
+        <button (click)="onTabBtnClick('Featured')"
+          class="btn font-semibold py-2.5 px-4 sm:px-7 hover:text-primary-green hover:bg-primary-butter" [ngClass]="{
+        'text-primary-green bg-primary-butter': currentTab() === 'Featured',
+        'text-secondary-gray bg-light-bg-gray': currentTab() !== 'Featured'
+        }">
+          <span class="text-sm sm:text-base">Featured</span>
+        </button>
+
+        <button (click)="onTabBtnClick('Popular')"
+          class="btn font-semibold py-2.5 px-4 sm:px-7 hover:text-primary-green hover:bg-primary-butter" [ngClass]="{
+        'text-primary-green bg-primary-butter': currentTab() === 'Popular',
+        'text-secondary-gray bg-light-bg-gray': currentTab() !== 'Popular'
+        }">
+          <span class="text-sm sm:text-base">Popular</span>
+        </button>
+
+        <button (click)="onTabBtnClick('New added')"
+          class="btn font-semibold py-2.5 px-4 sm:px-7 hover:text-primary-green hover:bg-primary-butter" [ngClass]="{
+        'text-primary-green bg-primary-butter': currentTab() === 'New added',
+        'text-secondary-gray bg-light-bg-gray': currentTab() !== 'New added'
+        }">
+          <span class="text-sm sm:text-base">New added</span>
+        </button>
+      </div>
+
+
+      <div>
+        <p
+          class="font-semibold pb-1 text-sm text-primary-green hover:text-hover-green border-b-2 border-extra-light-green space-x-2 cursor-pointer flex items-center group transition-all duration-300">
+          <span>View More</span>
+          <i class="bi bi-chevron-double-right text-xs group-hover:translate-x-1 transition-all duration-300"></i>
+        </p>
+      </div>
+    </div>
+
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+        <app-product-card/>
+    </div>
+  </div>
+</section>

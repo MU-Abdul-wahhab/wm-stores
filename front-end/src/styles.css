@@ -1,9 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* ✅ All imports must come first */
 @import "tailwindcss";
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
 
+/* ✅ Theme definitions */
 @theme {
   --breakpoint-*: initial;
   --breakpoint-sm: 576px;
@@ -15,14 +17,16 @@
   --color-primary-green: #088178;
   --color-hover-green: #046963;
   --color-light-green: #E8F6EA;
-  --color-orange-500: #ffa500;
+  --color-extra-light-green: #CCE7D0;
+  --color-primary-butter: #FDE1BD;
   --color-primary-gray: #1a1a1a;
   --color-secondary-gray: #494949;
-  --color-light-gray: #ececec;
+  --color-light-text-gray: #444;
   --color-light-bg-gray: #eeeeee;
   --color-secondary-light-gray: #8E8E90;
 }
 
+/* ✅ Global resets */
 :root,
 body,
 .e-carousel * {
@@ -40,37 +44,59 @@ body {
   @apply selection:bg-primary-green selection:text-white selection:opacity-100;
 }
 
-/* Forms */
-.form-control {
-  @apply w-full border border-gray-300 rounded-sm outline-0 placeholder:text-black placeholder:opacity-75 placeholder:font-medium focus:border-primary-green transition-all duration-200 focus:shadow-sm;
+/* ✅ Global reusable component classes */
+@layer components {
+  .btn-control {
+    @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green
+    hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex
+    items-center justify-center transition-all duration-300;
+  }
+
+  .tooltip-content {
+    @apply absolute px-2 py-1.5 text-[11px] rounded-md bg-primary-green text-white
+    whitespace-nowrap pointer-events-none transition-all duration-300
+    opacity-0 invisible z-50;
+  }
+
+  .tooltip-arrow {
+    @apply absolute w-2 h-2 bg-primary-green rotate-45 z-50;
+  }
+
+  /* Tooltip positions */
+  .tooltip-top {
+    @apply bottom-[140%] left-1/2 -translate-x-1/2;
+  }
+
+  .tooltip-top .tooltip-arrow {
+    @apply top-[89.3%] left-1/2 -translate-x-1/2;
+  }
+
+  .tooltip-bottom {
+    @apply top-[140%] left-1/2 -translate-x-1/2;
+  }
+
+  .tooltip-bottom .tooltip-arrow {
+    @apply bottom-[87.5%] left-1/2 -translate-x-1/2;
+  }
+
+  .tooltip-left {
+    @apply right-[140%] top-1/2 -translate-y-1/2;
+  }
+
+  .tooltip-left .tooltip-arrow {
+    @apply left-[95.25%] top-1/2 -translate-y-1/2;
+  }
+
+  .tooltip-right {
+    @apply left-[140%] top-1/2 -translate-y-1/2;
+  }
+
+  .tooltip-right .tooltip-arrow {
+    @apply right-[95.6%] top-1/2 -translate-y-1/2;
+  }
 }
 
-input.ng-invalid.ng-touched.ng-dirty {
-  background-color: #fbdcd6;
-  border-color: #f84e2c;
-}
-
-/* Buttons */
-.btn {
-  @apply text-sm rounded-md hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
-}
-
-.btn-primary {
-  @apply text-sm text-white bg-primary-green border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
-}
-
-.btn-hover {
-  @apply text-sm text-primary-green bg-white border-2 border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:text-white hover:-translate-y-1 cursor-pointer transition duration-200;
-}
-
-.btn-disabled {
-  @apply text-sm text-white bg-primary-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
-}
-
-.btn-control {
-  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300;
-}
-
+/* ✅ Other global utilities */
 .bg-brush {
   background-image: url('../public/images/misc/brush-bg.png');
   background-size: contain;
@@ -78,8 +104,7 @@ input.ng-invalid.ng-touched.ng-dirty {
   background-repeat: no-repeat;
 }
 
-
-/* Scroll Bar */
+/* ✅ Scrollbar styles */
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #088178 #f1f1f1;
@@ -101,4 +126,35 @@ input.ng-invalid.ng-touched.ng-dirty {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #7bc7b0;
+}
+
+/* ✅ Tooltip animations (keep here globally) */
+@keyframes tooltipIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes tooltipOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+}
+
+.animate-tooltip-in {
+  animation: tooltipIn 0.25s ease-out forwards;
+}
+
+.animate-tooltip-out {
+  animation: tooltipOut 0.25s ease-in forwards;
 }
