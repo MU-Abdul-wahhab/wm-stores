@@ -21,6 +21,9 @@ export const IMAGES = {
       HAPPY_SELL: 'images/banners/section-app-feature/feature-5.png',
       DAILY_SUPPORT: 'images/banners/section-app-feature/feature-6.png',
     },
+    sectionRepairServices:{
+      bannerImg: 'images/banners/section-repair-services/banner-img.png',
+    }
   },
   products: {
     product1: {
