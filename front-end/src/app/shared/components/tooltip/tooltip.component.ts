@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -6,6 +6,7 @@ import {NgClass} from '@angular/common';
   standalone: true,
   imports: [NgClass],
   templateUrl: './tooltip.component.html',
+  // encapsulation: ViewEncapsulation.None,
   host:{
     'class':'z-50'
   }

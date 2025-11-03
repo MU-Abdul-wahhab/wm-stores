@@ -1,11 +1,9 @@
-/* ✅ All imports must come first */
+/* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
 
-/* ✅ Theme definitions */
 @theme {
   --breakpoint-*: initial;
   --breakpoint-sm: 576px;
@@ -26,7 +24,6 @@
   --color-secondary-light-gray: #8E8E90;
 }
 
-/* ✅ Global resets */
 :root,
 body,
 .e-carousel * {
@@ -44,14 +41,70 @@ body {
   @apply selection:bg-primary-green selection:text-white selection:opacity-100;
 }
 
-/* ✅ Global reusable component classes */
-@layer components {
-  .btn-control {
-    @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green
-    hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex
-    items-center justify-center transition-all duration-300;
-  }
+/* Forms */
+.form-control {
+  @apply w-full border border-gray-300 rounded-sm outline-0 placeholder:text-black placeholder:opacity-75 placeholder:font-medium focus:border-primary-green transition-all duration-200 focus:shadow-sm;
+}
 
+input.ng-invalid.ng-touched.ng-dirty {
+  background-color: #fbdcd6;
+  border-color: #f84e2c;
+}
+
+/* Buttons */
+.btn {
+  @apply text-sm rounded-md hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-primary {
+  @apply text-sm text-white bg-primary-green border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-hover {
+  @apply text-sm text-primary-green bg-white border-2 border-hover-green rounded-md hover:bg-hover-green hover:shadow-sm hover:text-white hover:-translate-y-1 cursor-pointer transition duration-200;
+}
+
+.btn-disabled {
+  @apply text-sm text-white bg-primary-green rounded-md cursor-not-allowed opacity-50 transition duration-200;
+}
+
+.btn-control {
+  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300;
+}
+
+.bg-brush {
+  background-image: url('../public/images/misc/brush-bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* Scroll Bar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #088178 #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #9ddbc9;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7bc7b0;
+}
+
+@layer components {
   .tooltip-content {
     @apply absolute px-2 py-1.5 text-[11px] rounded-md bg-primary-green text-white
     whitespace-nowrap pointer-events-none transition-all duration-300
@@ -96,39 +149,7 @@ body {
   }
 }
 
-/* ✅ Other global utilities */
-.bg-brush {
-  background-image: url('../public/images/misc/brush-bg.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* ✅ Scrollbar styles */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #088178 #f1f1f1;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #9ddbc9;
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #7bc7b0;
-}
-
-/* ✅ Tooltip animations (keep here globally) */
+/* Tooltip Animations */
 @keyframes tooltipIn {
   0% {
     opacity: 0;
