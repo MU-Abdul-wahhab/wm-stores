@@ -763,6 +763,15 @@
 							"request": {
 								"method": "PATCH",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24?specId=690762b4cb0a21cc5f0a9252",
 									"host": [
