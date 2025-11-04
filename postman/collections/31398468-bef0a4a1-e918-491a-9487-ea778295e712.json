@@ -773,18 +773,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24?specId=690762b4cb0a21cc5f0a9252",
+									"raw": "{{category}}/ctest",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
-										"68fe3153ba9e9d2419cbbb24"
-									],
-									"query": [
-										{
-											"key": "specId",
-											"value": "690762b4cb0a21cc5f0a9252"
-										}
+										"ctest"
 									]
 								}
 							},
