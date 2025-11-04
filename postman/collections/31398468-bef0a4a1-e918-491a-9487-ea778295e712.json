@@ -1067,39 +1067,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "{{category}}/ctest",
-					"id": "31398468-3267df1f-44e2-4574-b025-fd7f1a245ac8",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{category}}/ctest",
-							"host": [
-								"{{category}}"
-							],
-							"path": [
-								"ctest"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"id": "31398468-dea3f325-1827-44f6-a90d-c91317ed93d6",
