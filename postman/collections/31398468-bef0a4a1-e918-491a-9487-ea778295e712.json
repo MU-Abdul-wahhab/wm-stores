@@ -773,12 +773,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{category}}/",
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/update-specs",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
-										""
+										"68fe3153ba9e9d2419cbbb24",
+										"update-specs"
 									]
 								}
 							},
