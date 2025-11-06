@@ -1,0 +1,1109 @@
+{
+	"info": {
+		"_postman_id": "31398468-bef0a4a1-e918-491a-9487-ea778295e712",
+		"name": "WM Stores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign Up",
+					"id": "31398468-ca1bdf8a-db10-4bb6-8915-628351ba7465",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\" : \"Abdul\",\r\n    \"last_name\" : \"Malik\",\r\n    \"email\": \"malik.info28@gmail.com\",\r\n    \"phone\" : \"0722578559\",\r\n    \"password\" : \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/signup",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"signup"
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nCreates a new user account with name, email, phone number, and password.\n\nEndFragment  \n  \nStartFragment\n\n### 📥 Body Parameters (type: `raw` → JSON)\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| first_name | string | ✅ | User’s first name |\n| last_name | string | ✅ | User’s last name |\n| email | string | ✅ | User’s unique email |\n| phone | string | ✅ | User’s phone number |\n| password | string | ✅ | User’s password |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Verificatoin Email",
+					"id": "31398468-33e31845-4998-4753-b8e3-289817212e79",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"abdulwahhab200547@gmail.com\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/verify/get/email",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"verify",
+								"get",
+								"email"
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nGenerates a new **email verification token** for a user if the email is not yet verified. Also checks password validity before issuing a new token.\n\nEndFragment  \n  \nStartFragment\n\n### 📥 Body Parameters (type: `raw` → JSON)\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| email | string | ✅ | Registered email of the user |\n| password | string | ✅ | Plaintext password for the user |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8b9d856-7563-49a0-8fdd-7760b309b8ca",
+								"exec": [
+									"pm.environment.set(\"access_token\", pm.response.json().access_token);\r",
+									"pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "31398468-2546cfed-a8f7-4b27-90f2-9665baba11a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"abdulwahhab200547@gmail.com\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/login",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nAuthenticates a verified user, checks email and password, and returns **access** and **refresh tokens**. Also stores the refresh token with user agent and IP address.\n\nEndFragment\n\nStartFragment\n\n### 📥 Body Parameters (type: `raw` → JSON)\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| email | string | ✅ | Registered user email |\n| password | string | ✅ | Plaintext password for the account |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get New Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f88dd81d-79d4-41da-854f-c181b9ae2c5a",
+								"exec": [
+									"pm.environment.set(\"access_token\", pm.response.json().access_token);\r",
+									"pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "31398468-59980d53-194f-47a7-a4be-a6d0b5d1080b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\" : \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/getnewtoken",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"getnewtoken"
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nValidates the provided **refresh token**, verifies device/browser identity, and returns a new **access token** and **refresh token**.\n\nEndFragment  \n  \nStartFragment\n\n### 📥 Body Parameters (type: `raw` → **text** or `application/json`)\n\n| Value | Type | Required | Description |\n| --- | --- | --- | --- |\n| refresh_token | string | ✅ | Valid refresh token issued during login |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"id": "31398468-1ed82f42-5f44-4291-8f42-b5bf080fddbf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{auth}}/verify/email?email=abdulwahhab200547@gmail.com&token=63fbecd005d0c4fc210806bddc0d1a4c",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"verify",
+								"email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "abdulwahhab200547@gmail.com"
+								},
+								{
+									"key": "token",
+									"value": "63fbecd005d0c4fc210806bddc0d1a4c"
+								}
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nVerifies a user's email address by validating the `email` and `token` combination. If valid and not expired, it marks the email as verified.\n\nEndFragment  \n  \nStartFragment\n\n### 📥 Query Parameters\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| email | string | ✅ | The user's registered email |\n| token | string | ✅ | The verification token sent via email |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Phone OTP",
+					"id": "31398468-c720e130-b1cd-470e-8e42-7133cbe346df",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{auth}}/verify/get/phone",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"verify",
+								"get",
+								"phone"
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nSends a one-time password (OTP) to the user's phone number if it's not already verified. The OTP is sent via Twilio, and stored with an expiration time in the user's document.\n\nEndFragment  \n  \nStartFragment\n\n.\n\n---\n\n### 🔐 Authentication Required\n\n✅ Yes – This route is protected by middleware (`GlobalMiddleware.auth`).  \n  \nYou must include a **valid access token** in the `Authorization` header.\n\nEndFragment  \n  \nStartFragment\n\n### 📥 Query Parameters\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| email | string | ✅ | Registered email of user |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Phone",
+					"id": "31398468-2c53e077-a186-4bed-be31-2c086b48caa0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{auth}}/verify/phone?otp=8307",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"verify",
+								"phone"
+							],
+							"query": [
+								{
+									"key": "otp",
+									"value": "8307"
+								}
+							]
+						},
+						"description": "StartFragment\n\n### 📝 Description\n\nVerifies the OTP sent to a user’s phone. If valid and not expired, marks the phone number as verified in the database.\n\n---\n\n### 🔐 Authentication Required\n\n✅ Yes – You must include a valid `access_token` in the `Authorization` header.\n\n---\n\n### 📥 Query Parameters\n\n| Key | Type | Required | Description |\n| --- | --- | --- | --- |\n| email | string | ✅ | The registered email address |\n| otp | string | ✅ | The OTP sent to the phone |\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"id": "31398468-cf5b981f-52c5-4b7c-bf86-3528c8fb81a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{auth}}/verify/password/email",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"verify",
+								"password",
+								"email"
+							]
+						},
+						"description": "# ✉️ Description\nThis endpoint verifies a user's email address as part of the password reset process. Use this to confirm that the provided email is eligible for password reset before sending a reset link.\n\n# 📝 Query Parameters\nThis endpoint does not require any query parameters.\n\n# 💡 Usage Example\n```\nGET {{auth}}/verify/password/email\n```\n\nReplace `{{auth}}` with your authentication service base URL.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password & Change Password",
+					"id": "31398468-926a909a-78fc-4e6f-90ec-5eab7bee632e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"current_password\": \"0987654321111\",\r\n    \"new_password\": \"1234567890\",\r\n    \"confirm_new_password\": \"1234567890\",\r\n    \"otp\": \"3021\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/reset/password",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"reset",
+								"password"
+							]
+						},
+						"description": "## Reset Password & Change Password\n\nThis request allows an authenticated user to reset or change their account password. It targets the following endpoint:\n\n**Endpoint:** `PATCH {{auth}}/reset/password`\n\n### Purpose\nUse this endpoint to update your password by providing your current password, a new password, and a one-time password (OTP) for verification. This is typically used when a user wants to change their password securely or as part of a password reset flow.\n\n### Required Request Body Parameters\nSend a JSON object in the request body with the following fields:\n\n- `current_password` (`string`): Your existing password. Required to authenticate the password change.\n- `new_password` (`string`): The new password you wish to set.\n- `confirm_new_password` (`string`): Must match the `new_password` field to ensure accuracy.\n- `otp` (`string`): The one-time password sent to your registered email or phone for verification.\n\n**Example Request Body:**\n```json\n{\n  \"current_password\": \"yourCurrentPassword\",\n  \"new_password\": \"yourNewPassword\",\n  \"confirm_new_password\": \"yourNewPassword\",\n  \"otp\": \"123456\"\n}\n```\n\n### Usage Notes\n- All fields are required.\n- The `otp` must be valid and unexpired.\n- The `new_password` and `confirm_new_password` must match.\n- Ensure you are authenticated and have received an OTP before making this request.\n- The endpoint uses the `{{auth}}` variable, which should be set in your environment to the base authentication URL.\n\nFor more details or to see example requests and responses, refer to the [Reset Password & Change Password](request/31398468-926a909a-78fc-4e6f-90ec-5eab7bee632e) request in your collection."
+					},
+					"response": []
+				}
+			],
+			"id": "31398468-64ae7bfb-ceac-498c-a504-b8fd9f3a0cb8",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7489f48f-57c6-48be-823d-0f96e991507a",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "51a35848-15aa-4ba2-a37f-9e7f68cd2e11",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Assign New Category",
+							"id": "31398468-339b9f82-78e5-4cbf-82a4-56e92bee59e5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categories\": [\r\n        \"68fe3153ba9e9d2419cbbb24\",\r\n        \"68fe37074e7feb9024db739d\",\r\n        \"68fe379f4e7feb9024db73a6\",\r\n        \"68fe380a4e7feb9024db73af\",\r\n        \"68fe38694e7feb9024db73b8\",\r\n        \"68fe38d64e7feb9024db73c1\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{brand}}/68fdf95b3423bbc1c1c66d4f/add-category",
+									"host": [
+										"{{brand}}"
+									],
+									"path": [
+										"68fdf95b3423bbc1c1c66d4f",
+										"add-category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a Category From the Brand",
+							"id": "31398468-3c1258ef-b0ba-4956-927f-6ff6597de283",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categories\" : [\"68fe3ac44e7feb9024db73dd\" , \"68fe3a054e7feb9024db73d4\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{brand}}/68fdf95b3423bbc1c1c66d4f/remove-category",
+									"host": [
+										"{{brand}}"
+									],
+									"path": [
+										"68fdf95b3423bbc1c1c66d4f",
+										"remove-category"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "31398468-2bcba486-4012-43f7-8c44-3d24efae680b"
+				},
+				{
+					"name": "Create Brand",
+					"id": "31398468-2ab48258-1f00-4b48-91a8-287c36808ea5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "LG",
+									"type": "text",
+									"uuid": "b6a2e971-5298-4eca-9dea-a0ecb0fac684"
+								},
+								{
+									"key": "description",
+									"value": "LG Electronics is a South Korean company that creates innovative products to improve daily living across home entertainment, appliances, and mobile technology. Renowned for its OLED TVs, energy-efficient refrigerators, and advanced washing machines, LG blends technology with modern aesthetics. Its “Life’s Good” philosophy highlights comfort, quality, and sustainability in every product line.",
+									"type": "text",
+									"uuid": "ab3aa4c6-ceb6-40c9-834b-8f8c755ccd90"
+								},
+								{
+									"key": "brand",
+									"type": "file",
+									"uuid": "2b0ff736-f366-4955-b67d-925f2314eb72",
+									"src": "/C:/Users/Abdul Wahhab/Downloads/lg logo.png"
+								},
+								{
+									"key": "category",
+									"value": "683f6fa34e5595da4df33864",
+									"type": "text",
+									"uuid": "d9f0d3e0-d886-4e87-9672-9125bc13a704",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "683f6f454e5595da4df33860",
+									"type": "text",
+									"uuid": "f9ddc29b-c768-4cd5-ba42-5d3e6611b3fc",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{brand}}/create",
+							"host": [
+								"{{brand}}"
+							],
+							"path": [
+								"create"
+							]
+						},
+						"description": "This endpoint creates a new brand. Submit a POST request with multipart/form-data including the following fields: 'name' (string), 'description' (string), and one or more 'category' (IDs). Use this endpoint to add a brand to the system with its associated details and categories."
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Brands",
+					"id": "31398468-877242bf-acf6-4374-81b9-8543dd05925a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Apple",
+									"type": "text",
+									"uuid": "b6a2e971-5298-4eca-9dea-a0ecb0fac684"
+								},
+								{
+									"key": "description",
+									"value": "Step into the world of Apple, where innovation meets unmatched design. From the iconic iPhone to the powerful Mac ecosystem, Apple devices are built for performance, simplicity, and seamless integration. Elevate your digital lifestyle with products that are as intuitive as they are inspiring.",
+									"type": "text",
+									"uuid": "ab3aa4c6-ceb6-40c9-834b-8f8c755ccd90"
+								},
+								{
+									"key": "brand",
+									"type": "file",
+									"uuid": "2b0ff736-f366-4955-b67d-925f2314eb72",
+									"src": "/C:/Users/Abdul Wahhab/Downloads/zara logo.png"
+								},
+								{
+									"key": "category",
+									"value": "683f6fa34e5595da4df33864",
+									"type": "text",
+									"uuid": "d9f0d3e0-d886-4e87-9672-9125bc13a704",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "683f6f454e5595da4df33860",
+									"type": "text",
+									"uuid": "f9ddc29b-c768-4cd5-ba42-5d3e6611b3fc",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{brand}}/brands?page=1&limit=2&sort=name",
+							"host": [
+								"{{brand}}"
+							],
+							"path": [
+								"brands"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Brand by ID or Name",
+					"id": "31398468-f2841a80-b699-4e8e-9b41-299cabe476b6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{brand}}/samsung",
+							"host": [
+								"{{brand}}"
+							],
+							"path": [
+								"samsung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Brand",
+					"id": "31398468-0f6bed6b-72e9-40e3-b06e-9d083ac2040a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"apple\",\r\n    \"status\" : \"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brand}}/68fe01bf59833962cb7f0dfa",
+							"host": [
+								"{{brand}}"
+							],
+							"path": [
+								"68fe01bf59833962cb7f0dfa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update brand Logo",
+					"id": "31398468-4614c68f-f073-49b1-b9b3-d82fc7f62ca4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand",
+									"type": "file",
+									"uuid": "dfe60c35-7230-4877-8301-06a78142a4c7",
+									"src": "/C:/Users/Abdul Wahhab/Downloads/1761477055287-160005344-appleLogo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{brand}}/68fe01bf59833962cb7f0dfa/logo",
+							"host": [
+								"{{brand}}"
+							],
+							"path": [
+								"68fe01bf59833962cb7f0dfa",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "31398468-fe9fa45b-b1af-4c49-b1b0-73dcc896a4d2",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ac4c208f-4848-4ee1-8260-cf3c8a0248f2",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7791cb2a-182c-40e6-8d61-a42d5e00c5aa",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Specs",
+					"item": [
+						{
+							"name": "Add Category Spec",
+							"id": "31398468-b64747a9-ddea-4c14-8ccb-5570782d9beb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"specs\": [\r\n        {\r\n            \"field\": \"test_field\",\r\n            \"type\": \"string\",\r\n            \"required\": \"true\",\r\n            \"unit_required\": false\r\n        },\r\n        {\r\n            \"field\": \"test_field2\",\r\n            \"type\": \"string\",\r\n            \"required\": \"true\",\r\n            \"unit_required\": false\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/add",
+									"host": [
+										"{{category}}"
+									],
+									"path": [
+										"68fe3153ba9e9d2419cbbb24",
+										"spec",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a Category Spec",
+							"id": "31398468-1abf0e67-c945-4def-b878-355dce012278",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/690ca725580f38f161224eff/remove",
+									"host": [
+										"{{category}}"
+									],
+									"path": [
+										"68fe3153ba9e9d2419cbbb24",
+										"spec",
+										"690ca725580f38f161224eff",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Category Spec - Pending",
+							"id": "31398468-df33eb24-e062-468f-bd56-7c6d6ee9508d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"unit_required\" : true,\r\n    \"unit\" : \"MAH\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/68fe3153ba9e9d2419cbbb29/update",
+									"host": [
+										"{{category}}"
+									],
+									"path": [
+										"68fe3153ba9e9d2419cbbb24",
+										"spec",
+										"68fe3153ba9e9d2419cbbb29",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "31398468-8b6af177-ac86-4400-94d9-90decdb73ef6"
+				},
+				{
+					"name": "Brands",
+					"item": [
+						{
+							"name": "Assign New Brand",
+							"id": "31398468-186875bc-44c2-4e77-85ca-6bc577cab14d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"brands\": [\r\n        \"68fdf95b3423bbc1c1c66d4f\",\r\n        \"68fdf9bb3423bbc1c1c66d53\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{category}}/68fe38d64e7feb9024db73c1/add-brand",
+									"host": [
+										"{{category}}"
+									],
+									"path": [
+										"68fe38d64e7feb9024db73c1",
+										"add-brand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a Brand From the Category",
+							"id": "31398468-a9dca4e9-9b24-4ab2-9f25-d4bcb4459973",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"brands\": [\r\n        \"68fdf95b3423bbc1c1c66d4f\",\r\n        \"68fdf9bb3423bbc1c1c66d53\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{category}}/68fe38d64e7feb9024db73c1/remove-brand",
+									"host": [
+										"{{category}}"
+									],
+									"path": [
+										"68fe38d64e7feb9024db73c1",
+										"remove-brand"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "31398468-1466734f-b1dd-4696-9dc1-25ef84859e20"
+				},
+				{
+					"name": "Create Category",
+					"id": "31398468-1da1701b-09d3-466c-8140-e2452d36e6e0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Smart Home Devices",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Automate and elevate your living with smart home devices designed for convenience and efficiency. From smart lights to voice assistants, these intelligent products make everyday tasks easier, safer, and more connected.",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"type": "file",
+									"uuid": "d7a5cd6d-2c12-484c-896a-51ee38df9292",
+									"src": "/C:/Users/Abdul Wahhab/Downloads/lock.svg"
+								},
+								{
+									"key": "brand",
+									"value": "683f6ecb4e5595da4df3385c",
+									"type": "text",
+									"uuid": "b46eedea-b090-42e0-b448-58a7fdd47ade",
+									"disabled": true
+								},
+								{
+									"key": "brand",
+									"value": "683f6feb4e5595da4df33868",
+									"type": "text",
+									"uuid": "c44f2810-ed95-4d44-8de3-8178ef4be078",
+									"disabled": true
+								},
+								{
+									"key": "specs",
+									"value": "{\"field\": \"Connectivity\", \"type\": \"string\", \"unit_required\": \"false\"}",
+									"type": "text",
+									"uuid": "16590613-60e4-4bcd-b223-75dc7bbb18e7"
+								},
+								{
+									"key": "specs",
+									"value": "{\"field\": \"Power Source\", \"type\": \"string\", \"unit_required\": \"false\"}",
+									"type": "text",
+									"uuid": "61631296-f604-41bd-aef6-59c97835462b"
+								},
+								{
+									"key": "specs",
+									"value": "{\"field\": \"Voice Control\", \"type\": \"boolean\", \"unit_required\": \"false\"}",
+									"type": "text",
+									"uuid": "b0c17431-5af5-4d4d-ae2c-361a93def197"
+								},
+								{
+									"key": "specs",
+									"value": "{\"field\": \"Compatibility\", \"type\": \"string\", \"unit_required\": \"false\"}",
+									"type": "text",
+									"uuid": "ce1e8f14-2318-447f-979d-d69b7df49b26"
+								},
+								{
+									"key": "specs",
+									"value": "{\"field\": \"Power Consumption\", \"type\": \"number\", \"unit_required\": \"true\", \"unit\": \"W\"}",
+									"type": "text",
+									"uuid": "17d3e8e4-4ecc-49e1-a309-0ef3c44fdbce"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{category}}/create",
+							"host": [
+								"{{category}}"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Category",
+					"id": "31398468-26805b34-7eb5-4e7a-b2e3-3ad489d0b4d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{category}}/categories?page=1&limit=1",
+							"host": [
+								"{{category}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "-name",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Category",
+					"id": "31398468-42de6738-36b1-4ad8-90eb-b2d2a7482428",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{category}}/68fe38d64e7feb9024db73c1",
+							"host": [
+								"{{category}}"
+							],
+							"path": [
+								"68fe38d64e7feb9024db73c1"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "ear buds",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update name , description , status , isFeatured",
+					"id": "31398468-ecf61e68-5d10-4a3c-81da-57667c1d7a12",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"earbuds\",\r\n    \"description\" : \"Experience crystal-clear audio and seamless connectivity with our range of premium earbuds. Designed for comfort and performance, these wireless companions let you enjoy music, calls, and podcasts on the go — all without the hassle of wires. Elevate your sound experience with earbuds that move with your lifestyle.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{category}}/68fe3153ba9e9d2419cbbb24",
+							"host": [
+								"{{category}}"
+							],
+							"path": [
+								"68fe3153ba9e9d2419cbbb24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category Image",
+					"id": "31398468-ddb2cb7b-5970-46b6-96d7-dcc474a932d5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"type": "file",
+									"uuid": "c0cc4164-067c-4f8a-88ef-26d9895f9ea5",
+									"src": "/C:/Users/Abdul Wahhab/Downloads/1761491795806-378733902-lock.svg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/logo",
+							"host": [
+								"{{category}}"
+							],
+							"path": [
+								"68fe3153ba9e9d2419cbbb24",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "31398468-dea3f325-1827-44f6-a90d-c91317ed93d6",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0bd9c43a-b353-4f53-9e47-8e370f32dd5a",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c230e10a-2d7c-4898-b85a-685141ca5bc3",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
