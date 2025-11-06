@@ -737,19 +737,15 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/remove-spec?specId=690762b4cb0a21cc5f0a9252",
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/690762b4cb0a21cc5f0a9252/remove",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
 										"68fe3153ba9e9d2419cbbb24",
-										"remove-spec"
-									],
-									"query": [
-										{
-											"key": "specId",
-											"value": "690762b4cb0a21cc5f0a9252"
-										}
+										"spec",
+										"690762b4cb0a21cc5f0a9252",
+										"remove"
 									]
 								}
 							},
