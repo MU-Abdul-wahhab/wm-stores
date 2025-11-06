@@ -3,13 +3,13 @@
 
     <!-- Header Row -->
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl md:text-2xl font-semibold">
-        Why
-        <span class="text-primary-green font-bold">Evara?</span>
+      <h2 class="text-xl md:text-2xl font-semibold line-clamp-1">
+        <span class="text-primary-green font-bold">Deals</span>
+        You Will Love
       </h2>
 
       <!-- Custom Nav Buttons -->
-      <div class="lg:hidden gap-3 flex">
+      <div class="gap-3 hidden lg:flex">
         <button class="btn-control sm-control" (click)="onPreviousBtn()">
           <i class="bi bi-chevron-left text-[10px]"></i>
         </button>
@@ -22,10 +22,10 @@
     <!-- Carousel -->
     <div class="relative px-2">
       <owl-carousel-o #owlCar [options]="owlOptions">
-        @for (feature of appFeatures(); track feature.title) {
+        @for (product of products(); track product.title) {
           <ng-template carouselSlide>
             <div class="pb-1">
-              <app-section-app-feature-card [appFeature]="feature"/>
+              <app-secondary-product-card [product]="product" />
             </div>
           </ng-template>
         }

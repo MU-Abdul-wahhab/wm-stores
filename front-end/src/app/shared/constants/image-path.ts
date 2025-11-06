@@ -21,9 +21,17 @@ export const IMAGES = {
       HAPPY_SELL: 'images/banners/section-app-feature/feature-5.png',
       DAILY_SUPPORT: 'images/banners/section-app-feature/feature-6.png',
     },
-    sectionRepairServices:{
+    sectionRepairServices: {
       bannerImg: 'images/banners/section-repair-services/banner-img.png',
-    }
+    },
+    sectionPopularBrands: {
+      SHOES: 'images/products/product-9/default-product-9.jpg',
+      PILLOWCASE: 'images/products/product-10/default-product-10.jpg',
+      JUMP: 'images/products/product-11/default-product-11.jpg',
+      HATS: 'images/products/product-12/default-product-12.jpg',
+      BAGS: 'images/products/product-13/default-product-13.jpg',
+      SCARF: 'images/products/product-14/default-product-14.jpg',
+    },
   },
   products: {
     product1: {
@@ -57,6 +65,50 @@ export const IMAGES = {
     product8: {
       defaultImgPath: 'images/products/product-8/default-product-8.jpg',
       hoverImgPath: 'images/products/product-8/hover-product-8.jpg',
+    },
+    product9: {
+      defaultImgPath: 'images/products/product-9/default-product-9.jpg',
+      hoverImgPath: 'images/products/product-9/default-product-9.jpg',
+    },
+    product10: {
+      defaultImgPath: 'images/products/product-10/default-product-10.jpg',
+      hoverImgPath: 'images/products/product-10/default-product-10.jpg',
+    },
+    product11: {
+      defaultImgPath: 'images/products/product-11/default-product-11.jpg',
+      hoverImgPath: 'images/products/product-11/default-product-11.jpg',
+    },
+    product12: {
+      defaultImgPath: 'images/products/product-12/default-product-12.jpg',
+      hoverImgPath: 'images/products/product-12/default-product-12.jpg',
+    },
+    product13: {
+      defaultImgPath: 'images/products/product-13/default-product-13.jpg',
+      hoverImgPath: 'images/products/product-13/default-product-13.jpg',
+    },
+    product14: {
+      defaultImgPath: 'images/products/product-14/default-product-14.jpg',
+      hoverImgPath: 'images/products/product-14/default-product-14.jpg',
+    },
+  },
+  brands: {
+    brand1: {
+      logo: 'images/brands/brand1/default-brand-1.png'
+    },
+    brand2: {
+      logo: 'images/brands/brand2/default-brand-2.png'
+    },
+    brand3: {
+      logo: 'images/brands/brand3/default-brand-3.png'
+    },
+    brand4: {
+      logo: 'images/brands/brand4/default-brand-4.png'
+    },
+    brand5: {
+      logo: 'images/brands/brand5/default-brand-5.png'
+    },
+    brand6: {
+      logo: 'images/brands/brand6/default-brand-6.png'
     },
   }
 }

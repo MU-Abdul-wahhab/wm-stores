@@ -69,7 +69,23 @@ input.ng-invalid.ng-touched.ng-dirty {
 }
 
 .btn-control {
-  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300;
+  @apply border border-[#DCDEED] bg-[#E8F6EA] cursor-pointer text-primary-green hover:text-white hover:bg-primary-green rounded-full flex items-center justify-center transition-all duration-300;
+}
+
+.btn-control.sm-control {
+  @apply w-7 h-7;
+}
+
+.btn-control.md-control {
+  @apply w-10 h-10;
+}
+
+.btn-control.lg-control {
+  @apply w-15 h-15;
+}
+
+.btn-control.useGreenBorder {
+  @apply hover:border-primary-green;
 }
 
 .bg-brush {

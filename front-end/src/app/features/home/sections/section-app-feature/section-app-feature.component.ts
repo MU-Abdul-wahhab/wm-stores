@@ -61,6 +61,7 @@ export class SectionAppFeatureComponent {
     loop: true,
     autoplay: true,
     autoplayTimeout: 5000,
+    smartSpeed: 1000,
     autoplayHoverPause: true,
     margin: 40,
     dots: false,
