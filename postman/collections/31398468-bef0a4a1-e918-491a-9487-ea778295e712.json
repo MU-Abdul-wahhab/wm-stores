@@ -762,7 +762,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "",
+									"raw": "{\r\n    \r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
