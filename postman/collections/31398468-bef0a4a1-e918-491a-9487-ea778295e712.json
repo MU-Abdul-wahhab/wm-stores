@@ -737,14 +737,14 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/690ca725580f38f161224f00/remove",
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/690ca725580f38f161224eff/remove",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
 										"68fe3153ba9e9d2419cbbb24",
 										"spec",
-										"690ca725580f38f161224f00",
+										"690ca725580f38f161224eff",
 										"remove"
 									]
 								}
