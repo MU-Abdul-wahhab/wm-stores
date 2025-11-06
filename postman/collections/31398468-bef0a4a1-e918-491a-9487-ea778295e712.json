@@ -770,14 +770,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/1234567890/update",
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/68fe3153ba9e9d2419cbbb29/update",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
 										"68fe3153ba9e9d2419cbbb24",
 										"spec",
-										"1234567890",
+										"68fe3153ba9e9d2419cbbb29",
 										"update"
 									]
 								}
