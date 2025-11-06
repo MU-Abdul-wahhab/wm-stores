@@ -714,13 +714,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/add-spec",
+									"raw": "{{category}}/68fe3153ba9e9d2419cbbb24/spec/add",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
 										"68fe3153ba9e9d2419cbbb24",
-										"add-spec"
+										"spec",
+										"add"
 									]
 								}
 							},
