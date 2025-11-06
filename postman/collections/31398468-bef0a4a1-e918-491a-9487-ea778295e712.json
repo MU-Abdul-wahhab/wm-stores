@@ -773,13 +773,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{category}}/ctest/remove-spec",
+									"raw": "{{category}}/",
 									"host": [
 										"{{category}}"
 									],
 									"path": [
-										"ctest",
-										"remove-spec"
+										""
 									]
 								}
 							},
