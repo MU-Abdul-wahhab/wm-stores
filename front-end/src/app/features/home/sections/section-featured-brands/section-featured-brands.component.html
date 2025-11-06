@@ -2,14 +2,14 @@
   <div class="container mx-auto">
 
     <!-- Header Row -->
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl md:text-2xl font-semibold">
-        Why
-        <span class="text-primary-green font-bold">Evara?</span>
+    <div class="flex items-center justify-between mb-1">
+      <h2 class="text-xl md:text-2xl font-semibold line-clamp-1">
+        <span class="text-primary-green font-bold">Featured</span>
+        Brands
       </h2>
 
       <!-- Custom Nav Buttons -->
-      <div class="lg:hidden gap-3 flex">
+      <div class="gap-3 flex">
         <button class="btn-control sm-control" (click)="onPreviousBtn()">
           <i class="bi bi-chevron-left text-[10px]"></i>
         </button>
@@ -20,12 +20,13 @@
     </div>
 
     <!-- Carousel -->
-    <div class="relative px-2">
+    <div class="px-2">
       <owl-carousel-o #owlCar [options]="owlOptions">
-        @for (feature of appFeatures(); track feature.title) {
+        @for (brand of brands(); track brand.imgPath) {
           <ng-template carouselSlide>
-            <div class="pb-1">
-              <app-section-app-feature-card [appFeature]="feature"/>
+            <div
+              class="h-32 w-48 cursor-pointer lg:opacity-50 lg:grayscale-50 lg:hover:opacity-100 lg:hover:grayscale-0 duration-500 transition-all">
+              <img [src]="brand.imgPath" [alt]="brand.brandName" class="w-full h-full object-contain" />
             </div>
           </ng-template>
         }

@@ -1,0 +1,10 @@
+<!--  <div class="h-[78%] w-full rounded-2xl overflow-hidden">-->
+<div class="h-3/4 w-full rounded-xl overflow-hidden">
+  <img [src]="category().imgPath" [alt]="category().title"
+       class="group-hover:scale-105 h-full w-full object-cover duration-500 transition-all"/>
+</div>
+
+<p
+  class="text-sm text-center text-secondary-light-gray group-hover:text-primary-green font-semibold line-clamp-1 tracking-wider duration-500 transition-all">
+  {{ category().title }}
+</p>

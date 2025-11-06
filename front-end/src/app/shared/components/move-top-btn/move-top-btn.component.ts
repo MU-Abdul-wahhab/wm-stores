@@ -6,7 +6,7 @@ import {Component, HostListener, signal} from '@angular/core';
   templateUrl: './move-top-btn.component.html',
   styleUrl: './move-top-btn.component.css',
   host: {
-    'class': 'fixed bottom-8 right-8 transition-opacity duration-300',
+    'class': 'fixed bottom-8 right-8 transition-opacity duration-300 z-50',
     '[class.opacity-0]': 'isAtTop()',
     '[class.pointer-events-none]': 'isAtTop()'
   }
