@@ -1,8 +1,8 @@
-import {Component, signal} from '@angular/core';
-import {CarouselModule} from '@syncfusion/ej2-angular-navigations';
+import { Component, signal } from '@angular/core';
+import { CarouselModule } from '@syncfusion/ej2-angular-navigations';
 
-import {SectionCarouselCardComponent} from './section-carousel-card/section-carousel-card.component';
-import {IMAGES} from '../../../../shared/constants/image-path';
+import { SectionCarouselCardComponent } from './section-carousel-card/section-carousel-card.component';
+import { IMAGES } from '../../../../shared/constants/image-path';
 
 @Component({
   selector: 'app-section-carousel',

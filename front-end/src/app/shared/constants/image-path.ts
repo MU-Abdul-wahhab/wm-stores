@@ -32,6 +32,15 @@ export const IMAGES = {
       BAGS: 'images/products/product-13/default-product-13.jpg',
       SCARF: 'images/products/product-14/default-product-14.jpg',
     },
+    sectionBlogs: {
+      blog1: {
+        imgPath: 'images/blogs/blog-1/blog-1.jpg'
+      },
+      blog2: {
+        imgPath: 'images/blogs/blog-2/blog-2.jpg'
+      }
+    }
+
   },
   products: {
     product1: {
