@@ -1,4 +1,5 @@
 import {Component, input} from '@angular/core';
+import {Category} from '../../../../../core/models/category.model';
 
 @Component({
   selector: 'app-section-popular-categories-card',
@@ -11,9 +12,5 @@ import {Component, input} from '@angular/core';
   }
 })
 export class SectionPopularCategoriesCardComponent {
-  category = input.required<{
-    title: string,
-    imgPath: string,
-    productsCount: number
-  }>();
+  category = input.required<Category>();
 }

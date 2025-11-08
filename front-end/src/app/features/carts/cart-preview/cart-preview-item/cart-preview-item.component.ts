@@ -1,4 +1,6 @@
-import { Component, input, output } from '@angular/core';
+import {Component, inject, input} from '@angular/core';
+import {Cart} from '../../cart.model';
+import {CartService} from '../../cart.service';
 
 @Component({
   selector: 'app-cart-preview-item',
@@ -7,17 +9,11 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './cart-preview-item.component.css',
 })
 export class CartPreviewItemComponent {
-  cartItem = input.required<{
-    id: string,
-    name: string,
-    qty: number,
-    price: number,
-    avatar: string
-  }>();
+  cartItem = input.required<Cart>();
 
-  cartRemove = output<string>();
+  private cartService = inject(CartService);
 
   onClose() {
-    this.cartRemove.emit(this.cartItem().id);
+    this.cartService.removeCartItem('userId1', this.cartItem().id);
   }
 }

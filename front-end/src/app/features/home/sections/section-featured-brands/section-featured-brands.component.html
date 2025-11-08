@@ -22,7 +22,7 @@
     <!-- Carousel -->
     <div class="px-2">
       <owl-carousel-o #owlCar [options]="owlOptions">
-        @for (brand of brands(); track brand.imgPath) {
+        @for (brand of brands(); track brand.id) {
           <ng-template carouselSlide>
             <div
               class="h-32 w-48 cursor-pointer lg:opacity-50 lg:grayscale-50 lg:hover:opacity-100 lg:hover:grayscale-0 duration-500 transition-all">

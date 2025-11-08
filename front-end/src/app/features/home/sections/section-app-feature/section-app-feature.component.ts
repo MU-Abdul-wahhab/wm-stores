@@ -1,8 +1,11 @@
-import {Component, signal, ViewChild} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, signal, ViewChild} from '@angular/core';
 import {CarouselComponent, CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
 
 import {IMAGES} from '../../../../shared/constants/image-path';
 import {SectionAppFeatureCardComponent} from './section-app-feature-card/section-app-feature-card.component';
+import {AppFeature} from '../../../../core/models/home-content.model';
+import {HomeContentService} from '../../../../core/services/home-content.service';
+
 
 @Component({
   selector: 'app-section-app-feature',
@@ -13,49 +16,14 @@ import {SectionAppFeatureCardComponent} from './section-app-feature-card/section
   templateUrl: './section-app-feature.component.html',
   styleUrl: './section-app-feature.component.css',
 })
-export class SectionAppFeatureComponent {
+export class SectionAppFeatureComponent implements OnInit{
   @ViewChild('owlCar') owlCar!: CarouselComponent;
 
   private IMAGES = signal(IMAGES);
+  private homeContentService = inject(HomeContentService);
+  private destroyRef = inject(DestroyRef);
 
-  // @HostListener('window:resize')
-
-  appFeatures = signal<{
-    title: string,
-    imgPath: string,
-    bgColor: string
-  }[]>([
-    {
-      title: 'Free Shipping',
-      imgPath: IMAGES.sections.sectionAppFeature.FREE_SHIPPING,
-      bgColor: '#FDDDE4'
-    },
-    {
-      title: 'Online Order',
-      imgPath: IMAGES.sections.sectionAppFeature.ONLINE_ORDER,
-      bgColor: '#d1e8f2'
-    },
-    {
-      title: 'Save Money',
-      imgPath: IMAGES.sections.sectionAppFeature.SAVE_MONEY,
-      bgColor: '#CDEBBC'
-    },
-    {
-      title: 'Promotions',
-      imgPath: IMAGES.sections.sectionAppFeature.PROMOTIONS,
-      bgColor: '#CDD4F8'
-    },
-    {
-      title: 'Happy Sell',
-      imgPath: IMAGES.sections.sectionAppFeature.HAPPY_SELL,
-      bgColor: '#F6DBF6'
-    },
-    {
-      title: '24/7 Support',
-      imgPath: IMAGES.sections.sectionAppFeature.DAILY_SUPPORT,
-      bgColor: '#FFF2E5'
-    },
-  ]);
+  appFeatures = signal<AppFeature[]>([]);
 
   owlOptions: OwlOptions = {
     loop: true,
@@ -73,6 +41,18 @@ export class SectionAppFeatureComponent {
       1400: {items: 7, autoplay: false, loop: false}
     }
   };
+
+  ngOnInit() {
+    const subs = this.homeContentService.homeContents$.subscribe({
+      next: homeContent => {
+        if (homeContent && homeContent.appFeatures) {
+          this.appFeatures.set(homeContent.appFeatures);
+        }
+      }
+    });
+
+    this.destroyRef.onDestroy(() => subs.unsubscribe());
+  }
 
   onPreviousBtn() {
     this.owlCar.prev();

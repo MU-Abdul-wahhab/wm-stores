@@ -6,7 +6,7 @@
                 @for (item of cartItems(); track item.id) {
                 @if (isDropdownOpen()) {
                 <li class="cursor-pointer" [@itemAnimation]>
-                    <app-cart-preview-item [cartItem]="item" (cartRemove)="onCartItemClose($event)" />
+                    <app-cart-preview-item [cartItem]="item" />
                 </li>
                 }
                 } @empty {

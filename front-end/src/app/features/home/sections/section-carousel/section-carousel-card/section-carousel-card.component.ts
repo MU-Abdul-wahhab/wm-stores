@@ -1,4 +1,5 @@
 import {Component, input} from '@angular/core';
+import {Carousel} from '../../../../../core/models/home-content.model';
 
 @Component({
   selector: 'app-section-carousel-card',
@@ -7,11 +8,5 @@ import {Component, input} from '@angular/core';
   styleUrl: './section-carousel-card.component.css'
 })
 export class SectionCarouselCardComponent {
-  carouselCard = input.required<{
-    'title_line_1': string,
-    'title_line_2': string,
-    'title_line_3': string,
-    'coupon_percentage': number,
-    'img_path': string
-  }>();
+  carouselCard = input.required<Carousel>();
 }

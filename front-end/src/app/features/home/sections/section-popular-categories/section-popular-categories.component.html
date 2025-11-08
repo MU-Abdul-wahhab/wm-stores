@@ -22,7 +22,7 @@
     <!-- Carousel -->
     <div class="relative px-2">
       <owl-carousel-o #owlCar [options]="owlOptions">
-        @for (category of categories(); track category.title) {
+        @for (category of categories(); track category.id) {
           <ng-template carouselSlide>
             <div class="pb-1">
               <app-section-popular-categories-card [category]="category"/>

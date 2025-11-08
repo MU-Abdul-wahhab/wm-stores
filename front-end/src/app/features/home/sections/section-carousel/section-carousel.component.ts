@@ -1,38 +1,43 @@
-import { Component, signal } from '@angular/core';
-import { CarouselModule } from '@syncfusion/ej2-angular-navigations';
+import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
+import {CarouselModule} from '@syncfusion/ej2-angular-navigations';
 
-import { SectionCarouselCardComponent } from './section-carousel-card/section-carousel-card.component';
-import { IMAGES } from '../../../../shared/constants/image-path';
+import {SectionCarouselCardComponent} from './section-carousel-card/section-carousel-card.component';
+import {IMAGES} from '../../../../shared/constants/image-path';
+import {BannerCardComponent} from '../../../../shared/components/banner-card/banner-card.component';
+import {Banner, Carousel} from '../../../../core/models/home-content.model';
+import {HomeContentService} from '../../../../core/services/home-content.service';
 
 @Component({
   selector: 'app-section-carousel',
   imports: [
     SectionCarouselCardComponent,
-    CarouselModule
+    CarouselModule,
+    BannerCardComponent
   ],
   templateUrl: './section-carousel.component.html',
   styleUrl: './section-carousel.component.css',
 })
-export class SectionCarouselComponent {
+export class SectionCarouselComponent implements OnInit {
   IMAGES = IMAGES
+  private homeContentService = inject(HomeContentService);
+  private destroyRef = inject(DestroyRef);
 
-  carouselCards = signal<{
-    'title_line_1': string,
-    'title_line_2': string,
-    'title_line_3': string,
-    'coupon_percentage': number,
-    'img_path': string
-  }[]>([{
-    'title_line_1': 'Tech Promotions',
-    'title_line_2': 'Tech Trending',
-    'title_line_3': 'Great Collection',
-    'coupon_percentage': 20,
-    'img_path': IMAGES.sections.sectionCarousel.SECTION_CAROUSEL_SLIDER_1
-  }, {
-    'title_line_1': 'Trade-In Offer',
-    'title_line_2': 'Supper Value Deals',
-    'title_line_3': 'On All Products',
-    'coupon_percentage': 70,
-    'img_path': IMAGES.sections.sectionCarousel.SECTION_CAROUSEL_SLIDER_2
-  }])
+  carouselCards = signal<Carousel[]>([]);
+
+  bannerCards = signal<Banner[]>([]);
+
+  ngOnInit() {
+    const subs = this.homeContentService.homeContents$.subscribe({
+      next: homeContent => {
+        if (homeContent && homeContent.banners) {
+          this.bannerCards.set(homeContent.banners);
+        }
+        if (homeContent && homeContent.carousels) {
+          this.carouselCards.set(homeContent.carousels);
+        }
+      }
+    });
+
+    this.destroyRef.onDestroy(() => subs.unsubscribe());
+  }
 }

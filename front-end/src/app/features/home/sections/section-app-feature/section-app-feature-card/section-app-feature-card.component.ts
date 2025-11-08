@@ -1,5 +1,6 @@
 import {Component, input} from '@angular/core';
 import {NgClass} from '@angular/common';
+import {AppFeature} from '../../../../../core/models/home-content.model';
 
 @Component({
   selector: 'app-section-app-feature-card',
@@ -13,9 +14,5 @@ import {NgClass} from '@angular/common';
   }
 })
 export class SectionAppFeatureCardComponent {
-  appFeature = input.required<{
-    title: string,
-    imgPath: string,
-    bgColor: string
-  }>();
+  appFeature = input.required<AppFeature>();
 }

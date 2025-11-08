@@ -22,7 +22,7 @@
     <!-- Carousel -->
     <div class="relative px-2">
       <owl-carousel-o #owlCar [options]="owlOptions">
-        @for (feature of appFeatures(); track feature.title) {
+        @for (feature of appFeatures(); track feature.id) {
           <ng-template carouselSlide>
             <div class="pb-1">
               <app-section-app-feature-card [appFeature]="feature"/>

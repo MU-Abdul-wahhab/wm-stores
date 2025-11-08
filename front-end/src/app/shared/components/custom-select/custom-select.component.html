@@ -10,7 +10,7 @@
 <div class="max-h-60 overflow-y-auto text-sm custom-scrollbar">
     <ul class="flex flex-col py-2">
         @for (item of filteredOptions(); track $index) {
-        <li class="px-4 py-2 hover:bg-light-green cursor-pointer transition-colors duration-200 text-gray-700 hover:text-black truncate"
+        <li class="px-4 py-2 hover:bg-light-opacity-green cursor-pointer transition-colors duration-200 text-gray-700 hover:text-black truncate"
             [ngClass]="{
                 'bg-light-gray': item === selectedValue(),
             }" (click)="selectItem(item)">

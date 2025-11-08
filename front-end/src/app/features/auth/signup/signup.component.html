@@ -3,7 +3,7 @@
   <div class="flex items-center justify-center min-h-screen bg-gray-50">
 
     <div
-      class="w-full max-w-lg space-y-3 md:space-y-8 p-4 md:p-8 border border-gray-300 rounded-xl bg-white shadow-md">
+      class="w-full max-w-lg space-y-3 md:space-y-8 px-4 pt-4 pb-2 md:px-8 md:pt-8 md:pb-4 border border-gray-300 rounded-xl bg-white shadow-md">
 
       <h2 class="text-2xl font-semibold">Create an Account</h2>
 
@@ -76,8 +76,8 @@
         </div>
 
         <button type="submit" [disabled]="(!form.valid || isLoading())" [class]="form.valid
-    ? 'btn-primary px-11 py-4 flex items-center'
-    : 'btn-disabled px-11 py-4 flex items-center'">
+    ? 'btn-primary px-11 py-4 flex items-center justify-center w-full'
+    : 'btn-disabled px-11 py-4 flex items-center justify-center w-full'">
           @if (isLoading()) {
             <svg class="mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24">
@@ -91,6 +91,18 @@
 
         <p class="text-xs text-black  font-medium text-center mt-3">Already Have an Account?
           <a [routerLink]="['../login']" class="text-hover-green cursor-pointer">Sign in </a>now
+        </p>
+
+        <div class="text-xs text-secondary-light-gray text-center flex items-center">
+          <div class="border-b border-text-secondary-light-gray w-1/2"></div>
+          <p>OR</p>
+          <div class="border-b border-text-secondary-light-gray w-1/2"></div>
+        </div>
+
+        <p class="text-center mt-3">
+          <button type="button" (click)="onGuestClick()" class="cursor-pointer text-sm text-black font-medium">
+            Continue as a <span class="text-hover-green">Guest</span>
+          </button>
         </p>
 
       </form>

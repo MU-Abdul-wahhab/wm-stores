@@ -39,8 +39,18 @@ export const IMAGES = {
       blog2: {
         imgPath: 'images/blogs/blog-2/blog-2.jpg'
       }
+    },
+    sectionBanners:{
+      banner1:{
+        imgPath: 'images/banners/section-banners/banner-1/banner-1.png'
+      },
+      banner2:{
+        imgPath: 'images/banners/section-banners/banner-2/banner-2.png'
+      },
+      banner3:{
+        imgPath: 'images/banners/section-banners/banner-3/banner-3.png'
+      },
     }
-
   },
   products: {
     product1: {

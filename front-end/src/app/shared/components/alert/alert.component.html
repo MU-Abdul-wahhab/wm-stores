@@ -1,20 +1,17 @@
 <dialog #errorDialog class="rounded-lg p-6 bg-white shadow-xl w-96 max-w-[90vw] text-left">
-    <div class="flex items-center space-x-3">
-        <div class="p-3 rounded-full" [class]="colorClasses()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="iconPath()" />
-            </svg>
-        </div>
-        <h2 class="text-lg font-semibold text-gray-800">{{ title() }}</h2>
+  <div class="flex items-center space-x-3">
+    <div class="h-10 w-10 flex items-center justify-center rounded-full" [class]="colorClasses()">
+      <i class="bi text-lg" [class]="iconClass()"></i>
     </div>
+    <h2 class="text-lg font-semibold text-gray-800">{{ title() }}</h2>
+  </div>
 
-    <p class="mt-4 text-sm text-gray-600">
-        {{ errorMessage() }}
-    </p>
+  <p class="mt-4 text-sm text-gray-600">
+    {{ errorMessage() }}
+  </p>
 
-    <div class="mt-6 flex justify-end space-x-2">
-        <button class="px-4 py-2 rounded-md text-white bg-primary-green hover:bg-hover-green cursor-pointer"
+  <div class="mt-6 flex justify-end space-x-2">
+    <button class="px-4 py-2 rounded-md text-white bg-primary-green hover:bg-hover-green cursor-pointer"
             type="button" (click)="onClose()">OK</button>
-    </div>
+  </div>
 </dialog>

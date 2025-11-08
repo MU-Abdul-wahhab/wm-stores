@@ -2,7 +2,7 @@
 
   <div class="flex items-center justify-center min-h-screen bg-gray-50">
 
-    <div class="w-full max-w-md space-y-8 p-8 border border-gray-300 rounded-xl bg-white shadow-md">
+    <div class="w-full max-w-md space-y-8 px-8 pt-8 pb-4 border border-gray-300 rounded-xl bg-white shadow-md">
 
       <h2 class="text-2xl font-semibold">Login</h2>
 
@@ -10,37 +10,37 @@
 
         <div>
           <input type="email" id="email" required formControlName="email" class="form-control px-5 py-4 text-sm"
-            placeholder="Your Email" />
+                 placeholder="Your Email"/>
           @if (isEmailInvalid) {
-          <p class="text-xs text-red-600 font-light mt-3">Please enter a valid email address.</p>
+            <p class="text-xs text-red-600 font-light mt-3">Please enter a valid email address.</p>
           }
         </div>
         <div>
           <div class="relative">
             <input [type]="showPassword() ? 'text' : 'password'" id="password" required formControlName="password"
-              placeholder="Password" class="form-control pr-12 px-5 py-4 text-sm" />
+                   placeholder="Password" class="form-control pr-12 px-5 py-4 text-sm"/>
 
             <!-- Eye Icon -->
             <button type="button" (click)="onTogglePasswordVisibility()"
-              class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
               @if (showPassword()) {
-              <i class="bi bi-eye text-lg transition-colors duration-200"></i>
+                <i class="bi bi-eye text-lg transition-colors duration-200"></i>
               } @else {
-              <i class="bi bi-eye-slash text-lg transition-colors duration-200"></i>
+                <i class="bi bi-eye-slash text-lg transition-colors duration-200"></i>
               }
             </button>
           </div>
 
           @if (isPasswordInvalid) {
-          <p class="text-xs text-red-600 font-light mt-3">Please enter a valid password - must be at least 6
-            characters long</p>
+            <p class="text-xs text-red-600 font-light mt-3">Please enter a valid password - must be at least 6
+              characters long</p>
           }
         </div>
 
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2 cursor-pointer">
             <input type="checkbox" id="checkbox"
-              class="cursor-pointer w-4 h-4 accent-primary-green transition-all duration-1000" />
+                   class="cursor-pointer w-4 h-4 accent-primary-green transition-all duration-1000"/>
             <label for="checkbox" class="cursor-pointer text-sm text-black opacity-75 font-medium">Remember me</label>
           </div>
 
@@ -48,21 +48,33 @@
         </div>
 
         <button type="submit" [disabled]="(!form.valid || isLoading())" [class]="form.valid
-    ? 'btn-primary px-11 py-4 flex items-center'
-    : 'btn-disabled px-11 py-4 flex items-center'">
-          @if(isLoading()){
-          <svg class="mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 24 24">
-            <circle class="opacity-50" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-            </circle>
-            <path fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-          </svg>
+    ? 'btn-primary px-11 py-4 flex items-center justify-center w-full'
+    : 'btn-disabled px-11 py-4 flex items-center justify-center w-full'">
+          @if (isLoading()) {
+            <svg class="mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <circle class="opacity-50" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+              </circle>
+              <path fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
           }
-          {{ isLoading() ? 'Loading...':'Log in' }}
+          {{ isLoading() ? 'Loading...' : 'Log in' }}
         </button>
 
         <p class="text-xs text-black  font-medium text-center mt-3">Don't Have an Account?
           <a [routerLink]="['../signup']" class="text-hover-green cursor-pointer">Sign up </a>now
+        </p>
+
+        <div class="text-xs text-secondary-light-gray text-center flex items-center">
+          <div class="border-b border-text-secondary-light-gray w-1/2"></div>
+          <p>OR</p>
+          <div class="border-b border-text-secondary-light-gray w-1/2"></div>
+        </div>
+
+        <p class="text-center mt-3">
+          <button type="button" (click)="onGuestClick()" class="cursor-pointer text-sm text-black font-medium">
+            Continue as a <span class="text-hover-green">Guest</span>
+          </button>
         </p>
 
       </form>
@@ -74,9 +86,9 @@
 </section>
 
 @if (errorMsg()) {
-<app-alert [errorMessage]="errorMsg()!" type="error" (closed)="errorMsg.set(undefined)" />
+  <app-alert [errorMessage]="errorMsg()!" type="error" (closed)="errorMsg.set(undefined)"/>
 }
 
 @if (successMsg()) {
-<app-alert [errorMessage]="successMsg()!" type="success" (closed)="onSuccessDialogClose()" />
+  <app-alert [errorMessage]="successMsg()!" type="success" (closed)="onSuccessDialogClose()"/>
 }

@@ -1,0 +1,11 @@
+<section id="section-banners" class="w-full px-4 py-6">
+  <div class="container mx-auto">
+    <div class="flex flex-col md:flex-row gap-6 items-center h-[75vh] md:h-44">
+      @for (banner of banners(); track banner.id) {
+        @if (banner.id !== 'b1' && banner.id !== 'b2' && banner.id !== 'b3') {
+          <app-banner-card class="h-1/3 w-full md:h-full md:w-1/3" [bannerCredentials]="banner"/>
+        }
+      }
+    </div>
+  </div>
+</section>

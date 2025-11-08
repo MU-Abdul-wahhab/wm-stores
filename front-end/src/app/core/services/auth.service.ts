@@ -1,22 +1,25 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable, OnInit, signal } from '@angular/core';
-import { BehaviorSubject, catchError, filter, finalize, tap, throwError, take, map } from 'rxjs';
-import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {inject, Injectable, OnInit, signal} from '@angular/core';
+import {BehaviorSubject, catchError, filter, finalize, map, take, tap, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 
-import { environment } from '../../../environments/environment';
-import { AuthResponseData, User } from './auth.model';
-import { TokenService } from './token.service';
-import { CryptoService } from './crypto.service';
+import {environment} from '../../../environments/environment';
+import {AuthResponseData, User} from '../models/auth.model';
+import {TokenService} from './token.service';
+import {CryptoService} from './crypto.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  enteredEmail = signal<string>('');
+  private _enteredEmail = signal<string>('');
+  enteredEmail = this._enteredEmail.asReadonly();
+
   private refreshInProgress = signal(false);
+
   isAuthenticated = signal(false);
 
-  private refreshSubject = new BehaviorSubject<string | null>(null);
+  private refreshSubject$ = new BehaviorSubject<string | null>(null);
   user$ = new BehaviorSubject<User | null>(null);
 
   private baseUrl = environment.apiBaseUrl;
@@ -30,7 +33,7 @@ export class AuthService {
   private cryptoService = inject(CryptoService);
 
   automaticallySetEnteredMailToLoginField(email: string) {
-    this.enteredEmail.set(email);
+    this._enteredEmail.set(email);
   }
 
   signup(signupCredentials: { firstName: string, lastName: string, email: string, mobile: string, password: string }) {
@@ -117,7 +120,7 @@ export class AuthService {
       const accessTokenExpireTime = this.tokenService.getTokenExpiration(loadedUser.accessToken);
 
       if (accessTokenExpireTime.getTime() <= Date.now()) {
-        this.refreshToken().subscribe({ error: () => this.logout() });
+        this.refreshToken().subscribe({error: () => this.logout()});
       } else {
         this.setAutoLogout(accessTokenExpireTime);
         this.setTokenRefresh(accessTokenExpireTime);
@@ -127,12 +130,10 @@ export class AuthService {
     }
   }
 
-
-
   logout() {
     this.log("LOGGING OUT USER");
     this.user$.next(null);
-    this.router.navigate(['/auth'], { replaceUrl: true });
+    this.router.navigate(['/auth'], {replaceUrl: true});
     localStorage.removeItem('wmStoreLoggedUserData');
 
     if (this.accessTokenExpirationTimer) {
@@ -160,24 +161,6 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private setTokenRefresh(accessTokenExpiration: Date) {
-    const refreshTime = accessTokenExpiration.getTime() - new Date().getTime() - (10 * 1000);
-    this.log(`Refresh Scheduled In: ${refreshTime / 1000}s`);
-    if (this.refreshTokenTimer) {
-      clearTimeout(this.refreshTokenTimer);
-    }
-
-    if (refreshTime > 0) {
-
-      this.refreshTokenTimer = setTimeout(() => {
-        this.refreshToken().subscribe({
-          error: (err) => {
-          }
-        });
-      }, refreshTime);
-    }
-  }
-
   private i = 1;
 
   refreshToken() {
@@ -188,7 +171,7 @@ export class AuthService {
     }
 
     if (this.refreshInProgress()) {
-      return this.refreshSubject.pipe(
+      return this.refreshSubject$.pipe(
         filter(token => token !== null),
         take(1)
       );
@@ -232,7 +215,7 @@ export class AuthService {
 
           this.user$.next(updatedUser);
 
-          const userPayload = { ...updatedUser };
+          const userPayload = {...updatedUser};
           const hash = this.cryptoService.generateHash(userPayload);
 
           localStorage.setItem('wmStoreLoggedUserData', JSON.stringify({
@@ -240,7 +223,7 @@ export class AuthService {
             hash
           }));
 
-          this.refreshSubject.next(responseData.access_token);
+          this.refreshSubject$.next(responseData.access_token);
         }
       }),
       map(res => res.access_token),
@@ -280,7 +263,6 @@ export class AuthService {
     });
   }
 
-
   private handleAuthentication(responseData: AuthResponseData) {
     const accessTokenExpireTime = this.tokenService.getTokenExpiration(responseData.access_token);
     const refreshTokenExpireTime = this.tokenService.getTokenExpiration(responseData.refresh_token);
@@ -307,7 +289,7 @@ export class AuthService {
     this.setAutoLogout(accessTokenExpireTime);
     this.setTokenRefresh(accessTokenExpireTime);
 
-    const userPayload = { ...user };
+    const userPayload = {...user};
     const hash = this.cryptoService.generateHash(userPayload);
 
     localStorage.setItem('wmStoreLoggedUserData', JSON.stringify({
@@ -320,11 +302,10 @@ export class AuthService {
     let errorMsg = 'An unknown error occurred!';
 
     console.log(errorRes);
+    console.log("ERROR IN AUTH");
 
     if (errorRes.error && errorRes.error.message) {
       errorMsg = errorRes.error.message;
-    } else if (errorRes.message) {
-      errorMsg = errorRes.message;
     }
 
     return throwError(() => new Error(errorMsg));
@@ -332,6 +313,24 @@ export class AuthService {
 
   private log(msg: string) {
     console.log(`[${new Date().toLocaleTimeString()}] ${msg}`);
+  }
+
+  private setTokenRefresh(accessTokenExpiration: Date) {
+    const refreshTime = accessTokenExpiration.getTime() - new Date().getTime() - (10 * 1000);
+    this.log(`Refresh Scheduled In: ${refreshTime / 1000}s`);
+    if (this.refreshTokenTimer) {
+      clearTimeout(this.refreshTokenTimer);
+    }
+
+    if (refreshTime > 0) {
+
+      this.refreshTokenTimer = setTimeout(() => {
+        this.refreshToken().subscribe({
+          error: (err) => {
+          }
+        });
+      }, refreshTime);
+    }
   }
 
 }

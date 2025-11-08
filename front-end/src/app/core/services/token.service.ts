@@ -17,6 +17,6 @@ export class TokenService {
     }
 
     isValidJwt(token: string): boolean {
-        return typeof token === 'string' && token.split('.').length === 3;
+        return token.split('.').length === 3;
     }
 }

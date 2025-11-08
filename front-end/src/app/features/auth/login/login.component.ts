@@ -81,6 +81,11 @@ export class LoginComponent {
     this.router.navigate(['/home'], {replaceUrl: true});
   }
 
+  onGuestClick(){
+    this.authService.logout();
+    this.router.navigate(['/home'], {replaceUrl: true});
+  }
+
 }
 
 export const canLeaveLoginPage: CanDeactivateFn<LoginComponent> = (component) => {

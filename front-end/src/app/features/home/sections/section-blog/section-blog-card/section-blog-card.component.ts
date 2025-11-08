@@ -1,4 +1,5 @@
 import {Component, input} from '@angular/core';
+import {Blog} from '../../../../../core/models/home-content.model';
 
 @Component({
   selector: 'app-section-blog-card',
@@ -7,11 +8,5 @@ import {Component, input} from '@angular/core';
   styleUrl: './section-blog-card.component.css'
 })
 export class SectionBlogCardComponent {
-  blog = input.required<{
-    imgPath: string,
-    category: string,
-    description: string,
-    date: string,
-    views: string
-  }>();
+  blog = input.required<Blog>();
 }

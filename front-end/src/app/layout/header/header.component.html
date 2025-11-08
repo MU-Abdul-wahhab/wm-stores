@@ -5,12 +5,14 @@
       <div class="flex items-center">
         <p>
           <i class="bi bi-phone"></i>&nbsp;
-          <span class="font-extralight">(+94) - 72 257 8559</span>
+          <span class="font-extralight">{{ appCredentials()?.phone }}</span>
         </p>
         <p class="mx-2 text-xl font-extralight">|</p>
         <p>
-          <i class="bi bi-geo-alt"></i>&nbsp;
-          <span class="font-extralight">Our location</span>
+          <a [href]="appCredentials()?.location">
+            <i class="bi bi-geo-alt"></i>&nbsp;
+            <span class="font-extralight">Our location</span>
+          </a>
         </p>
       </div>
 
@@ -35,7 +37,7 @@
           <div class="dropdown-trigger">
             <div
               class="cursor-pointer appearance-none pr-8 pl-3 py-1 border border-gray-300 rounded text-white max-w-32">
-              <p class="truncate">{{ selectedCurrency || 'Select currency' }}</p>
+              <p class="truncate">{{ selectedCurrency() || 'Select currency' }}</p>
             </div>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
               <i class="bi bi-caret-down-fill text-[10px] duration-200"
@@ -44,17 +46,24 @@
           </div>
 
           <div class="dropdown-content">
-            <app-custom-select [_options]="currencies" [selected]="selectedCurrency"
+            <app-custom-select [_options]="currencies()" [selected]="selectedCurrency()"
                                (selectionChange)="onCurrencyChange($event)" (closeRequest)="currencyDropdown.close()">
             </app-custom-select>
           </div>
         </app-dropdown>
 
         <p class="mx-2 text-xl font-extralight">|</p>
-        <a routerLink="/auth" class="flex items-center">
-          <i class="bi bi-person text-lg"></i>&nbsp;
-          <span class="font-extralight">Log In / Sign Up</span>
-        </a>
+        @if (isAuthenticated()) {
+          <button type="button" (click)="onLogout()" class="flex items-center cursor-pointer space-x-1">
+            <i class="bi bi-box-arrow-left text-lg"></i>&nbsp;
+            <span class="font-extralight">Logout</span>
+          </button>
+        } @else {
+          <a routerLink="/auth/login" class="flex items-center cursor-pointer">
+            <i class="bi bi-person text-lg"></i>&nbsp;
+            <span class="font-extralight">Login</span>
+          </a>
+        }
       </div>
 
     </div>
@@ -81,7 +90,7 @@
             <div
               class="cursor-pointer appearance-none pr-8 pl-3 py-3 border border-gray-300 hover:border-primary-green rounded font-extrabold text-center text-primary-gray text-sm"
               [style.border-top-right-radius]="'0'" [style.border-bottom-right-radius]="'0'">
-              <p class="truncate">{{ selectedCategory || 'Select Category' }}</p>
+              <p class="truncate">{{ selectedCategory().title || 'Select Category' }}</p>
             </div>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
               <i class="bi bi-caret-down-fill text-[10px] mt-1 duration-200"
@@ -90,7 +99,8 @@
           </div>
 
           <div class="dropdown-content">
-            <app-custom-select [_options]="categories" [selected]="selectedCategory" [needAnSearchBar]="true"
+            <app-custom-select [_options]="categoryOptions()" [selected]="selectedCategoryTitle()"
+                               [needAnSearchBar]="true"
                                (selectionChange)="onCategoryChange($event)" (closeRequest)="categoryDropdown.close()">
             </app-custom-select>
           </div>
@@ -167,7 +177,7 @@
           </div>
 
           <div class="dropdown-content">
-            <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="category.close()">
+            <app-custom-select [_options]="categoryOptions()" (closeRequest)="category.close()">
             </app-custom-select>
           </div>
         </app-dropdown>
@@ -216,7 +226,7 @@
       <div class="flex-1 flex items-center justify-end space-x-1">
         <i class="bi bi-headset text-gray-700 text-lg font-bold"></i>
         <p class="text-primary-gray font-bold text-sm mr-3">Hotline</p>
-        <p class="text-primary-green text-lg font-semibold">1900 - 888</p>
+        <p class="text-primary-green text-lg font-semibold">{{ appCredentials()?.hotlineNumber }}</p>
       </div>
 
     </div>

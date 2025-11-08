@@ -1,6 +1,7 @@
 import {Component, effect, input, OnDestroy, OnInit, signal} from '@angular/core';
 import {TooltipComponent} from '../../tooltip/tooltip.component';
 import {DecimalPipe} from '@angular/common';
+import {Product} from '../product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -15,16 +16,7 @@ import {DecimalPipe} from '@angular/common';
   }
 })
 export class ProductCardComponent implements OnInit, OnDestroy {
-  product = input.required<{
-    id: string;
-    defaultImgPath: string;
-    hoverImgPath: string;
-    category: string;
-    title: string;
-    ratingPercentage: number;
-    discountPercentage?: number;
-    price: number;
-  }>();
+  product = input.required<Product>();
 
   currentImgPath = signal('');
   discountedPrice = signal(0);

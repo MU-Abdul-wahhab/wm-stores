@@ -1,4 +1,4 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 
 import {AuthService} from '../core/services/auth.service';
@@ -15,7 +15,5 @@ import {MoveTopBtnComponent} from '../shared/components/move-top-btn/move-top-bt
 export class LayoutComponent {
   private authService = inject(AuthService);
 
-  isAuthenticated = computed(() => {
-    return this.authService.isAuthenticated();
-  });
+  isAuthenticated = signal(this.authService.isAuthenticated());
 }

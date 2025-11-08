@@ -119,6 +119,10 @@ export class SignupComponent {
     this.router.navigate(['/auth', 'login'], {replaceUrl: true});
   }
 
+  onGuestClick(){
+    this.authService.logout();
+    this.router.navigate(['/home'], {replaceUrl: true});
+  }
 }
 
 export const canLeaveSignupPage: CanDeactivateFn<SignupComponent> = (component) => {

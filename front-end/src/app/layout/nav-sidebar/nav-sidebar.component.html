@@ -34,7 +34,7 @@
       </div>
 
       <div class="dropdown-content">
-        <app-custom-select [_options]="['Home 1', 'Home 2', 'Home 3', 'Home 4']" (closeRequest)="category.close()">
+        <app-custom-select [_options]="categoryOptions()" (closeRequest)="category.close()">
         </app-custom-select>
       </div>
     </app-dropdown>
@@ -90,13 +90,19 @@
 
   <div class="my-16 text-base">
     <div class="flex flex-col space-y-4">
-      <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">Our Location
+      <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">
+        <a [href]="appCredentials()?.location">Our Location</a>
       </p>
       <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">
-        <a routerLink="/auth">Log In / Sign Up</a>
+        @if(isAuthenticated()){
+          <button type="button" (click)="onLogout()" class="cursor-pointer">Log Out</button>
+        }@else{
+          <a routerLink="/auth/login">Log In</a>
+        }
       </p>
-      <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">(+94) - 72 257
-        8559</p>
+      <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">
+        {{ appCredentials()?.phone }}
+      </p>
     </div>
   </div>
 
@@ -104,10 +110,21 @@
     <div class="flex flex-col space-y-2 text-black opacity-50 text-base font-semibold">
       <p>Follow Us</p>
       <div class="flex space-x-4">
-        <i class="bi bi-facebook fa-lg"></i>
-        <i class="bi bi-twitter fa-lg"></i>
-        <i class="bi bi-instagram fa-lg"></i>
-        <i class="bi bi-youtube fa-lg"></i>
+        <a [href]="appCredentials()?.social?.facebook">
+          <i class="bi bi-facebook fa-lg"></i>
+        </a>
+
+        <a [href]="appCredentials()?.social?.twitter">
+          <i class="bi bi-twitter fa-lg"></i>
+        </a>
+
+        <a [href]="appCredentials()?.social?.instagram">
+          <i class="bi bi-instagram fa-lg"></i>
+        </a>
+
+        <a [href]="appCredentials()?.social?.youtube">
+          <i class="bi bi-youtube fa-lg"></i>
+        </a>
       </div>
     </div>
   </div>
