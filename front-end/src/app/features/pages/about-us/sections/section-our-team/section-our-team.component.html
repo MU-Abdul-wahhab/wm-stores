@@ -1,0 +1,63 @@
+<section id="section-our-team" class="w-full px-4 py-6">
+  <article class="container mx-auto">
+
+    <div class="flex items-center flex-col md:flex-row gap-6">
+      <div class="w-full md:w-1/2 flex flex-col space-y-5">
+
+        <div class="flex flex-col space-y-2">
+          <h5 class="text-base font-bold uppercase text-primary-green">our team</h5>
+          <h1 class="text-3xl font-bold tracking-wider">Top team of experts</h1>
+        </div>
+
+        <p class="text-sm text-[#465B52] leading-6 text-justify">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione optio perferendis sequi mollitia quis autem
+          ea
+          cupiditate possimus!
+        </p>
+
+      </div>
+
+      <div class="w-full md:w-1/2 md:text-end">
+        <button class="btn-hover font-semibold px-11 py-4">All Members</button>
+      </div>
+    </div>
+
+    <div class="grid md:grid-rows-2 md:grid-cols-2 lg:grid-rows-1 lg:grid-cols-4 mt-10 gap-7">
+
+      @for (teammate of teammates(); track teammate.id) {
+        <div class="h-[440px]">
+          <div
+            class="h-3/4 overflow-hidden rounded-xl shadow-sm hover:-translate-y-1 duration-300 transition-transform">
+            <img [src]="teammate.imgPath" [alt]="teammate.name"
+                 class="object-cover object-top h-full w-full">
+          </div>
+
+          <div class="h-1/4 flex flex-col items-center justify-end space-y-0.5">
+            <h3 class="text-xl font-semibold">{{ teammate.name }}</h3>
+            <p class="text-base text-primary-green">{{ teammate.role }}</p>
+
+            <div class="flex space-x-4 text-base font-semibold pt-1">
+              <a [href]="teammate.social.facebook">
+                <i class="bi bi-facebook fa-lg text-black opacity-50 hover:opacity-100 transition-all"></i>
+              </a>
+
+              <a [href]="teammate.social.twitter">
+                <i class="bi bi-twitter fa-lg text-black opacity-50 hover:opacity-100 transition-all"></i>
+              </a>
+
+              <a [href]="teammate.social.instagram">
+                <i class="bi bi-instagram fa-lg text-black opacity-50 hover:opacity-100 transition-all"></i>
+              </a>
+
+              <a [href]="teammate.social.youtube">
+                <i class="bi bi-youtube fa-lg text-black opacity-50 hover:opacity-100 transition-all"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  </article>
+</section>

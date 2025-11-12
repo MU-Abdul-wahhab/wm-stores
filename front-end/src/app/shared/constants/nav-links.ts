@@ -6,11 +6,11 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-    { label: 'Home', path: '/home'},
-    { label: 'About', path: '/shop'},
-    { label: 'Shop', path: '/about' },
-    { label: 'Blog', path: '/about' },
-    { label: 'Contact', path: '/contact' },
-    { label: 'FAQs', path: '/faqs' },
-    { label: 'Careers', path: '/careers' },
+    { label: 'Home', path: '/'},
+    { label: 'About', path: 'evara/about'},
+    { label: 'Shop', path: 'shop' },
+    { label: 'Blog', path: 'evara/blog' },
+    { label: 'Contact', path: 'evara/contact' },
+    { label: 'FAQs', path: 'evara/faqs' },
+    { label: 'Careers', path: 'evara/careers' },
 ];

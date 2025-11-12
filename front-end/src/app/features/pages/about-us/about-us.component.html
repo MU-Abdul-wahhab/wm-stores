@@ -1,0 +1,30 @@
+<section id="section-breadcrumb" class="w-full px-4 py-6 bg-[#F7F8F9]">
+  <div class="container mx-auto">
+
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+        <li class="inline-flex items-center">
+          <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-green">
+            <i class="bi bi-house-fill me-2.5"></i>
+            Home
+          </a>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <i class="bi bi-chevron-right text-gray-400 font-bold text-sm mx-1"></i>
+            <span class="ms-1 text-sm font-medium text-gray-700 md:ms-2">About Us</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+  </div>
+</section>
+
+<app-section-our-company/>
+<app-section-our-team/>
+<div class="border-b border-b-slate-300 my-6"></div>
+<app-section-corporation/>
+<div class="border-b border-b-slate-300 my-6"></div>
+<app-section-reviews/>
+<app-section-featured-brands/>

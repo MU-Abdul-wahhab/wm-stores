@@ -1,7 +1,7 @@
 import {Component, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 
-import {IMAGES} from '../../constants/image-path';
+import {IMAGES} from '../../../constants/image-path';
 
 @Component({
   selector: 'app-not-found',

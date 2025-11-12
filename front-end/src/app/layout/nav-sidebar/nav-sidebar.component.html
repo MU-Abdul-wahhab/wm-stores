@@ -1,11 +1,11 @@
 <header class="px-8 py-5">
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <img [src]="APP_LOGO" alt="logo" class="h-10" />
+      <img [src]="APP_LOGO" alt="logo" class="h-10"/>
     </div>
 
     <button type="button" title="Close" (click)="onHamburgerClose()"
-      class="flex items-center text-primary-gray hover:text-black text-2xl focus:outline-none cursor-pointer">
+            class="flex items-center text-primary-gray hover:text-black text-2xl focus:outline-none cursor-pointer">
       <i class="bi bi-x-lg fa-sm mt-2 font-bold transition-colors duration-200"></i>
     </button>
   </div>
@@ -15,12 +15,12 @@
 
   <div class="relative">
     <button type="button" title="search"
-      class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
+            class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
       <i class="bi bi-search text-lg transition-colors duration-200"></i>
     </button>
 
     <input type="text" title="search" class="form-control px-4 pr-10 py-3 text-sm w-full"
-      placeholder="Search for items..." />
+           placeholder="Search for items..."/>
   </div>
 
   <div class="py-6">
@@ -42,48 +42,52 @@
 
   <ul class="w-full flex flex-col space-y-3 justify-around items-start">
 
-    @for(link of NAV_LINKS(); track link.label){
-    @if(link.subNavLink){
+    @for (link of NAV_LINKS(); track link.label) {
+      @if (link.subNavLink) {
 
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56" position="left"
-        #label>
-        <div
-          class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
+        <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
+          <app-dropdown class="w-full" [noneAbsoluteSelect]="true" triggerElement="click" width="min-w-56"
+                        position="left"
+                        #label>
+            <div
+              class="dropdown-trigger w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
 
-          <div class="cursor-pointer appearance-none">
-            <p class="truncate">
-              {{ link.label }}</p>
+              <div class="cursor-pointer appearance-none">
+                <p class="truncate">
+                  {{ link.label }}</p>
+              </div>
+
+              <div class="pointer-events-none flex items-center">
+                <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="label.isOpen()"></i>
+              </div>
+
+            </div>
+
+            <div class="dropdown-content">
+              <app-custom-select [_options]="getSubNavLabels(link.subNavLink)" (closeRequest)="label.close()">
+              </app-custom-select>
+            </div>
+          </app-dropdown>
+        </li>
+
+      } @else {
+
+        <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
+          <div
+            class="w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
+
+            <div class="cursor-pointer appearance-none">
+              <p>
+                <a [routerLink]="link.path" class="truncate">
+                  {{ link.label }}
+                </a>
+              </p>
+            </div>
+
           </div>
+        </li>
 
-          <div class="pointer-events-none flex items-center">
-            <i class="bi bi-chevron-down text-xs duration-200" [class.rotate-180]="label.isOpen()"></i>
-          </div>
-
-        </div>
-
-        <div class="dropdown-content">
-          <app-custom-select [_options]="getSubNavLabels(link.subNavLink)" (closeRequest)="label.close()">
-          </app-custom-select>
-        </div>
-      </app-dropdown>
-    </li>
-
-    }@else{
-
-    <li class="w-full flex items-center justify-between pb-3 border-b border-b-slate-300">
-      <div
-        class="w-full flex items-center justify-between text-primary-gray font-semibold text-base  hover:text-primary-green duration-150">
-
-        <div class="cursor-pointer appearance-none">
-          <p class="truncate">
-            {{ link.label }}</p>
-        </div>
-
-      </div>
-    </li>
-
-    }
+      }
     }
 
   </ul>
@@ -94,9 +98,9 @@
         <a [href]="appCredentials()?.location">Our Location</a>
       </p>
       <p class="text-primary-green hover:text-primary-gray cursor-pointer font-extralight">
-        @if(isAuthenticated()){
+        @if (isAuthenticated()) {
           <button type="button" (click)="onLogout()" class="cursor-pointer">Log Out</button>
-        }@else{
+        } @else {
           <a routerLink="/auth/login">Log In</a>
         }
       </p>

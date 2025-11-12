@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {AuthComponent} from './features/auth/auth.component';
-import {NotFoundComponent} from './shared/components/not-found/not-found.component';
+import {NotFoundComponent} from './shared/components/pages/not-found/not-found.component';
 import {LayoutComponent} from './layout/layout.component';
 
 export const routes: Routes = [

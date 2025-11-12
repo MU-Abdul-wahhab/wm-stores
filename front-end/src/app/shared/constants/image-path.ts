@@ -40,16 +40,48 @@ export const IMAGES = {
         imgPath: 'images/blogs/blog-2/blog-2.jpg'
       }
     },
-    sectionBanners:{
-      banner1:{
+    sectionBanners: {
+      banner1: {
         imgPath: 'images/banners/section-banners/banner-1/banner-1.png'
       },
-      banner2:{
+      banner2: {
         imgPath: 'images/banners/section-banners/banner-2/banner-2.png'
       },
-      banner3:{
+      banner3: {
         imgPath: 'images/banners/section-banners/banner-3/banner-3.png'
       },
+    }
+  },
+  pages: {
+    aboutUs: {
+      sections: {
+        sectionOurCompany: {
+          thumbnail: 'images/pages/about-us/sections/section-our-company/about-1.png'
+        },
+        sectionOurTeam: {
+          teammates: {
+            teammate1Avatar: 'images/pages/about-us/sections/section-our-team/avatar-1.jpg',
+            teammate2Avatar: 'images/pages/about-us/sections/section-our-team/avatar-2.jpg',
+            teammate3Avatar: 'images/pages/about-us/sections/section-our-team/avatar-3.jpg',
+            teammate4Avatar: 'images/pages/about-us/sections/section-our-team/avatar-4.jpg',
+          }
+        },
+        sectionCorporation: {
+          branch1Avatar: 'images/pages/about-us/sections/section-corporation/branch-1.jpg',
+          branch2Avatar: 'images/pages/about-us/sections/section-corporation/branch-2.jpg',
+          branch3Avatar: 'images/pages/about-us/sections/section-corporation/branch-3.jpg',
+        },
+        sectionReviews:{
+          clients:{
+            client1Avatar: 'images/pages/about-us/sections/section-our-team/avatar-1.jpg',
+            client2Avatar: 'images/pages/about-us/sections/section-our-team/avatar-3.jpg',
+            client3Avatar: 'images/pages/about-us/sections/section-our-team/avatar-2.jpg',
+            client4Avatar: 'images/pages/about-us/sections/section-our-team/avatar-4.jpg',
+            client5Avatar: 'images/pages/about-us/sections/section-our-team/avatar-5.jpg',
+            client6Avatar: 'images/pages/about-us/sections/section-our-team/avatar-1.jpg',
+          }
+        }
+      }
     }
   },
   products: {

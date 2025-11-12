@@ -1,0 +1,17 @@
+<div
+  class="border max-h-64 w-full rounded-xl shadow border-gray-300 hover:-translate-y-2 p-7 hover:border-primary-green duration-300 transition-all flex space-x-8">
+
+  <div
+    class="h-16 min-w-12 overflow-hidden hover:border rounded hover:border-primary-green hover:-translate-y-2.5 shadow-sm duration-300 transition-all ">
+    <img [src]="review().avatar" [alt]="review().name" class="object-cover object-top w-full h-full">
+  </div>
+
+  <div class="flex flex-col space-y-2 text-sm">
+
+    <h3 class="font-semibold line-clamp-1">{{ review().name }}</h3>
+    <h6 class="text-black opacity-50">{{ review().title }}</h6>
+    <p class="text-[#465B52] text-justify line-clamp-6">"{{ review().description }}"</p>
+
+  </div>
+
+</div>
